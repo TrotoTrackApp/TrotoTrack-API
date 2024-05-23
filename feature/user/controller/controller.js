@@ -137,7 +137,7 @@ class UserController {
     try {
       const { role } = extractToken(req);
       if (role === "admin") {
-        await this.userService.delete(userId);
+        await this.userService.deleteUserById(userId);
         return successGetResponse(res, "User deleted successfully");
       } else {
         return ForbiddenResponse.sendUnauthorized(res);
