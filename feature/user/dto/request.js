@@ -6,8 +6,8 @@ function userRequest(body) {
 }
 
 function userUpdateRequest(body) {
-  const { name, username, email } = body;
-  return { name, username, email };
+  const { name, username, email} = body;
+  return { name, username, email};
 }
 
 function loginRequest(body) {

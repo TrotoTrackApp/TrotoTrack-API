@@ -98,13 +98,20 @@ class UserService extends UserServicesInterface {
       throw new ValidationError("User id is not valid");
     }
 
-    if (!validator.isEmail(updatedData.email)) {
-      throw new ValidationError("Email is not valid");
-    }
+    // Periksa apakah ada data email yang disediakan
+    if (updatedData.email) {
+      // Validasi email jika disediakan
+      if (!validator.isEmail(updatedData.email)) {
+        throw new ValidationError("Email is not valid");
+      }
 
-    const existingEmail = await this.userRepo.getUserByEmail(updatedData.email);
-    if (existingEmail && existingEmail.id !== id) {
-      throw new ValidationError("Email already registered");
+      // Cek apakah email sudah terdaftar untuk pengguna lain
+      const existingEmail = await this.userRepo.getUserByEmail(
+        updatedData.email
+      );
+      if (existingEmail && existingEmail.id !== id) {
+        throw new ValidationError("Email already registered");
+      }
     }
 
     const user = await this.userRepo.updateUserById(id, updatedData);
