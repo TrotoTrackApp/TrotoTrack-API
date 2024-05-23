@@ -154,6 +154,46 @@ class UserService extends UserServicesInterface {
     console.log("id", user.id, "role", user.role);
     return { user, token };
   }
+
+  async updatePassword(id, oldPassword, newPassword, confirmPassword) {
+    if (!id) {
+      throw new ValidationError("Please provide user id");
+    }
+
+    if (!validator.isUUID(id)) {
+      throw new ValidationError("User id is not valid");
+    }
+    
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      throw new ValidationError("Please fill all required fields");
+    }
+
+    if (newPassword.length < 8) {
+      throw new ValidationError("Password must be at least 8 characters long");
+    }
+
+    if (newPassword !== confirmPassword) {
+      throw new ValidationError(
+        "Password and Confirm Password must be the same"
+      );
+    }
+
+    const user = await this.userRepo.getUserById(id);
+    const isValidPassword = await comparePasswordHash(
+      oldPassword,
+      user.password
+    );
+    if (!isValidPassword) {
+      throw new ValidationError("Old password is incorrect");
+    }
+
+    const hashedPassword = await generatePasswordHash(newPassword);
+    const updatedUser = await this.userRepo.updateUserById(id, {
+      password: hashedPassword,
+    });
+
+    return updatedUser;
+  }
 }
 
 module.exports = UserService;

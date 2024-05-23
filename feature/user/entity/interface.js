@@ -56,6 +56,10 @@ class UserServicesInterface {
   async login(email, password) {
     throw new Error("Method not implemented");
   }
+
+  async updatePassword(id, oldPassword, newPassword, confirmPassword) {
+    throw new Error("Method not implemented");
+  }
 }
 
 module.exports = { UserRepositoryInterface, UserServicesInterface };

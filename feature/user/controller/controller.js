@@ -11,7 +11,12 @@ const {
   ForbiddenResponse,
 } = require("../../../utils/helper/response");
 const { message } = require("../../../utils/constanta/constanta");
-const { userRequest, loginRequest, userUpdateRequest} = require("../dto/request");
+const {
+  userRequest,
+  loginRequest,
+  userUpdateRequest,
+  updatePasswordRequest,
+} = require("../dto/request");
 const {
   loginResponse,
   userResponse,
@@ -144,6 +149,29 @@ class UserController {
         error instanceof UnauthorizedError
       ) {
         res.status(error.statusCode).json({ message: error.message });
+      }
+      return serverErrorResponse(res, "Internal server error");
+    }
+  }
+
+  async updatePassword(req, res) {
+    const userId = req.params.id;
+    const user = updatePasswordRequest(req.body);
+    try {
+      const { id, role } = extractToken(req);
+      if (role === "admin" || id === userId) {
+        await this.userService.updatePassword(userId, user.oldPassword, user.newPassword, user.confirmPassword);
+        return successGetResponse(res, "Password updated successfully");
+      } else {
+        return ForbiddenResponse.sendUnauthorized(res);
+      }
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json({ message: error.message });
       }
       return serverErrorResponse(res, "Internal server error");
     }

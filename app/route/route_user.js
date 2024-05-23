@@ -18,5 +18,6 @@ router.get('/users', jwtMiddleware, userController.getAllUsers.bind(userControll
 router.get('/users/:id', jwtMiddleware, userController.getUserById.bind(userController));
 router.put('/users/:id', jwtMiddleware, userController.updateUserById.bind(userController));
 router.delete('/users/:id', jwtMiddleware, userController.deleteUserById.bind(userController));
+router.patch('/users/:id', jwtMiddleware, userController.updatePassword.bind(userController));
 
 module.exports = router;
