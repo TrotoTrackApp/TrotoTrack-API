@@ -1,0 +1,89 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TrotoTrack",
+    "description": "TrotoTrack API Documentation",
+    "version": "1.0.0",
+    "contact": {
+      "name": "TrotoTrack",
+      "url": "https://trototrack.my.id",
+      "email": "shiigetsu1@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api-docs",
+      "description": "Development server"
+    }
+  ],
+  "externalDocs": {
+    "description": "Find out more about TrotoTrack",
+    "url": "https://trototrack.my.id"
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Login & Register"],
+        "summary": "Login to the application",
+        "description": "Login to the application",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestLogin"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "email": "hilal@gmail.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login success",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "value": {
+                      "message": "Login success",
+                      "user": {
+                        "name": "Hilal",
+                        "email": "hilal@gmail.com"
+                      },
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RequestLogin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password"
+          }
+        },
+        "required": ["email", "password"]
+      }
+    }
+  }
+}
