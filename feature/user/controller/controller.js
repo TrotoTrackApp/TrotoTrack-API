@@ -36,7 +36,7 @@ class UserController {
       return successCreateResponse(res, message.SUCCESS_CREATED);
     } catch (error) {
       if (error instanceof ValidationError || error instanceof DuplicateError) {
-        res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json({ message: error.message });
       } else {
         return serverErrorResponse(res, "Internal server error");
       }
@@ -53,7 +53,7 @@ class UserController {
       return loginResponse(res, user, token);
     } catch (error) {
       if (error instanceof ValidationError || error instanceof NotFoundError) {
-        res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json({ message: error.message });
       } else {
         return serverErrorResponse(res, "Internal server error");
       }
@@ -68,7 +68,7 @@ class UserController {
         const user = await this.userService.getUserById(userId);
         return userResponse(res, user);
       } else {
-        ForbiddenResponse.sendUnauthorized(res);
+        return ForbiddenResponse.sendUnauthorized(res);
       }
     } catch (error) {
       if (
@@ -76,7 +76,7 @@ class UserController {
         error instanceof ValidationError ||
         error instanceof UnauthorizedError
       ) {
-        res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json({ message: error.message });
       } else {
         console.log(error);
         return serverErrorResponse(res, "Internal server error");
@@ -92,14 +92,14 @@ class UserController {
         const users = await this.userService.getAllUser();
         return userListResponse(res, users);
       } else {
-        ForbiddenResponse.sendUnauthorized(res);
+        return ForbiddenResponse.sendUnauthorized(res);
       }
     } catch (error) {
       if (
         error instanceof NotFoundError ||
         error instanceof UnauthorizedError
       ) {
-        res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json({ message: error.message });
       } else {
         return serverErrorResponse(res, "Internal server error");
       }
@@ -116,7 +116,7 @@ class UserController {
         await this.userService.updateUserById(userId, user);
         return successGetResponse(res, "User updated successfully");
       } else {
-        ForbiddenResponse.sendUnauthorized(res);
+        return ForbiddenResponse.sendUnauthorized(res);
       }
     } catch (error) {
       if (
@@ -125,7 +125,7 @@ class UserController {
         error instanceof DuplicateError ||
         error instanceof UnauthorizedError
       ) {
-        res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json({ message: error.message });
       }
       console.log(error);
       return serverErrorResponse(res, "Internal server error");
@@ -140,7 +140,7 @@ class UserController {
         await this.userService.delete(userId);
         return successGetResponse(res, "User deleted successfully");
       } else {
-        ForbiddenResponse.sendUnauthorized(res);
+        return ForbiddenResponse.sendUnauthorized(res);
       }
     } catch (error) {
       if (
@@ -148,7 +148,7 @@ class UserController {
         error instanceof ValidationError ||
         error instanceof UnauthorizedError
       ) {
-        res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json({ message: error.message });
       }
       return serverErrorResponse(res, "Internal server error");
     }
