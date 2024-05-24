@@ -1,10 +1,10 @@
 const message = {
   // Success message
-  SUCCESS_CREATED: "Success Created Data",
-  SUCCESS_UPDATED: "Success Updated Data",
-  SUCCESS_DELETED: "Success Deleted Data",
-  SUCCESS_GET: "Success Get Data",
-  SUCCESS_GET_ALL: "Success Get All Data",
+  SUCCESS_CREATED: "Success created data",
+  SUCCESS_UPDATED: "Success updated data",
+  SUCCESS_DELETED: "Success deleted data",
+  SUCCESS_GET: "Success get data",
+  SUCCESS_GET_ALL: "Success get all data",
 
   // Error message
   ERROR_INTERNAL_SERVER: "Internal server error",
