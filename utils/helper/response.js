@@ -38,28 +38,40 @@ class UnauthorizedError extends Error {
   }
 }
 
-class ForbiddenResponse {
-  static sendUnauthorized(res) {
-    return res.status(403).json({ message: "Unauthorized access" });
+class ErrorResponseJson {
+  constructor(message) {
+    this.status = false;
+    this.message = message;
   }
 }
 
-class UnauthorizedResponse {
-  static sendUnauthorized(res) {
-    return res.status(401).json({ message: "Unauthorized" });
+class SuccessResponseJson {
+  constructor(message) {
+    this.status = true;
+    this.message = message;
   }
 }
 
-function successCreateResponse(res, data) {
-  return res.status(201).json({ message: data });
+class SuccessResponseJsonWithData {
+  constructor(message, data = null) {
+    this.status = true;
+    this.message = message;
+    if (data !== null) {
+      this.data = data;
+    }
+  }
 }
 
-function successGetResponse(res, data) {
-  return res.status(200).json({ message: data });
+function errorResponse(message) {
+  return new ErrorResponseJson(message);
 }
 
-function serverErrorResponse(res, data) {
-  return res.status(500).json({ message: data });
+function successResponse(message) {
+  return new SuccessResponseJson(message);
+}
+
+function successWithDataResponse(message, data) {
+  return new SuccessResponseJsonWithData(message, data);
 }
 
 module.exports = {
@@ -68,9 +80,7 @@ module.exports = {
   DuplicateError,
   AuthenticationError,
   UnauthorizedError,
-  ForbiddenResponse,
-  UnauthorizedResponse,
-  successCreateResponse,
-  successGetResponse,
-  serverErrorResponse,
+  successResponse,
+  errorResponse,
+  successWithDataResponse,
 };

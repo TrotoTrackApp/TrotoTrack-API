@@ -1,9 +1,7 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const {
-  ForbiddenResponse,
-  UnauthorizedResponse,
-} = require("../helper/response");
+const { errorResponse } = require("../helper/response");
+const { message } = require("../constanta/constanta");
 dotenv.config();
 const secretKey = process.env.JWTSECRET;
 
@@ -38,14 +36,14 @@ function jwtMiddleware(req, res, next) {
   console.log("Token:", token);
 
   if (!token) {
-    return UnauthorizedResponse.sendUnauthorized(res);
+    return res.status(401).json(errorResponse(message.ERROR_UNAUTHORIZED));
   }
 
   jwt.verify(token, secretKey, (err, user) => {
     console.log("JWT Verification Error:", err ? err.message : "Unknown error");
     console.log("Secret Key:", secretKey);
     if (err) {
-      return ForbiddenResponse.sendUnauthorized(res);
+      return res.status(403).json(errorResponse(message.ERROR_UNAUTHORIZED));
     }
 
     req.user = user;
