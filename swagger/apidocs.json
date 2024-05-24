@@ -482,6 +482,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Authorization"
+      }
+    },
     "parameters": {
       "UserId": {
         "name": "id",
@@ -630,14 +637,6 @@
           }
         }
       }
-    }
-  },
-  "securitySchemes": {
-    "auth": {
-      "description": "JWT authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-      "type": "http",
-      "schema": "bearer",
-      "bearerFormat": "Authorization"
     }
   }
 }
