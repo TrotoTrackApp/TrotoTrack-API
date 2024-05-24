@@ -12,7 +12,7 @@ const userRepository = new UserRepository(db);
 const userService = new UserService(userRepository);
 const userController = new UserController(userService); 
 
-router.post('/users', userController.createUser.bind(userController));
+router.post('/register', userController.createUser.bind(userController));
 router.post('/login', userController.login.bind(userController));
 router.get('/users', jwtMiddleware, userController.getAllUsers.bind(userController));
 router.get('/users/:id', jwtMiddleware, userController.getUserById.bind(userController));
