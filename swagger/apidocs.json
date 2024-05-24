@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/api-docs",
+      "url": "http://localhost:8080/",
       "description": "Development server"
     }
   ],
@@ -34,10 +34,10 @@
                 "$ref": "#/components/schemas/RequestLogin"
               },
               "examples": {
-                "user": {
+                "login": {
                   "value": {
                     "email": "hilal@gmail.com",
-                    "password": "123456"
+                    "password": "123456asd"
                   }
                 }
               }
@@ -49,15 +49,152 @@
             "description": "Login success",
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLogin"
+                },
                 "examples": {
                   "success": {
                     "value": {
+                      "status": "true",
                       "message": "Login success",
-                      "user": {
-                        "name": "Hilal",
+                      "data": {
+                        "name": "hilal",
+                        "email": "hilal@gmail.com",
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["Login & Register"],
+        "summary": "Register to the application",
+        "description": "Register to the application",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestRegister"
+              },
+              "examples": {
+                "register": {
+                  "value": {
+                    "name": "troto",
+                    "username": "troto",
+                    "email": "troto@gmail.com",
+                    "password": "123456asd",
+                    "confirm_password": "123456asd"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Register success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateOrUpdate"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "true",
+                      "message": "Success created data"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user by id",
+        "description": "Get user by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get user by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseGetUser"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "true",
+                      "message": "Success get data",
+                      "data": {
+                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
+                        "name": "hilal",
                         "email": "hilal@gmail.com"
-                      },
-                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Update user by id",
+        "description": "Update user by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUpdateUser"
+              },
+              "examples": {
+                "update": {
+                  "value": {
+                    "name": "hilal",
+                    "username": "hilal",
+                    "email": "hilal@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update user by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateOrUpdate"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": "true",
+                      "message": "Success updated data"
                     }
                   }
                 }
@@ -69,20 +206,133 @@
     }
   },
   "components": {
+    "parameters": {
+      "UserId": {
+        "name": "id",
+        "in": "path",
+        "description": "Id of the user to get",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      }
+    },
     "schemas": {
       "RequestLogin": {
         "type": "object",
         "properties": {
           "email": {
-            "type": "string",
-            "description": "User email"
+            "type": "string"
           },
           "password": {
-            "type": "string",
-            "description": "User password"
+            "type": "string"
           }
         },
         "required": ["email", "password"]
+      },
+      "ResponseLogin": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "email", "token"]
+          }
+        }
+      },
+      "RequestRegister": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confirm_password": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "email", "password", "confirm_password"]
+      },
+      "ResponseCreateOrUpdate": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["status", "message"]
+      },
+      "ResponseGetUser": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": ["id", "name", "email"]
+          }
+        }
+      },
+      "RequestUpdateUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
       }
     }
   }
