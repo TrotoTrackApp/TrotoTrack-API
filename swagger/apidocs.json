@@ -121,6 +121,11 @@
     },
     "/users": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["User"],
         "summary": "Get all users",
         "description": "Get all users",
@@ -161,6 +166,11 @@
     },
     "/users/{id}": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["User"],
         "summary": "Get user by id",
         "description": "Get user by id",
@@ -196,6 +206,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["User"],
         "summary": "Update user by id",
         "description": "Update user by id",
@@ -244,6 +259,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["User"],
         "summary": "Delete user by id",
         "description": "Delete user by id",
@@ -274,6 +294,11 @@
         }
       },
       "patch": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["User"],
         "summary": "Update password user by id",
         "description": "Update password user by id",
@@ -472,6 +497,14 @@
           }
         }
       }
+    }
+  },
+  "securitySchemes": {
+    "auth": {
+      "description": "JWT authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+      "type": "http",
+      "schema": "bearer",
+      "bearerFormat": "Authorization"
     }
   }
 }
