@@ -10,6 +10,7 @@ const {
   comparePasswordHash,
 } = require("../../../utils/helper/bcrypt");
 const e = require("express");
+const { message } = require("../../../utils/constanta/constanta");
 
 class UserService extends UserServicesInterface {
   constructor(userRepo) {
@@ -26,7 +27,7 @@ class UserService extends UserServicesInterface {
       !data.password ||
       !data.confirmPassword
     ) {
-      throw new ValidationError("Please fill all required fields");
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
     // Validate password length
@@ -70,11 +71,11 @@ class UserService extends UserServicesInterface {
 
   async getUserById(id) {
     if (!id) {
-      throw new ValidationError("Please provide user id");
+      throw new ValidationError(message.ERROR_ID);
     }
 
     if (!validator.isUUID(id)) {
-      throw new ValidationError("User id is not valid");
+      throw new ValidationError(message.ERROT_ID_INVALID);
     }
 
     const user = await this.userRepo.getUserById(id);
@@ -91,11 +92,11 @@ class UserService extends UserServicesInterface {
 
   async updateUserById(id, updatedData) {
     if (!id) {
-      throw new ValidationError("Please provide user id");
+      throw new ValidationError(message.ERROR_ID);
     }
 
     if (!validator.isUUID(id)) {
-      throw new ValidationError("User id is not valid");
+      throw new ValidationError(message.ERROT_ID_INVALID);
     }
 
     // Periksa apakah ada data email yang disediakan
@@ -120,11 +121,11 @@ class UserService extends UserServicesInterface {
 
   async deleteUserById(id) {
     if (!id) {
-      throw new ValidationError("Please provide user id");
+      throw new ValidationError(message.ERROR_ID);
     }
 
     if (!validator.isUUID(id)) {
-      throw new ValidationError("User id is not valid");
+      throw new ValidationError(message.ERROT_ID_INVALID);
     }
 
     const user = await this.userRepo.deleteUserById(id);
@@ -133,7 +134,7 @@ class UserService extends UserServicesInterface {
 
   async login(email, password) {
     if (!email || !password) {
-      throw new ValidationError("Please provide email and password");
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
     if (!validator.isEmail(email)) {
@@ -157,15 +158,15 @@ class UserService extends UserServicesInterface {
 
   async updatePassword(id, oldPassword, newPassword, confirmPassword) {
     if (!id) {
-      throw new ValidationError("Please provide user id");
+      throw new ValidationError(message.ERROR_ID);
     }
 
     if (!validator.isUUID(id)) {
-      throw new ValidationError("User id is not valid");
+      throw new ValidationError(message.ERROT_ID_INVALID);
     }
     
     if (!oldPassword || !newPassword || !confirmPassword) {
-      throw new ValidationError("Please fill all required fields");
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
     if (newPassword.length < 8) {

@@ -1,7 +1,7 @@
 const {
-  successCreateResponse,
-  successGetResponse,
-  serverErrorResponse,
+  successResponse,
+  errorResponse,
+  successWithDataResponse,
 } = require("../../../utils/helper/response");
 const {
   ValidationError,
@@ -33,12 +33,14 @@ class UserController {
     try {
       const user = userRequest(req.body);
       await this.userService.createUser(user);
-      return successCreateResponse(res, message.SUCCESS_CREATED);
+      return res.status(201).json(successResponse(message.SUCCESS_CREATED));
     } catch (error) {
       if (error instanceof ValidationError || error instanceof DuplicateError) {
-        return res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
-        return serverErrorResponse(res, "Internal server error");
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
     }
   }
@@ -50,12 +52,17 @@ class UserController {
         login.email,
         login.password
       );
-      return loginResponse(res, user, token);
+      const response = loginResponse(user, token);
+      return res
+        .status(200)
+        .json(successWithDataResponse("Login success", response));
     } catch (error) {
       if (error instanceof ValidationError || error instanceof NotFoundError) {
-        return res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
-        return serverErrorResponse(res, "Internal server error");
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
     }
   }
@@ -66,9 +73,12 @@ class UserController {
       const { id, role } = extractToken(req);
       if (role === "admin" || id === userId) {
         const user = await this.userService.getUserById(userId);
-        return userResponse(res, user);
+        const response = userResponse(user);
+        return res
+          .status(200)
+          .json(successWithDataResponse(message.SUCCESS_GET, response));
       } else {
-        return ForbiddenResponse.sendUnauthorized(res);
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
     } catch (error) {
       if (
@@ -76,10 +86,12 @@ class UserController {
         error instanceof ValidationError ||
         error instanceof UnauthorizedError
       ) {
-        return res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
         console.log(error);
-        return serverErrorResponse(res, "Internal server error");
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
     }
   }
@@ -90,18 +102,24 @@ class UserController {
       console.log("role", role);
       if (role === "admin") {
         const users = await this.userService.getAllUser();
-        return userListResponse(res, users);
+        const response = userListResponse(users);
+        return res
+          .status(200)
+          .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
       } else {
-        return ForbiddenResponse.sendUnauthorized(res);
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
     } catch (error) {
       if (
         error instanceof NotFoundError ||
         error instanceof UnauthorizedError
       ) {
-        return res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
-        return serverErrorResponse(res, "Internal server error");
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
     }
   }
@@ -114,9 +132,9 @@ class UserController {
       const { id, role } = extractToken(req);
       if (role === "admin" || id === userId) {
         await this.userService.updateUserById(userId, user);
-        return successGetResponse(res, "User updated successfully");
+        return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
       } else {
-        return ForbiddenResponse.sendUnauthorized(res);
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
     } catch (error) {
       if (
@@ -125,10 +143,10 @@ class UserController {
         error instanceof DuplicateError ||
         error instanceof UnauthorizedError
       ) {
-        return res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       }
       console.log(error);
-      return serverErrorResponse(res, "Internal server error");
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }
 
@@ -138,9 +156,9 @@ class UserController {
       const { role } = extractToken(req);
       if (role === "admin") {
         await this.userService.deleteUserById(userId);
-        return successGetResponse(res, "User deleted successfully");
+        return res.status(200).json(successResponse(message.SUCCESS_DELETED));
       } else {
-        return ForbiddenResponse.sendUnauthorized(res);
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
     } catch (error) {
       if (
@@ -148,9 +166,9 @@ class UserController {
         error instanceof ValidationError ||
         error instanceof UnauthorizedError
       ) {
-        return res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       }
-      return serverErrorResponse(res, "Internal server error");
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }
 
@@ -160,10 +178,15 @@ class UserController {
     try {
       const { id, role } = extractToken(req);
       if (role === "admin" || id === userId) {
-        await this.userService.updatePassword(userId, user.oldPassword, user.newPassword, user.confirmPassword);
-        return successGetResponse(res, "Password updated successfully");
+        await this.userService.updatePassword(
+          userId,
+          user.oldPassword,
+          user.newPassword,
+          user.confirmPassword
+        );
+        return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
       } else {
-        return ForbiddenResponse.sendUnauthorized(res);
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
     } catch (error) {
       if (
@@ -171,9 +194,9 @@ class UserController {
         error instanceof ValidationError ||
         error instanceof UnauthorizedError
       ) {
-        return res.status(error.statusCode).json({ message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       }
-      return serverErrorResponse(res, "Internal server error");
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }
 }
