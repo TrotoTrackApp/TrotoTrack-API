@@ -23,6 +23,7 @@ const {
   userListResponse,
 } = require("../dto/response");
 const { extractToken } = require("../../../utils/jwt/jwt");
+const e = require("cors");
 
 class UserController {
   constructor(userService) {
@@ -188,6 +189,75 @@ class UserController {
       } else {
         return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async getProfile(req, res) {
+    try {
+      const { id } = extractToken(req);
+      const user = await this.userService.getUserById(id);
+      const response = userResponse(user);
+      return res
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET, response));
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
+
+  async updateProfile(req, res) {
+    try {
+      const user = userUpdateRequest(req.body);
+      const { id } = extractToken(req);
+
+      await this.userService.updateUserById(id, user);
+      return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof ValidationError ||
+        error instanceof DuplicateError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      console.log(error);
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async updatePasswordProfile(req, res) {
+    try {
+      const user = updatePasswordRequest(req.body);
+      const { id } = extractToken(req);
+
+      await this.userService.updatePassword(
+        id,
+        user.oldPassword,
+        user.newPassword,
+        user.confirmPassword
+      );
+      return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
