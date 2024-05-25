@@ -115,6 +115,72 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": "false",
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "password_length": {
+                    "value": {
+                      "status": "false",
+                      "message": "Password must be at least 8 characters long"
+                    }
+                  },
+                  "password_mismatch": {
+                    "value": {
+                      "status": "false",
+                      "message": "Password and Confirm Password must be the same"
+                    }
+                  },
+                  "invalid_email": {
+                    "value": {
+                      "status": "false",
+                      "message": "Email is not valid"
+                    }
+                  },
+                  "email_registered": {
+                    "value": {
+                      "status": "false",
+                      "message": "Email already registered"
+                    }
+                  },
+                  "username_exists": {
+                    "value": {
+                      "status": "false",
+                      "message": "Username already exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "internal server": {
+                    "value": {
+                      "status": "false",
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
