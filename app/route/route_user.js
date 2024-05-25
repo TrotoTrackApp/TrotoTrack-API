@@ -20,4 +20,9 @@ router.put('/users/:id', jwtMiddleware, userController.updateUserById.bind(userC
 router.delete('/users/:id', jwtMiddleware, userController.deleteUserById.bind(userController));
 router.patch('/users/:id', jwtMiddleware, userController.updatePassword.bind(userController));
 
+// users
+router.get('/profile', jwtMiddleware, userController.getProfile.bind(userController));
+router.put('/profile', jwtMiddleware, userController.updateProfile.bind(userController));
+router.patch('/profile', jwtMiddleware, userController.updatePasswordProfile.bind(userController));
+
 module.exports = router;
