@@ -67,6 +67,72 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": "false",
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_email": {
+                    "value": {
+                      "status": "false",
+                      "message": "Email is not valid"
+                    }
+                  },
+                  "incorrect_password": {
+                    "value": {
+                      "status": "false",
+                      "message": "Password is incorrect"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": "false",
+                      "message": "Email not registered"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": "false",
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -360,6 +426,24 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": "false",
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "403": {
             "description": "Forbidden error",
             "content": {
@@ -371,7 +455,7 @@
                   "forbidden": {
                     "value": {
                       "status": "false",
-                      "message": "Forbidden"
+                      "message": "Forbidden access"
                     }
                   }
                 }
@@ -397,7 +481,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
+            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -407,7 +491,7 @@
                   "server_error": {
                     "value": {
                       "status": "false",
-                      "message": "Internal Server Error"
+                      "message": "Internal server error"
                     }
                   }
                 }
@@ -480,6 +564,24 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": "false",
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "403": {
             "description": "Forbidden error",
             "content": {
@@ -491,7 +593,7 @@
                   "forbidden": {
                     "value": {
                       "status": "false",
-                      "message": "Forbidden"
+                      "message": "Forbidden access"
                     }
                   }
                 }
@@ -586,6 +688,114 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": "false",
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": "false",
+                      "message": "ID is not valid"
+                    }
+                  },
+                  "invalid_email": {
+                    "value": {
+                      "status": "false",
+                      "message": "Email is not valid"
+                    }
+                  },
+                  "email_registered": {
+                    "value": {
+                      "status": "false",
+                      "message": "Email already registered"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": "false",
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
+                    "value": {
+                      "status": "false",
+                      "message": "Forbidden access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": "false",
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": "false",
+                      "message": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -616,6 +826,84 @@
                     "value": {
                       "status": "true",
                       "message": "Success deleted data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": "false",
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": "false",
+                      "message": "ID is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": "false",
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": "false",
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": "false",
+                      "message": "Internal server error"
                     }
                   }
                 }
@@ -669,6 +957,120 @@
                     "value": {
                       "status": "true",
                       "message": "Success updated password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": "false",
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": "false",
+                      "message": "ID is not valid"
+                    }
+                  },
+                  "short_password": {
+                    "value": {
+                      "status": "false",
+                      "message": "Password must be at least 8 characters long"
+                    }
+                  },
+                  "password_mismatch": {
+                    "value": {
+                      "status": "false",
+                      "message": "Password and Confirm Password must be the same"
+                    }
+                  },
+                  "incorrect_old_password": {
+                    "value": {
+                      "status": "false",
+                      "message": "Old password is incorrect"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": "false",
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
+                    "value": {
+                      "status": "false",
+                      "message": "Forbidden access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": "false",
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": "false",
+                      "message": "Internal server error"
                     }
                   }
                 }
