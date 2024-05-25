@@ -55,7 +55,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Login success",
                       "data": {
                         "name": "hilal",
@@ -78,19 +78,19 @@
                 "examples": {
                   "missing_fields": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Please fill all required fields"
                     }
                   },
                   "invalid_email": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email is not valid"
                     }
                   },
                   "incorrect_password": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Password is incorrect"
                     }
                   }
@@ -108,7 +108,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email not registered"
                     }
                   }
@@ -126,7 +126,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -174,7 +174,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success created data"
                     }
                   }
@@ -192,37 +192,37 @@
                 "examples": {
                   "missing_fields": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Please fill all required fields"
                     }
                   },
                   "password_length": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Password must be at least 8 characters long"
                     }
                   },
                   "password_mismatch": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Password and Confirm Password must be the same"
                     }
                   },
                   "invalid_email": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email is not valid"
                     }
                   },
                   "email_registered": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email already registered"
                     }
                   },
                   "username_exists": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Username already exists"
                     }
                   }
@@ -240,7 +240,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -272,7 +272,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success get data",
                       "data": {
                         "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
@@ -295,13 +295,13 @@
                 "examples": {
                   "missing_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is required"
                     }
                   },
                   "invalid_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is not valid"
                     }
                   }
@@ -319,7 +319,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -337,7 +337,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "User not found"
                     }
                   }
@@ -355,7 +355,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -403,7 +403,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success updated data"
                     }
                   }
@@ -421,31 +421,31 @@
                 "examples": {
                   "missing_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is required"
                     }
                   },
                   "invalid_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is not valid"
                     }
                   },
                   "invalid_email": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email is not valid"
                     }
                   },
                   "email_registered": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email already registered"
                     }
                   },
                   "username_exists": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Username already exists"
                     }
                   }
@@ -463,7 +463,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -481,7 +481,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "User not found"
                     }
                   }
@@ -499,7 +499,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal Server Error"
                     }
                   }
@@ -547,7 +547,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success updated password"
                     }
                   }
@@ -565,31 +565,31 @@
                 "examples": {
                   "missing_fields": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Please fill all required fields"
                     }
                   },
                   "invalid_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is not valid"
                     }
                   },
                   "short_password": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Password must be at least 8 characters long"
                     }
                   },
                   "password_mismatch": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Password and Confirm Password must be the same"
                     }
                   },
                   "incorrect_old_password": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Old password is incorrect"
                     }
                   }
@@ -607,7 +607,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -625,7 +625,7 @@
                 "examples": {
                   "forbidden": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Forbidden access"
                     }
                   }
@@ -643,7 +643,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "User not found"
                     }
                   }
@@ -661,7 +661,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -694,7 +694,7 @@
                   "success": {
                     "description": "Success get all users",
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success get all data",
                       "data": [
                         {
@@ -724,7 +724,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -742,7 +742,7 @@
                 "examples": {
                   "forbidden": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Forbidden access"
                     }
                   }
@@ -760,7 +760,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "No user found"
                     }
                   }
@@ -778,7 +778,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -815,7 +815,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success get data",
                       "data": {
                         "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
@@ -838,13 +838,13 @@
                 "examples": {
                   "missing_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is required"
                     }
                   },
                   "invalid_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is not valid"
                     }
                   }
@@ -862,7 +862,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -880,7 +880,7 @@
                 "examples": {
                   "forbidden": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Forbidden access"
                     }
                   }
@@ -898,7 +898,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "User not found"
                     }
                   }
@@ -916,7 +916,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -969,7 +969,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success updated data"
                     }
                   }
@@ -987,25 +987,25 @@
                 "examples": {
                   "missing_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is required"
                     }
                   },
                   "invalid_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is not valid"
                     }
                   },
                   "invalid_email": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email is not valid"
                     }
                   },
                   "email_registered": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Email already registered"
                     }
                   }
@@ -1023,7 +1023,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -1041,7 +1041,7 @@
                 "examples": {
                   "forbidden": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Forbidden access"
                     }
                   }
@@ -1059,7 +1059,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "User not found"
                     }
                   }
@@ -1077,7 +1077,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal Server Error"
                     }
                   }
@@ -1112,7 +1112,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success deleted data"
                     }
                   }
@@ -1130,13 +1130,13 @@
                 "examples": {
                   "missing_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is required"
                     }
                   },
                   "invalid_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is not valid"
                     }
                   }
@@ -1154,7 +1154,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -1172,7 +1172,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "User not found"
                     }
                   }
@@ -1190,7 +1190,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -1243,7 +1243,7 @@
                 "examples": {
                   "success": {
                     "value": {
-                      "status": "true",
+                      "status": true,
                       "message": "Success updated password"
                     }
                   }
@@ -1261,31 +1261,31 @@
                 "examples": {
                   "missing_fields": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Please fill all required fields"
                     }
                   },
                   "invalid_id": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "ID is not valid"
                     }
                   },
                   "short_password": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Password must be at least 8 characters long"
                     }
                   },
                   "password_mismatch": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Password and Confirm Password must be the same"
                     }
                   },
                   "incorrect_old_password": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Old password is incorrect"
                     }
                   }
@@ -1303,7 +1303,7 @@
                 "examples": {
                   "unauthorized": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Unauthorized"
                     }
                   }
@@ -1321,7 +1321,7 @@
                 "examples": {
                   "forbidden": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Forbidden access"
                     }
                   }
@@ -1339,7 +1339,7 @@
                 "examples": {
                   "not_found": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "User not found"
                     }
                   }
@@ -1357,7 +1357,7 @@
                 "examples": {
                   "server_error": {
                     "value": {
-                      "status": "false",
+                      "status": false,
                       "message": "Internal server error"
                     }
                   }
@@ -1410,7 +1410,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "string"
+            "type": "boolean"
           },
           "message": {
             "type": "string"
@@ -1457,7 +1457,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "string"
+            "type": "boolean"
           },
           "message": {
             "type": "string"
@@ -1469,7 +1469,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "string"
+            "type": "boolean"
           },
           "message": {
             "type": "string"
@@ -1529,7 +1529,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "string"
+            "type": "boolean"
           },
           "message": {
             "type": "string"
