@@ -99,19 +99,27 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROT_ID_INVALID);
     }
 
-    // Periksa apakah ada data email yang disediakan
+    // Check if email is already registered
     if (updatedData.email) {
-      // Validasi email jika disediakan
       if (!validator.isEmail(updatedData.email)) {
         throw new ValidationError("Email is not valid");
       }
 
-      // Cek apakah email sudah terdaftar untuk pengguna lain
       const existingEmail = await this.userRepo.getUserByEmail(
         updatedData.email
       );
       if (existingEmail && existingEmail.id !== id) {
         throw new ValidationError("Email already registered");
+      }
+    }
+
+    // Check if username is already registered
+    if (updatedData.username) {
+      const existingUsername = await this.userRepo.getUserByUsername(
+        updatedData.username
+      );
+      if (existingUsername && existingUsername.id !== id) {
+        throw new ValidationError("Username already taken");
       }
     }
 
@@ -164,7 +172,7 @@ class UserService extends UserServicesInterface {
     if (!validator.isUUID(id)) {
       throw new ValidationError(message.ERROT_ID_INVALID);
     }
-    
+
     if (!oldPassword || !newPassword || !confirmPassword) {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
