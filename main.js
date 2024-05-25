@@ -3,6 +3,8 @@ const cors = require("cors");
 const sequelize = require("./app/database/mysql");
 const routes = require("./app/route/route");
 const autoMigrate = require("./app/migrate/migrate");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger/apidocs.json");
 const app = express();
 
 
@@ -11,6 +13,8 @@ app.use(cors());
 app.use(routes);
 
 const PORT = process.env.SERVERPORT;
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 const startServer = async () => {
   try {
     await sequelize.authenticate();
