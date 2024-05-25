@@ -172,7 +172,7 @@
                   "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
                 },
                 "examples": {
-                  "internal server": {
+                  "server_error": {
                     "value": {
                       "status": "false",
                       "message": "Internal server error"
@@ -359,6 +359,60 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
+                    "value": {
+                      "status": "false",
+                      "message": "Forbidden"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": "false",
+                      "message": "No user found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": "false",
+                      "message": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -396,6 +450,84 @@
                         "name": "hilal",
                         "email": "hilal@gmail.com"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": "false",
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": "false",
+                      "message": "ID is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
+                    "value": {
+                      "status": "false",
+                      "message": "Forbidden"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": "false",
+                      "message": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": "false",
+                      "message": "Internal server error"
                     }
                   }
                 }
@@ -702,6 +834,18 @@
             "type": "string"
           }
         }
+      },
+      "ResponseError": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["status", "message"]
       }
     }
   }
