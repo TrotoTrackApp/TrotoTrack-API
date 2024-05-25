@@ -119,7 +119,7 @@ class UserService extends UserServicesInterface {
         updatedData.username
       );
       if (existingUsername && existingUsername.id !== id) {
-        throw new ValidationError("Username already taken");
+        throw new ValidationError("Username already exists");
       }
     }
 
