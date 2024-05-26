@@ -1470,7 +1470,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Article"
+                  "$ref": "#/components/schemas/ResponseArticle"
                 }
               }
             }
@@ -1480,7 +1480,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ResponseError"
                 }
               }
             }
@@ -1519,7 +1519,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Article"
+                  "$ref": "#/components/schemas/ResponseArticle"
                 }
               }
             }
@@ -1529,7 +1529,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ResponseError"
                 }
               }
             }
@@ -1567,7 +1567,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ResponseError"
                 }
               }
             }
@@ -1745,7 +1745,7 @@
         },
         "required": ["status", "message"]
       },
-      "Article": {
+      "ResponseArticle": {
         "type": "object",
         "properties": {
           "id": {
@@ -1760,18 +1760,6 @@
           },
           "image": {
             "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted_at": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "required": ["id", "title", "description", "image"]
@@ -1790,41 +1778,6 @@
           }
         },
         "required": ["title", "description", "image"]
-      },
-      "Error": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          },
-          "code": {
-            "type": "integer"
-          }
-        }
-      },
-      "ValidationError": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": ["message", "errors"]
-      },
-      "NotFoundError": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": ["message"]
       }
     }
   }
