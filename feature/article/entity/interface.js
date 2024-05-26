@@ -18,6 +18,10 @@ class ArticleRepositoryInterface {
   async deleteArticleById(id) {
     throw new Error("Method not implemented");
   }
+
+  async getArticleByTitle(title) {
+    throw new Error("Method not implemented");
+  }
 }
 
 class ArticleServicesInterface {

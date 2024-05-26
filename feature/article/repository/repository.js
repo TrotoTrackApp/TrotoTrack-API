@@ -55,6 +55,17 @@ class ArticleRepository extends ArticleRepositoryInterface {
     }
     return true;
   }
+
+  async getArticleByTitle(title) {
+    const article = await this.db.findOne({
+      where: { title: title },
+    });
+    if (!article) {
+      throw new NotFoundError("Article not found");
+    }
+    const articleCore = articleModelToArticleCore(article);
+    return articleCore;
+  }
 }
 
 module.exports = ArticleRepository;
