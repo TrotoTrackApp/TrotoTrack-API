@@ -1370,11 +1370,6 @@
     },
     "/articles": {
       "get": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
         "tags": ["Article","User"],
         "summary": "Get all articles",
         "operationId": "getAllArticles",
@@ -1386,7 +1381,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Article"
+                    "$ref": "#/components/schemas/ResponseArticle"
                   }
                 }
               }
@@ -1397,7 +1392,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ResponseError"
                 }
               }
             }
@@ -1430,7 +1425,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Article"
+                  "$ref": "#/components/schemas/ResponseArticle"
                 }
               }
             }
@@ -1440,7 +1435,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ResponseError"
                 }
               }
             }
@@ -1488,6 +1483,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article","Admin"],
         "summary": "Update an article by ID",
         "operationId": "updateArticleById",
@@ -1537,6 +1537,12 @@
         }
       },
       "delete": {
+
+        "security": [
+          {
+            "auth": []
+          }
+        ],        
         "tags": ["Article","Admin"],
         "summary": "Delete an article by ID",
         "operationId": "deleteArticleById",
