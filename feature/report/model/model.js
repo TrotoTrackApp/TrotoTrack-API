@@ -37,10 +37,6 @@ const Report = sequelize.define(
     id_user: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: {
-        model: User,
-        key: "id",
-      },
     },
   },
   {
@@ -51,7 +47,5 @@ const Report = sequelize.define(
     deletedAt: "deleted_at",
   }
 );
-
-Report.belongsTo(User, { foreignKey: 'id_user', as: 'user' });
 
 module.exports = Report;
