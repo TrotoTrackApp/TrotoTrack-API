@@ -14,5 +14,10 @@ const reportService = new ReportService(reportRepository);
 const reportController = new ReportController(reportService);
 
 router.post('/reports', jwtMiddleware, upload.single('file'), reportController.createReport.bind(reportController));
+router.put('/reports/:id', jwtMiddleware, upload.single('file'), reportController.updateReport.bind(reportController));
+router.delete('/reports/:id', jwtMiddleware, reportController.deleteReport.bind(reportController));
+router.get('/reports/:id', jwtMiddleware, reportController.getReportById.bind(reportController));
+router.get('/reports', jwtMiddleware, reportController.getAllReport.bind(reportController));
+
 
 module.exports = router;

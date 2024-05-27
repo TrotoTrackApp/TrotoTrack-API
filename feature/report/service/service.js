@@ -52,29 +52,24 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROT_ID_INVALID);
     }
 
-    if (
-      !data.location ||
-      !data.latitude ||
-      !data.longitude ||
-      !data.description ||
-      !file
-    ) {
-      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
-    }
+    // Validate optional fields if they are provided
+    if (data.latitude !== undefined) {
+      if (data.latitude < -90 || data.latitude > 90) {
+          throw new ValidationError("Latitude must be between -90 and 90");
+      }
+  }
 
-    if (data.latitude < -90 || data.latitude > 90) {
-      throw new ValidationError("Latitude must be between -90 and 90");
-    }
+  if (data.longitude !== undefined) {
+      if (data.longitude < -180 || data.longitude > 180) {
+          throw new ValidationError("Longitude must be between -180 and 180");
+      }
+  }
 
-    if (data.longitude < -180 || data.longitude > 180) {
-      throw new ValidationError("Longitude must be between -180 and 180");
-    }
-
-    if (data.description.length < 10) {
-      throw new ValidationError(
-        "Description must be at least 10 characters long"
-      );
-    }
+  if (data.description !== undefined) {
+      if (data.description.length < 10) {
+          throw new ValidationError("Description must be at least 10 characters long");
+      }
+  }
 
     if (file) {
         const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
