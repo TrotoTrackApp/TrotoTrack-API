@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../../app/database/mysql");
+const Report = require("../../report/model/model");
 
 const User = sequelize.define(
   "User",
@@ -41,7 +42,5 @@ const User = sequelize.define(
     deletedAt: "deleted_at",
   }
 );
-
-User.hasMany(Report, { foreignKey: "id_user", as: "reports" });
 
 module.exports = User;
