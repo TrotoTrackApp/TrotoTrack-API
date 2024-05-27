@@ -107,15 +107,27 @@ class ReportRepository extends ReportRepositoryInterface {
     return { result, pageInfo, totalCount };
   }
 
-  async getReportProfile(userId) {
+  async getReportProfile(userId, search, page, limit) {
+    let whereClause = { id_user: userId };
+    const offset = (page - 1) * limit;
+
+    if (search) {
+      whereClause = {
+        ...whereClause,
+        status: search,
+      };
+    }
+
+    const totalCount = await this.report.count({ where: whereClause });
     const reports = await this.report.findAll({
-      where: {
-        id_user: userId,
-      },
+      where: whereClause,
+      limit: limit,
+      offset: offset,
     });
 
     const result = listReportModelToListReportCore(reports);
-    return result;
+    const pageInfo = calculateData(totalCount, limit, page);
+    return { result, pageInfo, totalCount };
   }
 }
 

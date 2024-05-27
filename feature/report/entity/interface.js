@@ -19,7 +19,7 @@ class ReportRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
-  async getReportProfile(userId) {
+  async getReportProfile(userId, search, page, limit) {
     throw new Error("Method not implemented");
   }
 }
@@ -45,7 +45,7 @@ class ReportServiceInterface {
     throw new Error("Method not implemented");
   }
 
-  async getReportProfile(userId) {
+  async getReportProfile(userId, search, page, limit) {
     throw new Error("Method not implemented");
   }
 }

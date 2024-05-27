@@ -141,7 +141,7 @@ class ReportService extends ReportServiceInterface {
     return { result, pageInfo, totalCount };
   }
 
-  async getReportProfile(userId) {
+  async getReportProfile(userId, search, page, limit) {
     if (!userId) {
       throw new ValidationError(message.ERROR_ID);
     }
@@ -150,8 +150,32 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROT_ID_INVALID);
     }
 
-    const result = await this.reportRepository.getReportProfile(userId);
-    return result;
+    if (!Number.isInteger(page) || !Number.isInteger(limit)) {
+      throw new ValidationError("Page and limit must be a number");
+    }
+
+    if (limit > 10) {
+      throw new ValidationError("Limit must not be greater than 10");
+    }
+
+    if (page === undefined) {
+      page = 1;
+    }
+
+    if (limit === undefined) {
+      limit = 10;
+    }
+
+    const { result, pageInfo, totalCount } = await this.reportRepository.getReportProfile(userId, search, page, limit);
+    if (result.length === 0) {
+      return {
+        result: [],
+        pageInfo,
+        totalCount: 0,
+        message: "No report found",
+      };
+    }
+    return { result, pageInfo, totalCount };
   }
 }
 

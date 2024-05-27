@@ -148,12 +148,18 @@ class ReportController {
 
   async getReportProfile(req, res) {
     try {
+      const { search, page, limit } = req.query;
+      
+      // Konversi page dan limit ke tipe number
+      const pageNumber = parseInt(page, 10) || 1;
+      const limitNumber = parseInt(limit, 10) || 10;
+
       const { id } = extractToken(req);
-      const data = await this.userService.getReportProfile(id);
-      const response = reportListResponse(data);
+      const { result, pageInfo, totalCount } = await this.userService.getReportProfile(id, search, pageNumber, limitNumber);
+      const response = reportListResponse(result);
       return res
         .status(200)
-        .json(successWithDataResponse(message.SUCCESS_GET, response));
+        .json(successWithPaginationAndCount(message.SUCCESS_GET_ALL, response, pageInfo, totalCount));
     } catch (error) {
       if (
         error instanceof ValidationError ||
