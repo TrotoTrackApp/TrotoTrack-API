@@ -119,16 +119,34 @@ class ReportController {
 
   async getAllReport(req, res) {
     try {
-      const { role } = extractToken(req);
-      if (role === "admin") {
-        const data = await this.userService.getAllReport();
-        const response = reportListResponse(data);
-        return res
-          .status(200)
-          .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
+      const data = await this.userService.getAllReport();
+      const response = reportListResponse(data);
+      return res
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
+    } catch (error) {
+      if (
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
-        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
+    }
+  }
+
+  async getReportProfile(req, res) {
+    try {
+      const { id } = extractToken(req);
+      const data = await this.userService.getReportProfile(id);
+      const response = reportListResponse(data);
+      return res
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET, response));
     } catch (error) {
       if (
         error instanceof ValidationError ||

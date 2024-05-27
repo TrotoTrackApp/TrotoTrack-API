@@ -116,6 +116,19 @@ class ReportService extends ReportServiceInterface {
 
     return result;
   }
+
+  async getReportProfile(userId) {
+    if (!userId) {
+      throw new ValidationError(message.ERROR_ID);
+    }
+
+    if (!validator.isUUID(userId)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    const result = await this.reportRepository.getReportProfile(userId);
+    return result;
+  }
 }
 
 module.exports = ReportService;

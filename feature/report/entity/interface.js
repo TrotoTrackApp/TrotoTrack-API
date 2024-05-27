@@ -18,6 +18,10 @@ class ReportRepositoryInterface {
   async getAllReport() {
     throw new Error("Method not implemented");
   }
+
+  async getReportProfile(userId) {
+    throw new Error("Method not implemented");
+  }
 }
 
 class ReportServiceInterface {
@@ -38,6 +42,10 @@ class ReportServiceInterface {
   }
 
   async getAllReport() {
+    throw new Error("Method not implemented");
+  }
+
+  async getReportProfile(userId) {
     throw new Error("Method not implemented");
   }
 }

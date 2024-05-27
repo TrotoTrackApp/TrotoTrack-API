@@ -84,6 +84,17 @@ class ReportRepository extends ReportRepositoryInterface {
     const result = listReportModelToListReportCore(reports);
     return result;
   }
+
+  async getReportProfile(userId) {
+    const reports = await this.report.findAll({
+      where: {
+        id_user: userId,
+      },
+    });
+
+    const result = listReportModelToListReportCore(reports);
+    return result;
+  }
 }
 
 module.exports = ReportRepository;
