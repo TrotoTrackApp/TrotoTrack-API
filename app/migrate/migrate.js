@@ -1,5 +1,4 @@
-const User = require("../../feature/user/model/model");
-const Report = require("../../feature/report/model/model");
+const { User, Report } = require("././associations");
 
 async function autoMigrate() {
   await User.sync();
