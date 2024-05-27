@@ -1,7 +1,7 @@
 const { reportRequest } = require("../dto/request");
 const { extractToken } = require("../../../utils/jwt/jwt");
 const { message } = require("../../../utils/constanta/constanta");
-const { ValidationError } = require("../../../utils/helper/response");
+const { ValidationError, UnauthorizedError } = require("../../../utils/helper/response");
 const {
   successResponse,
   errorResponse,
@@ -25,7 +25,7 @@ class ReportController {
       await this.userService.createReport(request, file);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
     } catch (error) {
-      if (error instanceof ValidationError) {
+      if (error instanceof ValidationError || error instanceof UnauthorizedError) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
         return res

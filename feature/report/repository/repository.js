@@ -5,7 +5,7 @@ const {
   listReportModelToListReportCore,
 } = require("../entity/mapping");
 const Report = require("../model/model");
-const { uploadFileToGCS } = require("../../../storage/cloud_storage");
+const { uploadFileToGCS } = require("../../../utils/storage/gcp_storage");
 const { NotFoundError } = require("../../../utils/helper/response");
 
 class ReportRepository extends ReportRepositoryInterface {
