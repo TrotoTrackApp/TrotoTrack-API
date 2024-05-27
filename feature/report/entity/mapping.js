@@ -37,7 +37,7 @@ function listReportCoreToListReportModel(report) {
 function listReportModelToListReportCore(report) {
   const listReport = [];
   for (const data of report) {
-    const reportCore = UserTaskModelToTaskCore(data);
+    const reportCore = reportModelToReportCore(data);
     listReport.push(reportCore);
   }
   return listReport;
