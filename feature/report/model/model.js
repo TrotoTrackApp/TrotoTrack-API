@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../../app/database/mysql");
+const User = require("../../user/model/model");
 
 const Report = sequelize.define(
   "Report",
@@ -33,6 +34,14 @@ const Report = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    id_user: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+      },
+    },
   },
   {
     timestamps: true,
@@ -42,5 +51,7 @@ const Report = sequelize.define(
     deletedAt: "deleted_at",
   }
 );
+
+Report.belongsTo(User, { foreignKey: 'id_user', as: 'user' });
 
 module.exports = Report;
