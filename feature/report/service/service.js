@@ -76,9 +76,11 @@ class ReportService extends ReportServiceInterface {
       );
     }
 
-    const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
-    if (!allowedFileTypes.includes(file.mimetype)) {
-      throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+    if (file) {
+      const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!allowedFileTypes.includes(file.mimetype)) {
+        throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+      }
     }
 
     const result = await this.reportRepository.updateReport(id, data, file);
