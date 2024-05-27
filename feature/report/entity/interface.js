@@ -41,3 +41,5 @@ class ReportServiceInterface {
     throw new Error("Method not implemented");
   }
 }
+
+module.exports = { ReportRepositoryInterface, ReportServiceInterface };
