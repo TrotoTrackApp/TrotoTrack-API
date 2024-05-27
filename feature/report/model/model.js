@@ -38,6 +38,11 @@ const Report = sequelize.define(
       type: DataTypes.UUID,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM("pending", "rejected", "approved"),
+      allowNull: false,
+      defaultValue: "pending",
+    },
   },
   {
     timestamps: true,
