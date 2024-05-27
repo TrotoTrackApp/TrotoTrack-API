@@ -7,6 +7,7 @@ const {
 const Report = require("../model/model");
 const { uploadFileToGCS } = require("../../../utils/storage/gcp_storage");
 const { NotFoundError } = require("../../../utils/helper/response");
+const { Op } = require("sequelize");
 
 class ReportRepository extends ReportRepositoryInterface {
   constructor() {
@@ -25,7 +26,7 @@ class ReportRepository extends ReportRepositoryInterface {
 
     const createReport = await this.report.create({
       ...report,
-      id_user: data.userId
+      id_user: data.userId,
     });
     const result = reportModelToReportCore(createReport);
     return result;
@@ -79,8 +80,27 @@ class ReportRepository extends ReportRepositoryInterface {
     return result;
   }
 
-  async getAllReport() {
-    const reports = await this.report.findAll();
+  async getAllReport(search, page, limit) {
+    console.log("Search:", search);
+    const { location, status } = search;
+    const offset = (page - 1) * limit;
+
+    let whereClause = {};
+    if (search) {
+      whereClause = {
+          [Op.or]: [
+              { location: { [Op.like]: `%${search}%` } },
+              { status: { [Op.like]: `%${search}%` } }
+          ]
+      };
+  }
+
+    const reports = await this.report.findAll({
+      where: whereClause,
+      limit: limit,
+      offset: offset,
+    });
+
     const result = listReportModelToListReportCore(reports);
     return result;
   }

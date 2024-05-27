@@ -11,6 +11,7 @@ const {
   successWithDataResponse,
 } = require("../../../utils/helper/response");
 const { reportResponse, reportListResponse } = require("../dto/response");
+const { Op } = require('sequelize');
 
 class ReportController {
   constructor(userService) {
@@ -119,7 +120,13 @@ class ReportController {
 
   async getAllReport(req, res) {
     try {
-      const data = await this.userService.getAllReport();
+      const { search, page, limit } = req.query;
+      
+      // Konversi page dan limit ke tipe number
+      const pageNumber = parseInt(page, 10) || 1;
+      const limitNumber = parseInt(limit, 10) || 10;
+      
+      const data = await this.userService.getAllReport(search, pageNumber, limitNumber);
       const response = reportListResponse(data);
       return res
         .status(200)
