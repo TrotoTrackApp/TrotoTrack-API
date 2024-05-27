@@ -17,11 +17,11 @@ const Report = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    longitude: {
+    latitude: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    latitude: {
+    longitude: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
