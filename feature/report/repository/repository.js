@@ -1,25 +1,83 @@
-const { ReportRepositoryInterface } = require('../entity/interface');
-const Report = require('../model/model');
+const { ReportRepositoryInterface } = require("../entity/interface");
+const {
+  reportCoreToReportModel,
+  reportModelToReportCore,
+  listReportModelToListReportCore,
+} = require("../entity/mapping");
+const Report = require("../model/model");
+const { uploadFileToGCS } = require("../../../storage/cloud_storage");
+const { NotFoundError } = require("../../../utils/helper/response");
 
 class ReportRepository extends ReportRepositoryInterface {
-    constructor() {
-        super();
-        this.report = Report;
+  constructor() {
+    super();
+    this.report = Report;
+  }
+
+  async createReport(data, file) {
+    const report = reportCoreToReportModel(data);
+
+    if (file) {
+      const imageUrl = await uploadFileToGCS(file.path);
+      report.image = imageUrl;
     }
-    
-    async createReport(data, file) {
-        return await this.report.create(data, file);
+
+    const createReport = await this.report.create(data);
+    const result = reportModelToReportCore(createReport);
+    return result;
+  }
+
+  async updateReport(id, data, file) {
+    const report = reportCoreToReportModel(data);
+
+    if (file) {
+      const imageUrl = await uploadFileToGCS(file.path);
+      report.image = imageUrl;
     }
-    
-    async updateReport(id, data, file) {
-        return await this.report.update(id, data, file);
+
+    const upadateReport = await this.report.update(report, {
+      where: {
+        id: id,
+      },
+    });
+
+    if (upadateReport === 0) {
+      throw new NotFoundError("User task not found");
     }
-    
-    async deleteReport(id) {
-        return await this.report.delete(id);
+
+    const result = reportModelToReportCore(upadateReport);
+    return result;
+  }
+
+  async deleteReport(id) {
+    const deleteReport = await this.report.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    if (deleteReport === 0) {
+      throw new NotFoundError("User task not found");
     }
-    
-    async getReportById(id) {
-        return await this.report.findById(id);
+
+    const result = reportModelToReportCore(deleteReport);
+    return result;
+  }
+
+  async getReportById(id) {
+    const report = await this.report.findByPk(id);
+
+    if (!report) {
+      throw new NotFoundError("User task not found");
     }
+
+    const result = reportModelToReportCore(report);
+    return result;
+  }
+
+  async getAllReport() {
+    const reports = await this.report.findAll();
+    const result = listReportModelToListReportCore(reports);
+    return result;
+  }
 }
