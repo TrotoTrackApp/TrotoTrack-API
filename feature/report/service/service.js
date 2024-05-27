@@ -39,6 +39,9 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
     }
 
+    data.userId = data.userId || data.user_id; // ensure userId is set correctly
+    console.log("Service data:", data);
+
     const result = await this.reportRepository.createReport(data, file);
     return result;
   }

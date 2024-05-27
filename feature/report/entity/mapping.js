@@ -9,6 +9,7 @@ function reportCoreToReportModel(report) {
     longitude: report.longitude,
     image: report.image,
     description: report.description,
+    user_id: report.userId,
   };
 }
 
@@ -20,7 +21,8 @@ function reportModelToReportCore(report) {
     report.latitude,
     report.longitude,
     report.image,
-    report.description
+    report.description,
+    report.user_id
   );
   return reportCore;
 }

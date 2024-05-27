@@ -44,7 +44,7 @@ const uploadFileToGCS = async (filePath) => {
       },
     });
 
-    const publicUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
+    const publicUrl = `https://storage.googleapis.com/${bucketName}/${folderName}/${fileName}`;
     return publicUrl;
   } catch (err) {
     console.error("Error saat mengunggah file:", err);

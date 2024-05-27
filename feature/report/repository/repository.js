@@ -16,13 +16,17 @@ class ReportRepository extends ReportRepositoryInterface {
 
   async createReport(data, file) {
     const report = reportCoreToReportModel(data);
+    console.log("Repository data before creating report:", report);
 
     if (file) {
       const imageUrl = await uploadFileToGCS(file.path);
       report.image = imageUrl;
     }
 
-    const createReport = await this.report.create(data);
+    const createReport = await this.report.create({
+      ...report,
+      id_user: data.userId
+    });
     const result = reportModelToReportCore(createReport);
     return result;
   }
@@ -81,3 +85,5 @@ class ReportRepository extends ReportRepositoryInterface {
     return result;
   }
 }
+
+module.exports = ReportRepository;

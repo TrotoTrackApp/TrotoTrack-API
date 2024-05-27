@@ -16,7 +16,7 @@ const Report = sequelize.define(
     },
     reference_location: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     latitude: {
       type: DataTypes.FLOAT,
