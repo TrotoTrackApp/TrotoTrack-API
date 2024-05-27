@@ -39,9 +39,6 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
     }
 
-    data.userId = data.userId || data.user_id; // ensure userId is set correctly
-    console.log("Service data:", data);
-
     const result = await this.reportRepository.createReport(data, file);
     return result;
   }
@@ -80,10 +77,10 @@ class ReportService extends ReportServiceInterface {
     }
 
     if (file) {
-      const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
-      if (!allowedFileTypes.includes(file.mimetype)) {
-        throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
-      }
+        const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!allowedFileTypes.includes(file.mimetype)) {
+            throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+        }
     }
 
     const result = await this.reportRepository.updateReport(id, data, file);
