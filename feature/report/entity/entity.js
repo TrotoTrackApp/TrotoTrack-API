@@ -6,7 +6,9 @@ class ReportCore {
     latitude,
     longitude,
     image,
-    description
+    description,
+    userId,
+    status
   ) {
     this.id = id;
     this.location = location;
@@ -15,6 +17,8 @@ class ReportCore {
     this.longitude = longitude;
     this.image = image;
     this.description = description;
+    this.userId = userId;
+    this.status = status;
   }
 }
 

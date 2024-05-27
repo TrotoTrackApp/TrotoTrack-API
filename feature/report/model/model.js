@@ -16,14 +16,14 @@ const Report = sequelize.define(
     },
     reference_location: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     latitude: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DOUBLE,
       allowNull: false,
     },
     longitude: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DOUBLE,
       allowNull: false,
     },
     image: {
@@ -37,10 +37,11 @@ const Report = sequelize.define(
     id_user: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: {
-        model: User,
-        key: "id",
-      },
+    },
+    status: {
+      type: DataTypes.ENUM("pending", "rejected", "approved"),
+      allowNull: false,
+      defaultValue: "pending",
     },
   },
   {
@@ -51,7 +52,5 @@ const Report = sequelize.define(
     deletedAt: "deleted_at",
   }
 );
-
-Report.belongsTo(User, { foreignKey: 'id_user', as: 'user' });
 
 module.exports = Report;

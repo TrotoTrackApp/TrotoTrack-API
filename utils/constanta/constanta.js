@@ -15,6 +15,7 @@ const message = {
   ERROT_ID_INVALID: "Id is not valid",
   ERROR_REQUIRED_FIELD: "Please fill all required fields",
   ERROR_ID: "Please provide user id",
+  ERROR_INVALID_FILE_TYPE: "Invalid file type. Only images with jpeg, png, and jpg formats are allowed.",
 };
 
 module.exports = { message };
