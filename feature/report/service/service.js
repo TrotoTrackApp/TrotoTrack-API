@@ -34,6 +34,10 @@ class ReportService extends ReportServiceInterface {
       );
     }
 
+    if (file > 10 * 1024 * 1024) {
+      throw new ValidationError("File size must not be greater than 10MB");
+    }
+
     const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (!allowedFileTypes.includes(file.mimetype)) {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
@@ -74,6 +78,10 @@ class ReportService extends ReportServiceInterface {
     }
 
     if (file) {
+      if (file > 10 * 1024 * 1024) {
+        throw new ValidationError("File size must not be greater than 10MB");
+      }
+      
       const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
       if (!allowedFileTypes.includes(file.mimetype)) {
         throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
@@ -166,7 +174,8 @@ class ReportService extends ReportServiceInterface {
       limit = 10;
     }
 
-    const { result, pageInfo, totalCount } = await this.reportRepository.getReportProfile(userId, search, page, limit);
+    const { result, pageInfo, totalCount } =
+      await this.reportRepository.getReportProfile(userId, search, page, limit);
     if (result.length === 0) {
       return {
         result: [],
