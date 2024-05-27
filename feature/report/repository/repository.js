@@ -7,6 +7,7 @@ const {
 const Report = require("../model/model");
 const { uploadFileToGCS } = require("../../../utils/storage/gcp_storage");
 const { NotFoundError } = require("../../../utils/helper/response");
+const { calculateData } = require("../../../utils/helper/pagination");
 const { Op } = require("sequelize");
 
 class ReportRepository extends ReportRepositoryInterface {
@@ -82,19 +83,19 @@ class ReportRepository extends ReportRepositoryInterface {
 
   async getAllReport(search, page, limit) {
     console.log("Search:", search);
-    const { location, status } = search;
     const offset = (page - 1) * limit;
 
     let whereClause = {};
     if (search) {
       whereClause = {
-          [Op.or]: [
-              { location: { [Op.like]: `%${search}%` } },
-              { status: { [Op.like]: `%${search}%` } }
-          ]
+        [Op.or]: [
+          { location: { [Op.like]: `%${search}%` } },
+          { status: { [Op.like]: `%${search}%` } },
+        ],
       };
-  }
+    }
 
+    const totalCount = await this.report.count({ where: whereClause });
     const reports = await this.report.findAll({
       where: whereClause,
       limit: limit,
@@ -102,7 +103,8 @@ class ReportRepository extends ReportRepositoryInterface {
     });
 
     const result = listReportModelToListReportCore(reports);
-    return result;
+    const pageInfo = calculateData(totalCount, limit, page);
+    return { result, pageInfo, totalCount };
   }
 
   async getReportProfile(userId) {

@@ -9,9 +9,9 @@ const {
   successResponse,
   errorResponse,
   successWithDataResponse,
+  successWithPaginationAndCount,
 } = require("../../../utils/helper/response");
 const { reportResponse, reportListResponse } = require("../dto/response");
-const { Op } = require('sequelize');
 
 class ReportController {
   constructor(userService) {
@@ -126,11 +126,11 @@ class ReportController {
       const pageNumber = parseInt(page, 10) || 1;
       const limitNumber = parseInt(limit, 10) || 10;
       
-      const data = await this.userService.getAllReport(search, pageNumber, limitNumber);
-      const response = reportListResponse(data);
+      const { result, pageInfo, totalCount } = await this.userService.getAllReport(search, pageNumber, limitNumber);
+      const response = reportListResponse(result);
       return res
         .status(200)
-        .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
+        .json(successWithPaginationAndCount(message.SUCCESS_GET_ALL, response, pageInfo, totalCount));
     } catch (error) {
       if (
         error instanceof ValidationError ||

@@ -62,6 +62,21 @@ class SuccessResponseJsonWithData {
   }
 }
 
+class SuccessResponseJsonWithPaginationAndCount {
+  constructor(message, data, pagination, count) {
+    this.status = true;
+    this.message = message;
+    this.data = data;
+    this.pagination = pagination;
+    this.count = count;
+  }
+}
+
+function successWithPaginationAndCount(message, data, pagination, count) {
+  return new SuccessResponseJsonWithPaginationAndCount(message, data, pagination, count);
+}
+
+
 function errorResponse(message) {
   return new ErrorResponseJson(message);
 }
@@ -83,4 +98,5 @@ module.exports = {
   successResponse,
   errorResponse,
   successWithDataResponse,
+  successWithPaginationAndCount,
 };
