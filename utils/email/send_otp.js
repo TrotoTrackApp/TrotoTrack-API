@@ -4,8 +4,9 @@ const path = require("path");
 require("dotenv").config();
 
 const transporter = createTransport({
-  host: "smtp-relay.sendinblue.com",
-  port: 587,
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -23,7 +24,7 @@ const sendOtp = async (userEmail, otp) => {
     from: process.env.EMAIL_USER,
     to: userEmail,
     subject: "Your OTP Code",
-    text: formattedHtml,
+    html: formattedHtml,
   };
 
   try {
