@@ -22,6 +22,10 @@ class ReportRepositoryInterface {
   async getReportProfile(userId, search, page, limit) {
     throw new Error("Method not implemented");
   }
+
+  async updateStatusReport(id, status) {
+    throw new Error("Method not implemented");
+  }
 }
 
 class ReportServiceInterface {
@@ -46,6 +50,10 @@ class ReportServiceInterface {
   }
 
   async getReportProfile(userId, search, page, limit) {
+    throw new Error("Method not implemented");
+  }
+
+  async updateStatusReport(id, status) {
     throw new Error("Method not implemented");
   }
 }

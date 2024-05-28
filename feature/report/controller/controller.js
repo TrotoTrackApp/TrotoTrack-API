@@ -174,6 +174,32 @@ class ReportController {
       }
     }
   }
+
+  async updateStatusReport(req, res) {
+    try {
+      const id = req.params.id;
+      const { status } = req.body;
+      const { role } = extractToken(req);
+      if (role === "admin") {
+        await this.userService.updateStatusReport(id, status);
+        return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      } else {
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+      }
+    } catch (error) {
+      if (
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
 }
 
 module.exports = ReportController;

@@ -81,7 +81,7 @@ class ReportService extends ReportServiceInterface {
       if (file > 10 * 1024 * 1024) {
         throw new ValidationError("File size must not be greater than 10MB");
       }
-      
+
       const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
       if (!allowedFileTypes.includes(file.mimetype)) {
         throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
@@ -185,6 +185,42 @@ class ReportService extends ReportServiceInterface {
       };
     }
     return { result, pageInfo, totalCount };
+  }
+
+  async updateStatusReport(id, status) {
+    if (!id) {
+      throw new ValidationError(message.ERROR_ID);
+    }
+
+    if (!validator.isUUID(id)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    if (!status) {
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+    }
+
+    if (
+      status !== "pending" &&
+      status !== "approved" &&
+      status !== "rejected"
+    ) {
+      throw new ValidationError(
+        "Status must be pending, approved, or rejected"
+      );
+    }
+
+    const currentReport = await this.reportRepository.getReportById(id);
+    if (!currentReport) {
+      throw new ValidationError(message.ERROR_REPORT_NOT_FOUND);
+    }
+
+    if (currentReport.status === "approved") {
+      throw new ValidationError("Status cannot be changed once it is approved");
+    }
+
+    const result = await this.reportRepository.updateStatusReport(id, status);
+    return result;
   }
 }
 

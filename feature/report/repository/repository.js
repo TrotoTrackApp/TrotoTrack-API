@@ -129,6 +129,24 @@ class ReportRepository extends ReportRepositoryInterface {
     const pageInfo = calculateData(totalCount, limit, page);
     return { result, pageInfo, totalCount };
   }
+
+  async updateStatusReport(id, status) {
+    const updateStatus = await this.report.update(
+      { status: status },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+
+    if (updateStatus === 0) {
+      throw new NotFoundError("User task not found");
+    }
+
+    const result = reportModelToReportCore(updateStatus);
+    return result;
+  }
 }
 
 module.exports = ReportRepository;

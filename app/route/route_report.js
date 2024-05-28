@@ -21,6 +21,7 @@ router.get('/reports', jwtMiddleware, reportController.getAllReport.bind(reportC
 // Admin
 router.delete('/reports/:id', jwtMiddleware, reportController.deleteReport.bind(reportController));
 router.get('/reports/:id', jwtMiddleware, reportController.getReportById.bind(reportController));
+router.patch('/reports/:id/status', jwtMiddleware, reportController.updateStatusReport.bind(reportController));
 
 // User
 router.get('/profile/reports', jwtMiddleware, reportController.getReportProfile.bind(reportController));
