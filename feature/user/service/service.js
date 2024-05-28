@@ -223,7 +223,11 @@ class UserService extends UserServicesInterface {
     }
 
     await this.userRepo.sendOtpEmail(email, otp, otpExpired);
-    await sendOtp(email, otp);
+    sendOtp(email, otp).then(() => {
+      console.log(`Email sent to ${email}`);
+    }).catch((error) => {
+      console.error(`Error sending email to ${email}:`, error);
+    });
 
     return null;
   }
