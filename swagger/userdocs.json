@@ -1161,15 +1161,15 @@
     "/profile/reports": {
       "get": {
         "tags": ["Report"],
-        "summary": "Get report by id",
-        "description": "Get report by id",
+        "summary": "Get report profile",
+        "description": "Get report profile",
         "responses": {
           "200": {
-            "description": "Get report by id",
+            "description": "Get report profile",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
+                  "$ref": "#/components/schemas/ResponseReport"
                 },
                 "examples": {
                   "success": {
@@ -1656,6 +1656,61 @@
           }
         },
         "required": ["status", "message", "data", "pagination", "count"]
+      },
+      "ResponseReport": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "location": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number",
+                "format": "double"
+              },
+              "longitude": {
+                "type": "number",
+                "format": "double"
+              },
+              "image": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "id",
+              "location",
+              "latitude",
+              "longitude",
+              "image",
+              "description",
+              "status",
+              "created_at"
+            ]
+          }
+        },
+        "required": ["status", "message", "data"]
       }
     }
   }
