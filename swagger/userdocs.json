@@ -1080,6 +1080,7 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
+                          "reference_location": "depan penjual bakso mas budi",
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
@@ -1090,6 +1091,7 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
+                          "reference_location": "depan penjual bakso mas budi",
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
@@ -1224,6 +1226,7 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
+                          "reference_location": "depan penjual bakso mas budi",
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
@@ -1234,6 +1237,7 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
+                          "reference_location": "depan penjual bakso mas budi",
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
@@ -1992,6 +1996,9 @@
                 "location": {
                   "type": "string"
                 },
+                "reference_location": {
+                  "type": "string"
+                },
                 "latitude": {
                   "type": "number",
                   "format": "double"
@@ -2008,16 +2015,22 @@
                 },
                 "status": {
                   "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
                 }
               },
               "required": [
                 "id",
                 "location",
+                "reference_location",
                 "latitude",
                 "longitude",
                 "image",
                 "description",
-                "status"
+                "status",
+                "created_at"
               ]
             }
           },
@@ -2061,6 +2074,9 @@
               "location": {
                 "type": "string"
               },
+              "reference_location": {
+                "type": "string"
+              },
               "latitude": {
                 "type": "number",
                 "format": "double"
@@ -2086,6 +2102,7 @@
             "required": [
               "id",
               "location",
+              "reference_location",
               "latitude",
               "longitude",
               "image",
