@@ -674,6 +674,11 @@
     },
     "/articles": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article"],
         "summary": "Get all article",
         "description": "Get all article",
@@ -771,6 +776,11 @@
     },
     "/articles/{id}": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article"],
         "summary": "Get article by id",
         "description": "Get article by id",
