@@ -1069,7 +1069,7 @@
         }
       }
     },
-    "articles/{id}": {
+    "/articles/{id}": {
       "get": {
         "tags": ["Article"],
         "summary": "Get article by id",
