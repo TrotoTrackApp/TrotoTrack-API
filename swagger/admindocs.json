@@ -995,13 +995,15 @@
                           "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                           "title": "Bumi Sementara",
                           "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
-                          "image": "https://trototrack.my.id/image.jpg"
+                          "image": "https://trototrack.my.id/image.jpg",
+                          "created_at": "2021-08-01T00:00:00Z"
                         },
                         {
                           "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                           "title": "Bumi Sementara",
                           "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
-                          "image": "https://trototrack.my.id/image.jpg"
+                          "image": "https://trototrack.my.id/image.jpg",
+                          "created_at": "2021-08-01T00:00:00Z"
                         }
                       ]
                     }
@@ -1230,9 +1232,13 @@
           },
           "image": {
             "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
           }
         },
-        "required": ["id", "title", "description", "image"]
+        "required": ["id", "title", "description", "image", "created_at"]
       },
       "RequestArticle": {
         "type": "object",
