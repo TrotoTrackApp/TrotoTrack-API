@@ -833,7 +833,7 @@
         }
       }
     },
-    "/article": {
+    "/articles": {
       "post": {
         "security": [
           {
@@ -1495,7 +1495,7 @@
         }
       }
     },
-    "/report": {
+    "/reports": {
       "get": {
         "tags": ["Report"],
         "summary": "Get all report",
