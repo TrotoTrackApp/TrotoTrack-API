@@ -224,7 +224,30 @@ class UserService extends UserServicesInterface {
 
     await this.userRepo.sendOtpEmail(email, otp, otpExpired);
     await sendOtp(email, otp);
-    
+
+    return null;
+  }
+
+  async verifyOtpEmail(email, otp) {
+    if (!email || !otp) {
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+    }
+
+    const otpData = await this.userRepo.verifyOtpEmail(email, otp);
+    if (!otpData) {
+      throw new ValidationError("Email or OTP is incorrect");
+    }
+
+    if (otpData.otp_expired_time < Date.now()) {
+      throw new ValidationError("OTP is expired");
+    }
+
+    if (otpData.otp !== otp) {
+      throw new ValidationError("OTP is incorrect");
+    }
+
+    await this.userRepo.resetOtpEmail(otp);
+
     return null;
   }
 }

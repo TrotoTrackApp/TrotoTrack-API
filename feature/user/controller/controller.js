@@ -283,6 +283,21 @@ class UserController {
       return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }
+
+  async verifyOtpEmail(req, res) {
+    try {
+      const email = req.body.email;
+      const otp = req.body.otp;
+      await this.userService.verifyOtpEmail(email, otp);
+      return res.status(200).json(successResponse("verify otp success"));
+    } catch (error) {
+      if (error instanceof NotFoundError || error instanceof ValidationError) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      console.log(error);
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
 }
 
 module.exports = UserController;

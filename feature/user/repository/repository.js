@@ -83,12 +83,42 @@ class UserRepository extends UserRepositoryInterface {
       where: { email: email },
     });
 
-    if(!user) {
+    if (!user) {
       throw new NotFoundError("User not found");
     }
 
     user.otp = otp;
     user.otp_expired_time = otpExpired;
+    await user.save();
+
+    const result = usersModelToUsersCore(user);
+    return result;
+  }
+
+  async verifyOtpEmail(email, otp) {
+    const user = await User.findOne({
+      where: { email: email, otp: otp },
+    });
+
+    if (!user) {
+      throw new NotFoundError("User not found or OTP is incorrect");
+    }
+
+    const result = usersModelToUsersCore(user);
+    return result;
+  }
+
+  async resetOtpEmail(otp) {
+    const user = await User.findOne({
+      where: { otp: otp },
+    });
+
+    if (!user) {
+      throw new NotFoundError("Otp not found");
+    }
+
+    user.otp = null;
+    user.otp_expired_time = null;
     await user.save();
 
     const result = usersModelToUsersCore(user);
