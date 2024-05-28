@@ -250,6 +250,32 @@ class UserService extends UserServicesInterface {
 
     return null;
   }
+
+  async newPassword(email, password, confirmPassword) {
+    if (!email || !password || !confirmPassword) {
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+    }
+
+    if (password.length < 8) {
+      throw new ValidationError("Password must be at least 8 characters long");
+    }
+
+    if (password !== confirmPassword) {
+      throw new ValidationError(
+        "Password and Confirm Password must be the same"
+      );
+    }
+
+    const hashedPassword = await generatePasswordHash(password);
+    const user = await this.userRepo.getUserByEmail(email);
+    if (!user) {
+      throw new NotFoundError("Email not registered");
+    }
+
+    await this.userRepo.updateUserById(user.id, { password: hashedPassword });
+
+    return null;
+  }
 }
 
 module.exports = UserService;

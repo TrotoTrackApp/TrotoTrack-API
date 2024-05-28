@@ -16,6 +16,7 @@ const {
   loginRequest,
   userUpdateRequest,
   updatePasswordRequest,
+  newPasswordRequest,
 } = require("../dto/request");
 const {
   loginResponse,
@@ -257,7 +258,7 @@ class UserController {
         user.newPassword,
         user.confirmPassword
       );
-      return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -295,6 +296,23 @@ class UserController {
         return res.status(error.statusCode).json(errorResponse(error.message));
       }
       console.log(error);
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async newPassword(req, res) {
+    try {
+      const request = await newPasswordRequest(req.body);
+      await this.userService.newPassword(request.email, request.password, request.confirmPassword);
+      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
       return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }
