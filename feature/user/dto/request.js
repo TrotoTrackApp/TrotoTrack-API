@@ -20,4 +20,9 @@ function loginRequest(body) {
   return { email, password };
 }
 
-module.exports = { userRequest, loginRequest, userUpdateRequest, updatePasswordRequest };
+function newPasswordRequest(body) {
+  const { email, password, confirm_password } = body;
+  return { email, password, confirmPassword: confirm_password};
+}
+
+module.exports = { userRequest, loginRequest, userUpdateRequest, updatePasswordRequest, newPasswordRequest };

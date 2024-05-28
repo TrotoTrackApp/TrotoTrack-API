@@ -9,8 +9,9 @@ const {
   generatePasswordHash,
   comparePasswordHash,
 } = require("../../../utils/helper/bcrypt");
-const e = require("express");
+const sendOtp = require("../../../utils/email/send_otp");
 const { message } = require("../../../utils/constanta/constanta");
+const { generateOTP } = require("../../../utils/helper/otp");
 
 class UserService extends UserServicesInterface {
   constructor(userRepo) {
@@ -202,6 +203,84 @@ class UserService extends UserServicesInterface {
     });
 
     return updatedUser;
+  }
+
+  async sendOtpEmail(email) {
+    if (!email) {
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+    }
+
+    if (!validator.isEmail(email)) {
+      throw new ValidationError("Email is not valid");
+    }
+
+    const otp = generateOTP();
+    const otpExpired = Date.now() + 10 * 60 * 1000;
+
+    const user = await this.userRepo.getUserByEmail(email);
+    if (!user) {
+      throw new NotFoundError("Email not registered");
+    }
+
+    await this.userRepo.sendOtpEmail(email, otp, otpExpired);
+    sendOtp(email, otp).then(() => {
+      console.log(`Email sent to ${email}`);
+    }).catch((error) => {
+      console.error(`Error sending email to ${email}:`, error);
+    });
+
+    return null;
+  }
+
+  async verifyOtpEmail(email, otp) {
+    if (!email || !otp) {
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+    }
+
+    const uppercaseOTP = otp.toUpperCase();
+
+    const otpData = await this.userRepo.verifyOtpEmail(email, uppercaseOTP);
+    if (!otpData) {
+      throw new ValidationError("Email or OTP is incorrect");
+    }
+
+    if (otpData.otp_expired_time < Date.now()) {
+      throw new ValidationError("OTP is expired");
+    }
+
+    if (otpData.otp !== uppercaseOTP ) {
+      throw new ValidationError("OTP is incorrect");
+    }
+
+    await this.userRepo.resetOtpEmail(otp);
+
+    return null;
+  }
+
+  async newPassword(email, password, confirmPassword) {
+    if (!email || !password || !confirmPassword) {
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+    }
+
+    if (password.length < 8) {
+      throw new ValidationError("Password must be at least 8 characters long");
+    }
+
+    if (password !== confirmPassword) {
+      throw new ValidationError(
+        "Password and Confirm Password must be the same"
+      );
+    }
+
+    const hashedPassword = await generatePasswordHash(password);
+    const user = await this.userRepo.getUserByEmail(email);
+    if (!user) {
+      throw new NotFoundError("Email not registered");
+    }
+
+    await this.userRepo.updateUserById(user.id, { password: hashedPassword });
+
+    return null;
   }
 }
 
