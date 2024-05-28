@@ -24,6 +24,6 @@ router.get('/reports/:id', jwtMiddleware, reportController.getReportById.bind(re
 router.patch('/reports/:id/status', jwtMiddleware, reportController.updateStatusReport.bind(reportController));
 
 // User
-router.get('/profile/reports', jwtMiddleware, reportController.getReportProfile.bind(reportController));
+router.get('/reports/profile', jwtMiddleware, reportController.getReportProfile.bind(reportController));
 
 module.exports = router;
