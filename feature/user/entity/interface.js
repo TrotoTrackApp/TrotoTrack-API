@@ -26,6 +26,10 @@ class UserRepositoryInterface {
   async getUserByUsername(username) {
     throw new Error("Method not implemented");
   }
+
+  async sendOtpEmail(email, otp, otpExpired) {
+    throw new Error("Method not implemented");
+  }
 }
 
 class UserServicesInterface {
@@ -58,6 +62,10 @@ class UserServicesInterface {
   }
 
   async updatePassword(id, oldPassword, newPassword, confirmPassword) {
+    throw new Error("Method not implemented");
+  }
+
+  async sendOtpEmail(email) {
     throw new Error("Method not implemented");
   }
 }

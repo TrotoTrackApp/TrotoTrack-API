@@ -9,8 +9,9 @@ const {
   generatePasswordHash,
   comparePasswordHash,
 } = require("../../../utils/helper/bcrypt");
-const e = require("express");
+const sendOtp = require("../../../utils/email/send_otp");
 const { message } = require("../../../utils/constanta/constanta");
+const { generateOTP } = require("../../../utils/helper/otp");
 
 class UserService extends UserServicesInterface {
   constructor(userRepo) {
@@ -202,6 +203,29 @@ class UserService extends UserServicesInterface {
     });
 
     return updatedUser;
+  }
+
+  async sendOtpEmail(email) {
+    if (!email) {
+      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+    }
+
+    if (!validator.isEmail(email)) {
+      throw new ValidationError("Email is not valid");
+    }
+
+    const otp = generateOTP();
+    const otpExpired = Date.now() + 10 * 60 * 1000;
+
+    const user = await this.userRepo.getUserByEmail(email);
+    if (!user) {
+      throw new NotFoundError("Email not registered");
+    }
+
+    await this.userRepo.sendOtpEmail(email, otp, otpExpired);
+    await sendOtp(email, otp);
+    
+    return null;
   }
 }
 

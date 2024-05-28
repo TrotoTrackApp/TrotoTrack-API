@@ -9,6 +9,8 @@ function usersCoreToUsersModel(mainData) {
     email: mainData.email,
     password: mainData.password,
     role: mainData.role,
+    otp: mainData.otp,
+    otp_expired_time: mainData.otpExpiredTime,
   };
 }
 
@@ -30,7 +32,9 @@ function usersModelToUsersCore(mainData) {
     mainData.email,
     mainData.password,
     mainData.confirmPassword,
-    mainData.role
+    mainData.role,
+    mainData.otp,
+    mainData.otpExpiredTime
   );
   return userCore;
 }

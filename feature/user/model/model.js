@@ -33,6 +33,12 @@ const User = sequelize.define(
       allowNull: false,
       defaultValue: "user",
     },
+    otp: {
+      type: DataTypes.STRING,
+    },
+    otp_expired_time: {
+      type: DataTypes.DOUBLE,
+    },
   },
   {
     timestamps: true,

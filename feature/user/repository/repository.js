@@ -77,6 +77,23 @@ class UserRepository extends UserRepositoryInterface {
     const userCore = usersModelToUsersCore(user);
     return userCore;
   }
+
+  async sendOtpEmail(email, otp, otpExpired) {
+    const user = await User.findOne({
+      where: { email: email },
+    });
+
+    if(!user) {
+      throw new NotFoundError("User not found");
+    }
+
+    user.otp = otp;
+    user.otp_expired_time = otpExpired;
+    await user.save();
+
+    const result = usersModelToUsersCore(user);
+    return result;
+  }
 }
 
 module.exports = UserRepository;

@@ -5,6 +5,7 @@ const message = {
   SUCCESS_DELETED: "Success deleted data",
   SUCCESS_GET: "Success get data",
   SUCCESS_GET_ALL: "Success get all data",
+  SUCCESS_SEND_OTP: "Success send otp",
 
   // Error message
   ERROR_INTERNAL_SERVER: "Internal server error",
