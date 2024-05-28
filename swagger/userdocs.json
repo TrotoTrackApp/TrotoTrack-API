@@ -898,6 +898,11 @@
     },
     "/reports": {
       "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Create report",
         "description": "Create report",
@@ -1039,6 +1044,11 @@
         }
       },
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Get all report",
         "description": "Get all report",
@@ -1158,8 +1168,13 @@
         }
       }
     },
-    "/profile/reports": {
+    "/reports/profile": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Get report profile",
         "description": "Get report profile",

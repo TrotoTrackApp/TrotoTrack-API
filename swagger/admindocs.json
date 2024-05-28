@@ -1497,6 +1497,11 @@
     },
     "/reports": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Get all report",
         "description": "Get all report",
@@ -1618,6 +1623,11 @@
     },
     "/reports/{id}": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Get report profile",
         "description": "Get report profile",
@@ -1736,6 +1746,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Update report by id",
         "description": "Update report by id",
@@ -1892,6 +1907,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Delete report by id",
         "description": "Delete report by id",
@@ -2020,6 +2040,11 @@
     },
     "/reports/{id}/status": {
       "patch": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Report"],
         "summary": "Update status report by id",
         "description": "Update status report by id",
