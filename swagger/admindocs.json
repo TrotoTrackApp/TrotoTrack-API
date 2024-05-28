@@ -13,7 +13,7 @@
   "servers": [
     {
       "url": "http://localhost:8080/",
-      "description": "Development server"
+      "description": "Admin Documentation"
     }
   ],
   "externalDocs": {
@@ -23,7 +23,7 @@
   "paths": {
     "/login": {
       "post": {
-        "tags": ["Login & Register"],
+        "tags": ["Login"],
         "summary": "Login to the application",
         "description": "Login to the application",
         "requestBody": {
@@ -36,7 +36,7 @@
               "examples": {
                 "login": {
                   "value": {
-                    "email": "hilal@gmail.com",
+                    "email": "admin@gmail.com",
                     "password": "123456asd"
                   }
                 }
@@ -58,8 +58,8 @@
                       "status": true,
                       "message": "Login success",
                       "data": {
-                        "name": "hilal",
-                        "email": "hilal@gmail.com",
+                        "name": "admin",
+                        "email": "admin@gmail.com",
                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
                       }
                     }
@@ -137,541 +137,6 @@
         }
       }
     },
-    "/register": {
-      "post": {
-        "tags": ["Login & Register"],
-        "summary": "Register to the application",
-        "description": "Register to the application",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestRegister"
-              },
-              "examples": {
-                "register": {
-                  "value": {
-                    "name": "troto",
-                    "username": "troto",
-                    "email": "troto@gmail.com",
-                    "password": "123456asd",
-                    "confirm_password": "123456asd"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Register success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success created data"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "missing_fields": {
-                    "value": {
-                      "status": false,
-                      "message": "Please fill all required fields"
-                    }
-                  },
-                  "password_length": {
-                    "value": {
-                      "status": false,
-                      "message": "Password must be at least 8 characters long"
-                    }
-                  },
-                  "password_mismatch": {
-                    "value": {
-                      "status": false,
-                      "message": "Password and Confirm Password must be the same"
-                    }
-                  },
-                  "invalid_email": {
-                    "value": {
-                      "status": false,
-                      "message": "Email is not valid"
-                    }
-                  },
-                  "email_registered": {
-                    "value": {
-                      "status": false,
-                      "message": "Email already registered"
-                    }
-                  },
-                  "username_exists": {
-                    "value": {
-                      "status": false,
-                      "message": "Username already exists"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal server error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/profile": {
-      "get": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["User"],
-        "summary": "Get profile user",
-        "description": "Get profile user",
-        "responses": {
-          "200": {
-            "description": "Get profile user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseGetUser"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success get data",
-                      "data": {
-                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
-                        "name": "hilal",
-                        "email": "hilal@gmail.com"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "missing_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is required"
-                    }
-                  },
-                  "invalid_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is not valid"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "unauthorized": {
-                    "value": {
-                      "status": false,
-                      "message": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "not_found": {
-                    "value": {
-                      "status": false,
-                      "message": "User not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal server error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["User"],
-        "summary": "Update user profile",
-        "description": "Update user profile",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestUpdateUser"
-              },
-              "examples": {
-                "update": {
-                  "value": {
-                    "name": "hilal",
-                    "username": "hilal",
-                    "email": "hilal@gmail.com"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update user profile",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success updated data"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "missing_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is required"
-                    }
-                  },
-                  "invalid_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is not valid"
-                    }
-                  },
-                  "invalid_email": {
-                    "value": {
-                      "status": false,
-                      "message": "Email is not valid"
-                    }
-                  },
-                  "email_registered": {
-                    "value": {
-                      "status": false,
-                      "message": "Email already registered"
-                    }
-                  },
-                  "username_exists": {
-                    "value": {
-                      "status": false,
-                      "message": "Username already exists"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "unauthorized": {
-                    "value": {
-                      "status": false,
-                      "message": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "not_found": {
-                    "value": {
-                      "status": false,
-                      "message": "User not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal Server Error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["User"],
-        "summary": "Update password user",
-        "description": "Update password user",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestUpdatePasswordUser"
-              },
-              "examples": {
-                "update": {
-                  "value": {
-                    "old_password": "123456asd",
-                    "new_password": "troto123456",
-                    "confirm_password": "troto123456"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update password user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success updated password"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "missing_fields": {
-                    "value": {
-                      "status": false,
-                      "message": "Please fill all required fields"
-                    }
-                  },
-                  "invalid_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is not valid"
-                    }
-                  },
-                  "short_password": {
-                    "value": {
-                      "status": false,
-                      "message": "Password must be at least 8 characters long"
-                    }
-                  },
-                  "password_mismatch": {
-                    "value": {
-                      "status": false,
-                      "message": "Password and Confirm Password must be the same"
-                    }
-                  },
-                  "incorrect_old_password": {
-                    "value": {
-                      "status": false,
-                      "message": "Old password is incorrect"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "unauthorized": {
-                    "value": {
-                      "status": false,
-                      "message": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "forbidden": {
-                    "value": {
-                      "status": false,
-                      "message": "Forbidden access"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "not_found": {
-                    "value": {
-                      "status": false,
-                      "message": "User not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal server error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/users": {
       "get": {
         "security": [
@@ -679,7 +144,7 @@
             "auth": []
           }
         ],
-        "tags": ["Admin"],
+        "tags": ["Users"],
         "summary": "Get all users",
         "description": "Get all users",
         "responses": {
@@ -796,7 +261,7 @@
             "auth": []
           }
         ],
-        "tags": ["Admin"],
+        "tags": ["Users"],
         "summary": "Get user by id",
         "description": "Get user by id",
         "parameters": [
@@ -932,7 +397,7 @@
             "auth": []
           }
         ],
-        "tags": ["Admin"],
+        "tags": ["Users"],
         "summary": "Update user by id",
         "description": "Update user by id",
         "parameters": [
@@ -1093,7 +558,7 @@
             "auth": []
           }
         ],
-        "tags": ["Admin"],
+        "tags": ["Users"],
         "summary": "Delete user by id",
         "description": "Delete user by id",
         "parameters": [
@@ -1206,7 +671,7 @@
             "auth": []
           }
         ],
-        "tags": ["Admin"],
+        "tags": ["Users"],
         "summary": "Update password user by id",
         "description": "Update password user by id",
         "parameters": [
@@ -1367,221 +832,7 @@
           }
         }
       }
-    },
-    "/articles": {
-      "get": {
-        "tags": ["Article","User"],
-        "summary": "Get all articles",
-        "operationId": "getAllArticles",
-        "responses": {
-          "200": {
-            "description": "A list of articles",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseArticle"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No articles found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Article","Admin"],
-        "summary": "Create a new article",
-        "operationId": "createArticle",
-        "requestBody": {
-          "description": "Article object to create",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewArticle"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Article created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/articles/{id}": {
-      "get": {
-        "tags": ["Article","User"],
-        "summary": "Get an article by ID",
-        "operationId": "getArticleById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "An article",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Article not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Article","Admin"],
-        "summary": "Update an article by ID",
-        "operationId": "updateArticleById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Updated article object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewArticle"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Article updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Article not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-
-        "security": [
-          {
-            "auth": []
-          }
-        ],        
-        "tags": ["Article","Admin"],
-        "summary": "Delete an article by ID",
-        "operationId": "deleteArticleById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Article deleted successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Article not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                }
-              }
-            }
-          }
-        }
-      }
     }
-    
   },
   "components": {
     "securitySchemes": {
@@ -1645,27 +896,6 @@
             "required": ["name", "email", "token"]
           }
         }
-      },
-      "RequestRegister": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "confirm_password": {
-            "type": "string"
-          }
-        },
-        "required": ["name", "email", "password", "confirm_password"]
       },
       "ResponseCreateUpdateDelete": {
         "type": "object",

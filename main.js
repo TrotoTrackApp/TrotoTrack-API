@@ -4,16 +4,24 @@ const sequelize = require("./app/database/mysql");
 const routes = require("./app/route/route");
 const autoMigrate = require("./app/migrate/migrate");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger/apidocs.json");
+const swaggerUserDocs = require("./swagger/userdocs.json");
+const swaggerAdminDocs = require("./swagger/admindocs.json");
 const app = express();
-
 
 app.use(express.json());
 app.use(cors());
 app.use(routes);
 
 const PORT = process.env.SERVERPORT;
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const userDocsServe = swaggerUi.serveFiles(swaggerUserDocs, {});
+const userDocsSetup = swaggerUi.setup(swaggerUserDocs);
+
+// Create Swagger middleware for admin docs
+const adminDocsServe = swaggerUi.serveFiles(swaggerAdminDocs, {});
+const adminDocsSetup = swaggerUi.setup(swaggerAdminDocs);
+
+app.use("/users-docs", userDocsServe, userDocsSetup);
+app.use("/admin-docs", adminDocsServe, adminDocsSetup);
 
 const startServer = async () => {
   try {
