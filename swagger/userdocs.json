@@ -2008,6 +2008,10 @@
                 },
                 "status": {
                   "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
                 }
               },
               "required": [
@@ -2017,7 +2021,8 @@
                 "longitude",
                 "image",
                 "description",
-                "status"
+                "status",
+                "created_at"
               ]
             }
           },
