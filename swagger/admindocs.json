@@ -835,6 +835,11 @@
     },
     "/article": {
       "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article"],
         "summary": "Create new article",
         "description": "Create new article",
@@ -1071,6 +1076,11 @@
     },
     "/articles/{id}": {
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article"],
         "summary": "Get article by id",
         "description": "Get article by id",
@@ -1186,6 +1196,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article"],
         "summary": "Update article by id",
         "description": "Update article by id",
@@ -1330,6 +1345,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article"],
         "summary": "Delete article by id",
         "description": "Delete article by id",
