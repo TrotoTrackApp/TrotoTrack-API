@@ -1007,7 +1007,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
+                  "$ref": "#/components/schemas/ResponseAllArticle"
                 },
                 "examples": {
                   "success": {
@@ -1660,25 +1660,42 @@
       "ResponseArticle": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
+          "status": {
+            "type": "boolean"
           },
-          "title": {
+          "message": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
-          },
-          "image": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": ["id", "title", "description", "image"]
           }
-        },
-        "required": ["id", "title", "description", "image", "created_at"]
+        }
+      },
+      "ResponseAllArticle": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ResponseArticle"
+        }
       },
       "RequestArticle": {
         "type": "object",
