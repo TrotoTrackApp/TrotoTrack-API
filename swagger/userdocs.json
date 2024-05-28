@@ -674,30 +674,22 @@
     },
     "/articles": {
       "get": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
         "tags": ["Article"],
-        "summary": "Get all articles",
-        "description": "Get all articles",
+        "summary": "Get all article",
+        "description": "Get all article",
         "responses": {
           "200": {
-            "description": "A list of articles",
+            "description": "Get all article",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseArticle"
-                  }
+                  "$ref": "#/components/schemas/ResponseArticle"
                 },
                 "examples": {
                   "success": {
                     "value": {
                       "status": true,
-                      "message": "Success get data",
+                      "message": "Success get all data",
                       "data": [
                         {
                           "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
@@ -712,30 +704,6 @@
                           "image": "https://trototrack.my.id/image.jpg"
                         }
                       ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "missing_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is required"
-                    }
-                  },
-                  "invalid_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is not valid"
                     }
                   }
                 }
@@ -761,7 +729,7 @@
             }
           },
           "404": {
-            "description": "No articles found",
+            "description": "Not Found error",
             "content": {
               "application/json": {
                 "schema": {
@@ -771,7 +739,7 @@
                   "not_found": {
                     "value": {
                       "status": false,
-                      "message": "No articles found"
+                      "message": "No article found"
                     }
                   }
                 }
@@ -792,49 +760,6 @@
                       "message": "Internal server error"
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Article"],
-        "summary": "Create a new article",
-        "description": "Create a new article",
-        "requestBody": {
-          "description": "Create a new article",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewArticle"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Article created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
                 }
               }
             }
