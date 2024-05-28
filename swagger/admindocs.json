@@ -1513,7 +1513,7 @@
             "$ref": "#/components/parameters/PagePagination"
           },
           {
-            "$ref": "#/components/parameters/Search"
+            "$ref": "#/components/parameters/SearchLocationAndStatus"
           }
         ],
         "responses": {
@@ -1612,6 +1612,24 @@
                     "value": {
                       "status": false,
                       "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
                     }
                   }
                 }
@@ -2287,17 +2305,20 @@
           }
         }
       },
-      "Search": {
+      "SearchLocationAndStatus": {
         "name": "search",
         "in": "query",
-        "description": "Search data",
+        "description": "Search Location and Status",
         "required": false,
         "schema": {
           "type": "string"
         },
         "examples": {
-          "search": {
+          "location": {
             "value": "makassar"
+          },
+          "status": {
+            "value": "pending"
           }
         }
       }
