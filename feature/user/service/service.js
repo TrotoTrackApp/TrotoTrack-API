@@ -233,7 +233,9 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    const otpData = await this.userRepo.verifyOtpEmail(email, otp);
+    const uppercaseOTP = otp.toUpperCase();
+
+    const otpData = await this.userRepo.verifyOtpEmail(email, uppercaseOTP);
     if (!otpData) {
       throw new ValidationError("Email or OTP is incorrect");
     }
@@ -242,7 +244,7 @@ class UserService extends UserServicesInterface {
       throw new ValidationError("OTP is expired");
     }
 
-    if (otpData.otp !== otp) {
+    if (otpData.otp !== uppercaseOTP ) {
       throw new ValidationError("OTP is incorrect");
     }
 
