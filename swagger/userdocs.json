@@ -23,7 +23,7 @@
   "paths": {
     "/login": {
       "post": {
-        "tags": ["Login & Register"],
+        "tags": ["Page User"],
         "summary": "Login to the application",
         "description": "Login to the application",
         "requestBody": {
@@ -139,7 +139,7 @@
     },
     "/register": {
       "post": {
-        "tags": ["Login & Register"],
+        "tags": ["Page User"],
         "summary": "Register to the application",
         "description": "Register to the application",
         "requestBody": {
@@ -1334,6 +1334,312 @@
           }
         }
       }
+    },
+    "/send-otp": {
+      "post": {
+        "tags": ["Page User"],
+        "summary": "Send OTP",
+        "description": "Send OTP",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestSendOTP"
+              },
+              "examples": {
+                "send": {
+                  "value": {
+                    "email": "shiigetsu1@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send OTP",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success send otp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_email": {
+                    "value": {
+                      "status": false,
+                      "message": "Email is not valid"
+                    }
+                  },
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/verify-otp": {
+      "post": {
+        "tags": ["Page User"],
+        "summary": "Verify OTP",
+        "description": "Verify OTP",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestVerifyOTP"
+              },
+              "examples": {
+                "verify": {
+                  "value": {
+                    "email": "hilal@gmail.com",
+                    "otp": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verify OTP",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success verify otp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_email": {
+                    "value": {
+                      "status": false,
+                      "message": "Email is not valid"
+                    }
+                  },
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
+                    }
+                  },
+                  "invalid_email_otp": {
+                    "value": {
+                      "status": false,
+                      "message": "Email or OTP is incorrect"
+                    }
+                  },
+                  "invalid_otp": {
+                    "value": {
+                      "status": false,
+                      "message": "OTP is incorrect"
+                    }
+                  },
+                  "otp_expired": {
+                    "value": {
+                      "status": false,
+                      "message": "OTP is expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/new-password": {
+      "patch": {
+        "tags": ["Page User"],
+        "summary": "New Password",
+        "description": "New Password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestNewPassword"
+              },
+              "examples": {
+                "new": {
+                  "value": {
+                    "email": "hilal@gmail.com",
+                    "password": "troto123456",
+                    "confirm_password": "troto123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New Password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success update password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_email": {
+                    "value": {
+                      "status": false,
+                      "message": "Email is not valid"
+                    }
+                  },
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
+                    }
+                  },
+                  "short_password": {
+                    "value": {
+                      "status": false,
+                      "message": "Password must be at least 8 characters long"
+                    }
+                  },
+                  "password_mismatch": {
+                    "value": {
+                      "status": false,
+                      "message": "Password and Confirm Password must be the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1808,6 +2114,42 @@
           "type": "integer"
         },
         "required": ["status", "message", "data", "pagination", "count"]
+      },
+      "RequestSendOTP": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": ["email"]
+      },
+      "RequestVerifyOTP": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "otp": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "otp"]
+      },
+      "RequestNewPassword": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confirm_password": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password", "confirm_password"]
       }
     }
   }
