@@ -1068,6 +1068,267 @@
           }
         }
       }
+    },
+    "articles/{id}": {
+      "get": {
+        "tags": ["Article"],
+        "summary": "Get article by id",
+        "description": "Get article by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ArticleId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get article by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseArticle"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
+                        "title": "Bumi Sementara",
+                        "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                        "image": "https://trototrack.my.id/image.jpg",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Article not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Article"],
+        "summary": "Update article by id",
+        "description": "Update article by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ArticleId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update article by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success updated data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "title_exists": {
+                    "value": {
+                      "status": false,
+                      "message": "Title already exists"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only images with jpeg, png, and jpg formats are allowed"
+                    }
+                  },
+                  "invalid_size_image": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  },
+                  "invalid_description": {
+                    "value": {
+                      "status": false,
+                      "message": "Description must be at least 10 characters long"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
+                    "value": {
+                      "status": false,
+                      "message": "Forbidden access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Article not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1083,6 +1344,20 @@
         "name": "id",
         "in": "path",
         "description": "Id of the user to get",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "ArticleId": {
+        "name": "id",
+        "in": "path",
+        "description": "id of the article to get",
         "required": true,
         "schema": {
           "type": "string"
