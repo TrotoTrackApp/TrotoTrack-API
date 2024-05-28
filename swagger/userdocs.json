@@ -688,7 +688,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
+                  "$ref": "#/components/schemas/ResponseAllArticle"
                 },
                 "examples": {
                   "success": {
@@ -1059,7 +1059,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseReport"
+                  "$ref": "#/components/schemas/ResponseAllReport"
                 },
                 "examples": {
                   "success": {
@@ -1158,16 +1158,11 @@
         }
       }
     },
-    "/reports/{id}": {
+    "/profile/reports": {
       "get": {
         "tags": ["Report"],
         "summary": "Get report by id",
         "description": "Get report by id",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ReportId"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Get report by id",
@@ -1522,21 +1517,42 @@
       "ResponseArticle": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
+          "status": {
+            "type": "boolean"
           },
-          "title": {
+          "message": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
-          },
-          "image": {
-            "type": "string"
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": ["id", "title", "description", "image"]
           }
-        },
-        "required": ["id", "title", "description", "image"]
+        }
+      },
+      "ResponseAllArticle": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ResponseArticle"
+        }
       },
       "RequestReport": {
         "type": "object",
@@ -1570,7 +1586,7 @@
         },
         "required": ["title", "description", "image"]
       },
-      "ResponseReport": {
+      "ResponseAllReport": {
         "type": "object",
         "properties": {
           "status": {
