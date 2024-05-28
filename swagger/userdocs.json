@@ -895,6 +895,351 @@
           }
         }
       }
+    },
+    "/reports": {
+      "post": {
+        "tags": ["Report"],
+        "summary": "Create report",
+        "description": "Create report",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestReport"
+              },
+              "examples": {
+                "create": {
+                  "value": {
+                    "title": "Bumi Sementara",
+                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestReportMultiPart"
+              },
+              "examples": {
+                "create": {
+                  "value": {
+                    "title": "Bumi Sementara",
+                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Create report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success created data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only images with jpeg, png, and jpg formats are allowed"
+                    }
+                  },
+                  "invalid_latitude": {
+                    "value": {
+                      "status": false,
+                      "message": "Latitude must be between -90 and 90"
+                    }
+                  },
+                  "invalid_longitude": {
+                    "value": {
+                      "status": false,
+                      "message": "Longitude must be between -180 and 180"
+                    }
+                  },
+                  "invalid_description": {
+                    "value": {
+                      "status": false,
+                      "message": "Description must be at least 10 characters long"
+                    }
+                  },
+                  "invalid_file_size": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Report"],
+        "summary": "Get all report",
+        "description": "Get all report",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitPagination"
+          },
+          {
+            "$ref": "#/components/parameters/PagePagination"
+          },
+          {
+            "$ref": "#/components/parameters/Search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseReport"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get all data",
+                      "data": [
+                        {
+                          "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                          "location": "makassar",
+                          "latitude": -5.135399,
+                          "longitude": 119.42379,
+                          "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status": "pending",
+                          "created_at": "2021-08-01T00:00:00Z"
+                        },
+                        {
+                          "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                          "location": "makassar",
+                          "latitude": -5.135399,
+                          "longitude": 119.42379,
+                          "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status": "pending",
+                          "created_at": "2021-08-01T00:00:00Z"
+                        }
+                      ],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 3
+                      },
+                      "count": 6
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{id}": {
+      "get": {
+        "tags": ["Report"],
+        "summary": "Get report by id",
+        "description": "Get report by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ReportId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get report by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseArticle"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                        "location": "makassar",
+                        "latitude": -5.135399,
+                        "longitude": 119.42379,
+                        "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                        "description": "ini adalah contoh input report oleh user sendiri",
+                        "status": "pending",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Report not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -931,6 +1276,64 @@
         "examples": {
           "id": {
             "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "ReportId": {
+        "name": "id",
+        "in": "path",
+        "description": "id of the report to get",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "LimitPagination": {
+        "name": "limit",
+        "in": "query",
+        "description": "Limit data per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 10
+        },
+        "examples": {
+          "limit": {
+            "value": 10
+          }
+        }
+      },
+      "PagePagination": {
+        "name": "page",
+        "in": "query",
+        "description": "Page number",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 1
+        },
+        "examples": {
+          "page": {
+            "value": 1
+          }
+        }
+      },
+      "Search": {
+        "name": "search",
+        "in": "query",
+        "description": "Search data",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "search": {
+            "value": "makassar"
           }
         }
       }
@@ -1098,7 +1501,7 @@
         },
         "required": ["id", "title", "description", "image"]
       },
-      "NewArticle": {
+      "RequestReport": {
         "type": "object",
         "properties": {
           "title": {
@@ -1112,6 +1515,94 @@
           }
         },
         "required": ["title", "description", "image"]
+      },
+      "RequestReportMultiPart": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["title", "description", "image"]
+      },
+      "ResponseReport": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "longitude": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "location",
+                "latitude",
+                "longitude",
+                "image",
+                "description",
+                "status"
+              ]
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer"
+              },
+              "current_page": {
+                "type": "integer"
+              },
+              "last_page": {
+                "type": "integer"
+              }
+            },
+            "required": ["limit", "current_page", "last_page"]
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "required": ["status", "message", "data", "pagination", "count"]
       }
     }
   }
