@@ -672,93 +672,93 @@
         }
       }
     },
-    "/articles": {
-      "get": {
-        "tags": ["Article"],
-        "summary": "Get all article",
-        "description": "Get all article",
-        "responses": {
-          "200": {
-            "description": "Get all article",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success get all data",
-                      "data": [
-                        {
-                          "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
-                          "title": "Bumi Sementara",
-                          "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
-                          "image": "https://trototrack.my.id/image.jpg"
-                        },
-                        {
-                          "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
-                          "title": "Bumi Sementara",
-                          "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
-                          "image": "https://trototrack.my.id/image.jpg"
-                        }
-                      ]
-                    }
+    "get": {
+      "tags": ["Article"],
+      "summary": "Get all article",
+      "description": "Get all article",
+      "responses": {
+        "200": {
+          "description": "Get all article",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseArticle"
+              },
+              "examples": {
+                "success": {
+                  "value": {
+                    "status": true,
+                    "message": "Success get all data",
+                    "data": [
+                      {
+                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
+                        "title": "Bumi Sementara",
+                        "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                        "image": "https://trototrack.my.id/image.jpg",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      },
+                      {
+                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
+                        "title": "Bumi Sementara",
+                        "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                        "image": "https://trototrack.my.id/image.jpg",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    ]
                   }
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "unauthorized": {
-                    "value": {
-                      "status": false,
-                      "message": "Unauthorized"
-                    }
+          }
+        },
+        "401": {
+          "description": "Unauthorized error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseError"
+              },
+              "examples": {
+                "unauthorized": {
+                  "value": {
+                    "status": false,
+                    "message": "Unauthorized"
                   }
                 }
               }
             }
-          },
-          "404": {
-            "description": "Not Found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "not_found": {
-                    "value": {
-                      "status": false,
-                      "message": "No article found"
-                    }
+          }
+        },
+        "404": {
+          "description": "Not Found error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseError"
+              },
+              "examples": {
+                "not_found": {
+                  "value": {
+                    "status": false,
+                    "message": "No article found"
                   }
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal server error"
-                    }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseError"
+              },
+              "examples": {
+                "server_error": {
+                  "value": {
+                    "status": false,
+                    "message": "Internal server error"
                   }
                 }
               }
@@ -766,137 +766,117 @@
           }
         }
       }
-    },
-    "/articles/{id}": {
-      "get": {
-        "tags": ["Article", "User"],
-        "summary": "Get an article by ID",
-        "operationId": "getArticleById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "An article",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Article not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                }
-              }
-            }
-          }
+    }
+  },
+  "articles/{id}": {
+    "get": {
+      "tags": ["Article"],
+      "summary": "Get article by id",
+      "description": "Get article by id",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ArticleId"
         }
-      },
-      "put": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Article", "Admin"],
-        "summary": "Update an article by ID",
-        "operationId": "updateArticleById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Updated article object",
-          "required": true,
+      ],
+      "responses": {
+        "200": {
+          "description": "Get article by id",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewArticle"
+                "$ref": "#/components/schemas/ResponseArticle"
+              },
+              "examples": {
+                "success": {
+                  "value": {
+                    "status": true,
+                    "message": "Success get data",
+                    "data": {
+                      "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
+                      "title": "Bumi Sementara",
+                      "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                      "image": "https://trototrack.my.id/image.jpg",
+                      "created_at": "2021-08-01T00:00:00Z"
+                    }
+                  }
+                }
               }
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Article updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseArticle"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Article not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
+        "400": {
+          "description": "Validation error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseError"
+              },
+              "examples": {
+                "missing_id": {
+                  "value": {
+                    "status": false,
+                    "message": "ID is required"
+                  }
+                },
+                "invalid_id": {
+                  "value": {
+                    "status": false,
+                    "message": "ID is not valid"
+                  }
                 }
               }
             }
           }
-        }
-      },
-      "delete": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Article", "Admin"],
-        "summary": "Delete an article by ID",
-        "operationId": "deleteArticleById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Article deleted successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
+        },
+        "401": {
+          "description": "Unauthorized error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseError"
+              },
+              "examples": {
+                "unauthorized": {
+                  "value": {
+                    "status": false,
+                    "message": "Unauthorized"
+                  }
                 }
               }
             }
-          },
-          "404": {
-            "description": "Article not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
+          }
+        },
+        "404": {
+          "description": "Not Found error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseError"
+              },
+              "examples": {
+                "not_found": {
+                  "value": {
+                    "status": false,
+                    "message": "Article not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponseError"
+              },
+              "examples": {
+                "server_error": {
+                  "value": {
+                    "status": false,
+                    "message": "Internal server error"
+                  }
                 }
               }
             }
