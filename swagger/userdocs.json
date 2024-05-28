@@ -1095,6 +1095,43 @@
                       },
                       "count": 6
                     }
+                  },
+                  "no_report_found": {
+                    "value": {
+                      "status": true,
+                      "message": "No report found",
+                      "data": [],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 1
+                      },
+                      "count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "invalid_limit_page": {
+                    "value": {
+                      "status": false,
+                      "message": "Page and limit must be a number"
+                    }
+                  },
+                  "invalid_limit": {
+                    "value": {
+                      "status": false,
+                      "message": "Limit must not be greater than 10"
+                    }
                   }
                 }
               }
