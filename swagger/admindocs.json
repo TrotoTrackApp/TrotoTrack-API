@@ -979,6 +979,11 @@
         }
       },
       "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Article"],
         "summary": "Get all article",
         "description": "Get all article",
