@@ -13,7 +13,7 @@
   "servers": [
     {
       "url": "http://localhost:8080/",
-      "description": "Development server"
+      "description": "User Documentation"
     }
   ],
   "externalDocs": {
@@ -258,7 +258,7 @@
             "auth": []
           }
         ],
-        "tags": ["User"],
+        "tags": ["Profile"],
         "summary": "Get profile user",
         "description": "Get profile user",
         "responses": {
@@ -371,7 +371,7 @@
             "auth": []
           }
         ],
-        "tags": ["User"],
+        "tags": ["Profile"],
         "summary": "Update user profile",
         "description": "Update user profile",
         "requestBody": {
@@ -515,7 +515,7 @@
             "auth": []
           }
         ],
-        "tags": ["User"],
+        "tags": ["Profile"],
         "summary": "Update password user",
         "description": "Update password user",
         "requestBody": {
@@ -672,40 +672,43 @@
         }
       }
     },
-    "/users": {
+    "/articles": {
       "get": {
         "security": [
           {
             "auth": []
           }
         ],
-        "tags": ["Admin"],
-        "summary": "Get all users",
-        "description": "Get all users",
+        "tags": ["Article"],
+        "summary": "Get all article",
+        "description": "Get all article",
         "responses": {
           "200": {
-            "description": "Get all users",
+            "description": "Get all article",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseGetAllUsers"
+                  "$ref": "#/components/schemas/ResponseAllArticle"
                 },
                 "examples": {
                   "success": {
-                    "description": "Success get all users",
                     "value": {
                       "status": true,
                       "message": "Success get all data",
                       "data": [
                         {
                           "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
-                          "name": "hilal",
-                          "email": "hilal@gmail.com"
+                          "title": "Bumi Sementara",
+                          "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                          "image": "https://trototrack.my.id/image.jpg",
+                          "created_at": "2021-08-01T00:00:00Z"
                         },
                         {
-                          "id": "ce6c992c-f260-4bc9-b332-3e12a10df8fb",
-                          "name": "troto",
-                          "email": "troto@gmail.com"
+                          "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
+                          "title": "Bumi Sementara",
+                          "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                          "image": "https://trototrack.my.id/image.jpg",
+                          "created_at": "2021-08-01T00:00:00Z"
                         }
                       ]
                     }
@@ -732,24 +735,6 @@
               }
             }
           },
-          "403": {
-            "description": "Forbidden error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "forbidden": {
-                    "value": {
-                      "status": false,
-                      "message": "Forbidden access"
-                    }
-                  }
-                }
-              }
-            }
-          },
           "404": {
             "description": "Not Found error",
             "content": {
@@ -761,7 +746,7 @@
                   "not_found": {
                     "value": {
                       "status": false,
-                      "message": "No user found"
+                      "message": "No article found"
                     }
                   }
                 }
@@ -789,28 +774,28 @@
         }
       }
     },
-    "/users/{id}": {
+    "/articles/{id}": {
       "get": {
         "security": [
           {
             "auth": []
           }
         ],
-        "tags": ["Admin"],
-        "summary": "Get user by id",
-        "description": "Get user by id",
+        "tags": ["Article"],
+        "summary": "Get article by id",
+        "description": "Get article by id",
         "parameters": [
           {
-            "$ref": "#/components/parameters/UserId"
+            "$ref": "#/components/parameters/ArticleId"
           }
         ],
         "responses": {
           "200": {
-            "description": "Get user by id",
+            "description": "Get article by id",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseGetUser"
+                  "$ref": "#/components/schemas/ResponseArticle"
                 },
                 "examples": {
                   "success": {
@@ -819,8 +804,10 @@
                       "message": "Success get data",
                       "data": {
                         "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
-                        "name": "hilal",
-                        "email": "hilal@gmail.com"
+                        "title": "Bumi Sementara",
+                        "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                        "image": "https://trototrack.my.id/image.jpg",
+                        "created_at": "2021-08-01T00:00:00Z"
                       }
                     }
                   }
@@ -870,24 +857,6 @@
               }
             }
           },
-          "403": {
-            "description": "Forbidden error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "forbidden": {
-                    "value": {
-                      "status": false,
-                      "message": "Forbidden access"
-                    }
-                  }
-                }
-              }
-            }
-          },
           "404": {
             "description": "Not Found error",
             "content": {
@@ -899,7 +868,7 @@
                   "not_found": {
                     "value": {
                       "status": false,
-                      "message": "User not found"
+                      "message": "Article not found"
                     }
                   }
                 }
@@ -925,33 +894,44 @@
             }
           }
         }
-      },
-      "put": {
+      }
+    },
+    "/reports": {
+      "post": {
         "security": [
           {
             "auth": []
           }
         ],
-        "tags": ["Admin"],
-        "summary": "Update user by id",
-        "description": "Update user by id",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/UserId"
-          }
-        ],
+        "tags": ["Report"],
+        "summary": "Create report",
+        "description": "Create report",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RequestUpdateUser"
+                "$ref": "#/components/schemas/RequestReport"
               },
               "examples": {
-                "update": {
+                "create": {
                   "value": {
-                    "name": "hilal",
-                    "username": "hilal",
-                    "email": "hilal@gmail.com"
+                    "title": "Bumi Sementara",
+                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestReportMultiPart"
+              },
+              "examples": {
+                "create": {
+                  "value": {
+                    "title": "Bumi Sementara",
+                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "image": "https://trototrack.my.id/image.jpg"
                   }
                 }
               }
@@ -960,7 +940,7 @@
         },
         "responses": {
           "200": {
-            "description": "Update user by id",
+            "description": "Create report",
             "content": {
               "application/json": {
                 "schema": {
@@ -970,281 +950,7 @@
                   "success": {
                     "value": {
                       "status": true,
-                      "message": "Success updated data"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "missing_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is required"
-                    }
-                  },
-                  "invalid_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is not valid"
-                    }
-                  },
-                  "invalid_email": {
-                    "value": {
-                      "status": false,
-                      "message": "Email is not valid"
-                    }
-                  },
-                  "email_registered": {
-                    "value": {
-                      "status": false,
-                      "message": "Email already registered"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "unauthorized": {
-                    "value": {
-                      "status": false,
-                      "message": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "forbidden": {
-                    "value": {
-                      "status": false,
-                      "message": "Forbidden access"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "not_found": {
-                    "value": {
-                      "status": false,
-                      "message": "User not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal Server Error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Admin"],
-        "summary": "Delete user by id",
-        "description": "Delete user by id",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/UserId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Delete user by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success deleted data"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "missing_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is required"
-                    }
-                  },
-                  "invalid_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is not valid"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "unauthorized": {
-                    "value": {
-                      "status": false,
-                      "message": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "not_found": {
-                    "value": {
-                      "status": false,
-                      "message": "User not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal server error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Admin"],
-        "summary": "Update password user by id",
-        "description": "Update password user by id",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/UserId"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestUpdatePasswordUser"
-              },
-              "examples": {
-                "update": {
-                  "value": {
-                    "old_password": "123456asd",
-                    "new_password": "troto123456",
-                    "confirm_password": "troto123456"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update password user by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success updated password"
+                      "message": "Success created data"
                     }
                   }
                 }
@@ -1265,28 +971,34 @@
                       "message": "Please fill all required fields"
                     }
                   },
-                  "invalid_id": {
+                  "invalid_file": {
                     "value": {
                       "status": false,
-                      "message": "ID is not valid"
+                      "message": "Invalid file type. Only images with jpeg, png, and jpg formats are allowed"
                     }
                   },
-                  "short_password": {
+                  "invalid_latitude": {
                     "value": {
                       "status": false,
-                      "message": "Password must be at least 8 characters long"
+                      "message": "Latitude must be between -90 and 90"
                     }
                   },
-                  "password_mismatch": {
+                  "invalid_longitude": {
                     "value": {
                       "status": false,
-                      "message": "Password and Confirm Password must be the same"
+                      "message": "Longitude must be between -180 and 180"
                     }
                   },
-                  "incorrect_old_password": {
+                  "invalid_description": {
                     "value": {
                       "status": false,
-                      "message": "Old password is incorrect"
+                      "message": "Description must be at least 10 characters long"
+                    }
+                  },
+                  "invalid_file_size": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
                     }
                   }
                 }
@@ -1311,18 +1023,226 @@
               }
             }
           },
-          "403": {
-            "description": "Forbidden error",
+          "500": {
+            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseError"
                 },
                 "examples": {
-                  "forbidden": {
+                  "server_error": {
                     "value": {
                       "status": false,
-                      "message": "Forbidden access"
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Get all report",
+        "description": "Get all report",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitPagination"
+          },
+          {
+            "$ref": "#/components/parameters/PagePagination"
+          },
+          {
+            "$ref": "#/components/parameters/Search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAllReport"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get all data",
+                      "data": [
+                        {
+                          "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                          "location": "makassar",
+                          "latitude": -5.135399,
+                          "longitude": 119.42379,
+                          "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status": "pending",
+                          "created_at": "2021-08-01T00:00:00Z"
+                        },
+                        {
+                          "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                          "location": "makassar",
+                          "latitude": -5.135399,
+                          "longitude": 119.42379,
+                          "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status": "pending",
+                          "created_at": "2021-08-01T00:00:00Z"
+                        }
+                      ],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 3
+                      },
+                      "count": 6
+                    }
+                  },
+                  "no_report_found": {
+                    "value": {
+                      "status": true,
+                      "message": "No report found",
+                      "data": [],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 1
+                      },
+                      "count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "invalid_limit_page": {
+                    "value": {
+                      "status": false,
+                      "message": "Page and limit must be a number"
+                    }
+                  },
+                  "invalid_limit": {
+                    "value": {
+                      "status": false,
+                      "message": "Limit must not be greater than 10"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/profile": {
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Get report profile",
+        "description": "Get report profile",
+        "responses": {
+          "200": {
+            "description": "Get report profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseReport"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                        "location": "makassar",
+                        "latitude": -5.135399,
+                        "longitude": 119.42379,
+                        "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                        "description": "ini adalah contoh input report oleh user sendiri",
+                        "status": "pending",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
                     }
                   }
                 }
@@ -1340,7 +1260,7 @@
                   "not_found": {
                     "value": {
                       "status": false,
-                      "message": "User not found"
+                      "message": "Report not found"
                     }
                   }
                 }
@@ -1348,7 +1268,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
+            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -1389,6 +1309,78 @@
         "examples": {
           "id": {
             "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "ArticleId": {
+        "name": "id",
+        "in": "path",
+        "description": "id of the article to get",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "ReportId": {
+        "name": "id",
+        "in": "path",
+        "description": "id of the report to get",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "LimitPagination": {
+        "name": "limit",
+        "in": "query",
+        "description": "Limit data per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 10
+        },
+        "examples": {
+          "limit": {
+            "value": 10
+          }
+        }
+      },
+      "PagePagination": {
+        "name": "page",
+        "in": "query",
+        "description": "Page number",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 1
+        },
+        "examples": {
+          "page": {
+            "value": 1
+          }
+        }
+      },
+      "Search": {
+        "name": "search",
+        "in": "query",
+        "description": "Search data",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "search": {
+            "value": "makassar"
           }
         }
       }
@@ -1536,6 +1528,204 @@
           }
         },
         "required": ["status", "message"]
+      },
+      "ResponseArticle": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": ["id", "title", "description", "image"]
+          }
+        }
+      },
+      "ResponseAllArticle": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ResponseArticle"
+        }
+      },
+      "RequestReport": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "required": ["title", "description", "image"]
+      },
+      "RequestReportMultiPart": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["title", "description", "image"]
+      },
+      "ResponseAllReport": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "longitude": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "location",
+                "latitude",
+                "longitude",
+                "image",
+                "description",
+                "status"
+              ]
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer"
+              },
+              "current_page": {
+                "type": "integer"
+              },
+              "last_page": {
+                "type": "integer"
+              }
+            },
+            "required": ["limit", "current_page", "last_page"]
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "required": ["status", "message", "data", "pagination", "count"]
+      },
+      "ResponseReport": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "location": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number",
+                "format": "double"
+              },
+              "longitude": {
+                "type": "number",
+                "format": "double"
+              },
+              "image": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "id",
+              "location",
+              "latitude",
+              "longitude",
+              "image",
+              "description",
+              "status",
+              "created_at"
+            ]
+          }
+        },
+        "required": ["status", "message", "data"]
       }
     }
   }
