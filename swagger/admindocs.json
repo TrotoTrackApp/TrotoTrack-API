@@ -858,6 +858,20 @@
                   }
                 }
               }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestArticleMultipart"
+              },
+              "examples": {
+                "article": {
+                  "value": {
+                    "title": "New Article",
+                    "description": "This is new article",
+                    "image": "image.jpg"
+                  }
+                }
+              }
             }
           }
         },
@@ -1677,6 +1691,23 @@
           },
           "image": {
             "type": "string"
+          }
+        },
+        "required": ["title", "description", "image"]
+      },
+      "RequestArticleMultipart": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
           }
         },
         "required": ["title", "description", "image"]
