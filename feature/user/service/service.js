@@ -262,6 +262,10 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
+    if(!validator.isEmail(email)) {
+      throw new ValidationError("Email is not valid");
+    }
+
     if (password.length < 8) {
       throw new ValidationError("Password must be at least 8 characters long");
     }
