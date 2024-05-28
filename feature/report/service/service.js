@@ -212,7 +212,7 @@ class ReportService extends ReportServiceInterface {
 
     const currentReport = await this.reportRepository.getReportById(id);
     if (!currentReport) {
-      throw new ValidationError(message.ERROR_REPORT_NOT_FOUND);
+      throw new ValidationError(message.ERROR_NOT_FOUND);
     }
 
     if (currentReport.status === "approved") {
