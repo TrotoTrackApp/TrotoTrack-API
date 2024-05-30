@@ -918,8 +918,11 @@
               "examples": {
                 "create": {
                   "value": {
-                    "title": "Bumi Sementara",
-                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
                     "image": "https://trototrack.my.id/image.jpg"
                   }
                 }
@@ -932,8 +935,11 @@
               "examples": {
                 "create": {
                   "value": {
-                    "title": "Bumi Sementara",
-                    "description": "Bumi sementara adalah bumi yang kita tempati sekarang",
+                    "location": "makassar",
+                    "reference_location": "depan penjual bakso mas budi",
+                    "latitude": -5.135399,
+                    "longitude": 119.42379,
+                    "description": "ini adalah contoh input report oleh user sendiri",
                     "image": "https://trototrack.my.id/image.jpg"
                   }
                 }
@@ -1958,8 +1964,19 @@
       "RequestReport": {
         "type": "object",
         "properties": {
-          "title": {
+          "location": {
             "type": "string"
+          },
+          "reference_location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
           },
           "description": {
             "type": "string"
@@ -1968,13 +1985,24 @@
             "type": "string"
           }
         },
-        "required": ["title", "description", "image"]
+        "required": ["location", "latitude", "longitude", "image"]
       },
       "RequestReportMultiPart": {
         "type": "object",
         "properties": {
-          "title": {
+          "location": {
             "type": "string"
+          },
+          "reference_location": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
           },
           "description": {
             "type": "string"
@@ -1985,7 +2013,7 @@
             "nullable": false
           }
         },
-        "required": ["title", "description", "image"]
+        "required": ["location", "latitude", "longitude", "image"]
       },
       "ResponseAllReport": {
         "type": "object",
