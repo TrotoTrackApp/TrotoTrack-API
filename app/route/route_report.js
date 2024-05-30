@@ -17,8 +17,8 @@ const reportController = new ReportController(reportService);
 router.get('/reports/profile', jwtMiddleware, reportController.getReportProfile.bind(reportController));
 
 // User or Admin
-router.post('/reports', jwtMiddleware, upload.single('file'), reportController.createReport.bind(reportController));
-router.put('/reports/:id', jwtMiddleware, upload.single('file'), reportController.updateReport.bind(reportController));
+router.post('/reports', jwtMiddleware, upload.single('image'), reportController.createReport.bind(reportController));
+router.put('/reports/:id', jwtMiddleware, upload.single('image'), reportController.updateReport.bind(reportController));
 router.get('/reports', jwtMiddleware, reportController.getAllReport.bind(reportController));
 
 // Admin

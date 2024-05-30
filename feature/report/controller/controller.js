@@ -21,14 +21,14 @@ class ReportController {
   async createReport(req, res, next) {
     try {
       const request = reportRequest(req.body);
-      const file = req.file;
+      const image = req.file;
 
       const { id } = extractToken(req);
       request.userId = id;
       console.log("Request:", request);
       console.log("user id:", request.userId);
 
-      await this.userService.createReport(request, file);
+      await this.userService.createReport(request, image);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
     } catch (error) {
       if (
@@ -47,10 +47,10 @@ class ReportController {
   async updateReport(req, res) {
     try {
       const request = reportRequest(req.body);
-      const file = req.file;
+      const image = req.file;
       const { id } = extractToken(req);
 
-      await this.userService.updateReport(id, request, file);
+      await this.userService.updateReport(id, request, image);
       return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
     } catch (error) {
       if (
