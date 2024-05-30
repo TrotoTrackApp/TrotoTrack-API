@@ -1,5 +1,5 @@
 class ArticleRepositoryInterface {
-  async createArticle(article) {
+  async createArticle(data, file) {
     throw new Error("Method not implemented");
   }
 
@@ -11,7 +11,7 @@ class ArticleRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
-  async updateArticleById(id, article) {
+  async updateArticleById(id, updatedData) {
     throw new Error("Method not implemented");
   }
 
@@ -25,7 +25,7 @@ class ArticleRepositoryInterface {
 }
 
 class ArticleServicesInterface {
-  async createArticle(article) {
+  async createArticle(data, file) {
     throw new Error("Method not implemented");
   }
 
@@ -37,7 +37,7 @@ class ArticleServicesInterface {
     throw new Error("Method not implemented");
   }
 
-  async updateArticleById(id, article) {
+  async updateArticleById(id, updatedData) {
     throw new Error("Method not implemented");
   }
 

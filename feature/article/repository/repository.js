@@ -13,8 +13,14 @@ class ArticleRepository extends ArticleRepositoryInterface {
     this.db = Article;
   }
 
-  async createArticle(data) {
+  async createArticle(data, file) {
     const article = articleCoreToArticleModel(data);
+
+    if (file) {
+      const imageUrl = await uploadFileToGCS(file.path);
+      article.image = imageUrl;
+    }
+
     const createdArticle = await this.db.create(article);
     const articleCore = articleModelToArticleCore(createdArticle);
     return articleCore;
@@ -61,7 +67,7 @@ class ArticleRepository extends ArticleRepositoryInterface {
       where: { title: title },
     });
     if (!article) {
-      throw new NotFoundError("Article not found");
+      return null;
     }
     const articleCore = articleModelToArticleCore(article);
     return articleCore;
