@@ -118,7 +118,6 @@ class ArticleController {
   }
 
   async deleteArticleById(req, res) {
-    //Edited Wisnu
     const articleId = req.params.id;
     try {
       const { role } = extractToken(req);
@@ -136,24 +135,6 @@ class ArticleController {
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       }
-      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
-    }
-  }
-
-  async getArticleByTitle(req, res) {
-    //added by wisnu
-    try {
-      const title = req.params.title;
-      const article = await this.articleService.getArticleByTitle(title);
-      if (article) {
-        const response = articleResponse(article);
-        return res
-          .status(200)
-          .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
-      } else {
-        return res.status(404).json(errorResponse(message.ERROR_NOT_FOUND));
-      }
-    } catch (error) {
       return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }
