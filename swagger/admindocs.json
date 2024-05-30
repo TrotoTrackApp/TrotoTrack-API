@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/",
+      "url": "https://api.trototrack.online/",
       "description": "Admin Documentation"
     }
   ],
@@ -1233,6 +1233,38 @@
             "$ref": "#/components/parameters/ArticleId"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestArticle"
+              },
+              "examples": {
+                "article": {
+                  "value": {
+                    "title": "New Article",
+                    "description": "This is new article",
+                    "image": "https://example.com/image.jpg"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestArticleMultipart"
+              },
+              "examples": {
+                "article": {
+                  "value": {
+                    "title": "New Article",
+                    "description": "This is new article",
+                    "image": "image.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Update article by id",
