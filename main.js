@@ -7,12 +7,13 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerUserDocs = require("./swagger/userdocs.json");
 const swaggerAdminDocs = require("./swagger/admindocs.json");
 const app = express();
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-const PORT = process.env.SERVERPORT;
+const PORT = process.env.SERVERPORT || 8080;
 const userDocsServe = swaggerUi.serveFiles(swaggerUserDocs, {});
 const userDocsSetup = swaggerUi.setup(swaggerUserDocs);
 
