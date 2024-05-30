@@ -1,9 +1,8 @@
-const User = require("../../feature/user/model/model");
-const Article = require("../../feature/article/model/model");
+const { User, Report } = require("././associations");
 
 async function autoMigrate() {
   await User.sync();
-  await Article.sync();
+  await Report.sync();
   console.log("Auto migration successful");
 }
 

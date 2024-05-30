@@ -14,6 +14,11 @@ const userController = new UserController(userService);
 
 router.post('/register', userController.createUser.bind(userController));
 router.post('/login', userController.login.bind(userController));
+router.post('/send-otp', userController.sendOtpEmail.bind(userController));
+router.post('/verify-otp', userController.verifyOtpEmail.bind(userController));
+router.patch('/new-password', userController.newPassword.bind(userController));
+
+
 router.get('/users', jwtMiddleware, userController.getAllUsers.bind(userController));
 router.get('/users/:id', jwtMiddleware, userController.getUserById.bind(userController));
 router.put('/users/:id', jwtMiddleware, userController.updateUserById.bind(userController));

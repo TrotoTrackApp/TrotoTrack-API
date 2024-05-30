@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../../app/database/mysql");
+const Report = require("../../report/model/model");
 
 const User = sequelize.define(
   "User",
@@ -31,6 +32,12 @@ const User = sequelize.define(
       type: DataTypes.ENUM("user", "admin"),
       allowNull: false,
       defaultValue: "user",
+    },
+    otp: {
+      type: DataTypes.STRING,
+    },
+    otp_expired_time: {
+      type: DataTypes.DOUBLE,
     },
   },
   {

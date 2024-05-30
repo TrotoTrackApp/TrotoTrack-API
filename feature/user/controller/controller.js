@@ -16,6 +16,7 @@ const {
   loginRequest,
   userUpdateRequest,
   updatePasswordRequest,
+  newPasswordRequest,
 } = require("../dto/request");
 const {
   loginResponse,
@@ -257,7 +258,53 @@ class UserController {
         user.newPassword,
         user.confirmPassword
       );
-      return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async sendOtpEmail(req, res) {
+    try {
+      const email = req.body.email;
+      await this.userService.sendOtpEmail(email);
+      return res.status(200).json(successResponse(message.SUCCESS_SEND_OTP));
+    } catch (error) {
+      if (error instanceof NotFoundError || error instanceof ValidationError) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      console.log(error);
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async verifyOtpEmail(req, res) {
+    try {
+      const email = req.body.email;
+      const otp = req.body.otp;
+      await this.userService.verifyOtpEmail(email, otp);
+      return res.status(200).json(successResponse("verify otp success"));
+    } catch (error) {
+      if (error instanceof NotFoundError || error instanceof ValidationError) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      console.log(error);
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async newPassword(req, res) {
+    try {
+      const request = await newPasswordRequest(req.body);
+      await this.userService.newPassword(request.email, request.password, request.confirmPassword);
+      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
