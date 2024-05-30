@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.use(userRoute);
 router.use(reportRoute);
-router.user(articleRoute)
+router.use(articleRoute)
 
 module.exports = router;
