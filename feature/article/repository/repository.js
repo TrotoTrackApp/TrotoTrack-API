@@ -41,8 +41,14 @@ class ArticleRepository extends ArticleRepositoryInterface {
     return articleList;
   }
 
-  async updateArticleById(id, updatedData) {
+  async updateArticleById(id, updatedData, file) {
     const articleModel = articleCoreToArticleModel(updatedData);
+
+    if (file) {
+      const imageUrl = await uploadFileToGCS(file.path);
+      articleModel.image = imageUrl;
+    }
+
     const updatedArticle = await this.db.update(articleModel, {
       where: { id: id },
     });

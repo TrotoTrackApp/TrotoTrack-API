@@ -70,31 +70,57 @@ class ArticleService extends ArticleServicesInterface {
     return article;
   }
 
-  async updateArticleById(id, updated) {
-    // Validate required fields
-    if (!data.title || !data.description || !data.image) {
-      throw new ValidationError(message.ERROR_REQUIRED_FIELD);
+  async updateArticleById(id, updatedData, file) {
+    if (!id) {
+      throw new ValidationError(message.ERROR_ID);
+    }
+
+    if (!validator.isUUID(id)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    if (updatedData.title !== undefined) {
+      if (updatedData.title.length < 5) {
+        throw new ValidationError("Title must be at least 5 characters long");
+      }
     }
 
     // Validate title length
-    if (data.title.length < 5) {
-      throw new ValidationError("Title must be at least 5 characters long");
+    if (updatedData.description !== undefined) {
+      if (updatedData.description.length < 10) {
+        throw new ValidationError(
+          "Description must be at least 10 characters long"
+        );
+      }
     }
 
     // Validate description length
-    if (data.description.length < 10) {
+    if (updatedData.description.length < 10) {
       throw new ValidationError(
         "Description must be at least 10 characters long"
       );
     }
 
     // Check if title is already exist
-    const titleExist = await this.articleRepo.getArticleByTitle(data.title);
+    const titleExist = await this.articleRepo.getArticleByTitle(
+      updatedData.title
+    );
     if (titleExist) {
       throw new ValidationError("Title already exist");
     }
 
-    const article = await this.articleRepo.updateArticleById(id, updated);
+    if (file) {
+      if (file > 10 * 1024 * 1024) {
+        throw new ValidationError("File size must not be greater than 10MB");
+      }
+
+      const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!allowedFileTypes.includes(file.mimetype)) {
+        throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+      }
+    }
+
+    const article = await this.articleRepo.updateArticleById(id, updatedData);
     return article;
   }
 
@@ -106,11 +132,10 @@ class ArticleService extends ArticleServicesInterface {
     if (!validator.isUUID(id)) {
       throw new ValidationError(message.ERROT_ID_INVALID);
     }
-    
+
     const article = await this.articleRepo.deleteArticleById(id);
     return article;
   }
 }
-
 
 module.exports = ArticleService;

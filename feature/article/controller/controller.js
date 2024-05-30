@@ -19,7 +19,8 @@ class ArticleController {
     this.articleService = articleService;
   }
 
-  async createArticle(req, res) { //Edited by wisnu
+  async createArticle(req, res) {
+    //Edited by wisnu
     try {
       const { role } = extractToken(req);
       if (role === "admin") {
@@ -47,9 +48,11 @@ class ArticleController {
   async getArticleById(req, res) {
     const articleId = req.params.id;
     try {
-        const article = await this.articleService.getArticleById(articleId);
-        const response = articleResponse(article);
-        return res.status(200).json(successWithDataResponse(message.SUCCESS_GET, response));
+      const article = await this.articleService.getArticleById(articleId);
+      const response = articleResponse(article);
+      return res
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET, response));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -71,9 +74,9 @@ class ArticleController {
       const article = await this.articleService.getAllArticle();
       const response = listArticleResponse(article);
       return res
-          .status(200)
-          .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
-    }  catch (error) {
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
+    } catch (error) {
       if (
         error instanceof NotFoundError ||
         error instanceof UnauthorizedError
@@ -88,15 +91,16 @@ class ArticleController {
     }
   }
 
-  async updateArticleById(req, res) { //Edited Wisnu
+  async updateArticleById(req, res) {
     const articleId = req.params.id;
+    const image = req.file;
     const data = articleRequest(req.body);
     try {
-      const { id, role } = extractToken(req);
-      if (role === "admin" || id === articleId) {
-      await this.articleService.updateArticleById(articleId,data);
+      const { role } = extractToken(req);
+      if (role === "admin") {
+        await this.articleService.updateArticleById(articleId, data, image);
         return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
-      }else {
+      } else {
         return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
     } catch (error) {
@@ -113,7 +117,8 @@ class ArticleController {
     }
   }
 
-  async deleteArticleById(req, res) { //Edited Wisnu
+  async deleteArticleById(req, res) {
+    //Edited Wisnu
     const articleId = req.params.id;
     try {
       const { role } = extractToken(req);
@@ -135,13 +140,16 @@ class ArticleController {
     }
   }
 
-  async getArticleByTitle(req, res) { //added by wisnu
+  async getArticleByTitle(req, res) {
+    //added by wisnu
     try {
       const title = req.params.title;
       const article = await this.articleService.getArticleByTitle(title);
       if (article) {
         const response = articleResponse(article);
-        return res.status(200).json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
+        return res
+          .status(200)
+          .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
       } else {
         return res.status(404).json(errorResponse(message.ERROR_NOT_FOUND));
       }
