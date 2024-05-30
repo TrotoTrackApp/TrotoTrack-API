@@ -6,6 +6,7 @@ const {
   articleModelToArticleCore,
   listArticleModelToArticleCore,
 } = require("../entity/mapping");
+const { uploadFileToGCSForArticle } = require("../../../utils/storage/gcp_storage");
 
 class ArticleRepository extends ArticleRepositoryInterface {
   constructor() {
@@ -17,7 +18,7 @@ class ArticleRepository extends ArticleRepositoryInterface {
     const article = articleCoreToArticleModel(data);
 
     if (file) {
-      const imageUrl = await uploadFileToGCS(file.path);
+      const imageUrl = await uploadFileToGCSForArticle(file.path);
       article.image = imageUrl;
     }
 
@@ -45,7 +46,7 @@ class ArticleRepository extends ArticleRepositoryInterface {
     const articleModel = articleCoreToArticleModel(updatedData);
 
     if (file) {
-      const imageUrl = await uploadFileToGCS(file.path);
+      const imageUrl = await uploadFileToGCSForArticle(file.path);
       articleModel.image = imageUrl;
     }
 
