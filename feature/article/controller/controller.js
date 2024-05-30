@@ -21,10 +21,11 @@ class ArticleController {
 
   async createArticle(req, res) { //Edited by wisnu
     try {
-      const { id, role } = extractToken(req);
+      const { role } = extractToken(req);
       if (role === "admin") {
         const data = articleRequest(req.body);
-        await this.articleService.createArticle(data);
+        const image = req.file;
+        await this.articleService.createArticle(data, image);
         return res.status(201).json(successResponse(message.SUCCESS_CREATED));
       } else {
         return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
@@ -43,7 +44,7 @@ class ArticleController {
     }
   }
 
-  async getArticleById(req, res) {//Edited by wisnu, ini masih bingung sih
+  async getArticleById(req, res) {
     const articleId = req.params.id;
     try {
       if (id === articleId) { 

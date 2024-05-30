@@ -1,6 +1,6 @@
 function articleRequest(body) {
-  const { title, description, image } = body;
-  return { title, description, image };
+  const { title, description } = body;
+  return { title, description };
 }
 
 
