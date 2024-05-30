@@ -47,13 +47,9 @@ class ArticleController {
   async getArticleById(req, res) {
     const articleId = req.params.id;
     try {
-      if (id === articleId) { 
         const article = await this.articleService.getArticleById(articleId);
         const response = articleResponse(article);
         return res.status(200).json(successWithDataResponse(message.SUCCESS_GET, response));
-      } else {
-        return res.status(404).json(errorResponse(message.ERROR_NOT_FOUND));
-      }
     } catch (error) {
       if (
         error instanceof NotFoundError ||

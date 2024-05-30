@@ -7,6 +7,7 @@ function articleCoreToArticleModel(mainData) {
     title: mainData.title,
     description: mainData.description,
     image: mainData.image,
+    created_at: report.createdAt,
   };
 }
 
@@ -25,7 +26,8 @@ function articleModelToArticleCore(mainData) {
     mainData.id,
     mainData.title,
     mainData.description,
-    mainData.image
+    mainData.image,
+    mainData.created_at
   );
   return articleCore;
 }
