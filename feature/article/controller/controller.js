@@ -1,5 +1,5 @@
 const { articleRequest } = require("../dto/request");
-const { articleResponse } = require("../dto/response");//added By Wisnu
+const { articleResponse, listArticleResponse } = require("../dto/response");
 const {
   successResponse,
   errorResponse,
@@ -66,10 +66,10 @@ class ArticleController {
     }
   }
 
-  async getAllArticle(req, res) {//Edited by wisnu, *gatau req belum kepake disini bingung*)
+  async getAllArticle(req, res) {
     try {
       const article = await this.articleService.getAllArticle();
-      const response = articleResponse(article);
+      const response = listArticleResponse(article);
       return res
           .status(200)
           .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));

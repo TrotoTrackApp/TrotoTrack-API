@@ -8,4 +8,13 @@ function articleResponse(article) {
   return response;
 }
 
-module.exports = { articleResponse };
+function listArticleResponse(article) {
+  const response = [];
+  for (const data of article) {
+    const articleResponse = articleResponse(data);
+    response.push(articleResponse);
+  }
+  return response;
+}
+
+module.exports = { articleResponse, listArticleResponse };
