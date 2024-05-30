@@ -58,7 +58,9 @@
                       "status": true,
                       "message": "Login success",
                       "data": {
+                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                         "name": "hilal",
+                        "username": "exoream",
                         "email": "hilal@gmail.com",
                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
                       }
@@ -277,6 +279,7 @@
                       "data": {
                         "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                         "name": "hilal",
+                        "username": "exoream",
                         "email": "hilal@gmail.com"
                       }
                     }
@@ -1784,7 +1787,13 @@
           "data": {
             "type": "object",
             "properties": {
+              "id": {
+                "type": "string"
+              },
               "name": {
+                "type": "string"
+              },
+              "username": {
                 "type": "string"
               },
               "email": {
@@ -1847,6 +1856,9 @@
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "username": {
                 "type": "string"
               },
               "email": {
