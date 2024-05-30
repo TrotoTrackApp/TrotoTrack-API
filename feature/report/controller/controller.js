@@ -21,14 +21,14 @@ class ReportController {
   async createReport(req, res, next) {
     try {
       const request = reportRequest(req.body);
-      const file = req.file;
+      const image = req.file;
 
       const { id } = extractToken(req);
       request.userId = id;
       console.log("Request:", request);
       console.log("user id:", request.userId);
 
-      await this.userService.createReport(request, file);
+      await this.userService.createReport(request, image);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
     } catch (error) {
       if (
@@ -46,12 +46,19 @@ class ReportController {
 
   async updateReport(req, res) {
     try {
+      const { id } = req.params;
       const request = reportRequest(req.body);
-      const file = req.file;
-      const { id } = extractToken(req);
+      const image = req.file;
 
-      await this.userService.updateReport(id, request, file);
-      return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      const { id: idUser, role } = extractToken(req);
+
+      const report = await this.userService.getReportById(id);
+      if (role === "admin" || report.userId === idUser) {
+        await this.userService.updateReport(id, request, image);
+        return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      } else {
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+      }
     } catch (error) {
       if (
         error instanceof ValidationError ||
@@ -121,16 +128,24 @@ class ReportController {
   async getAllReport(req, res) {
     try {
       const { search, page, limit } = req.query;
-      
+
       // Konversi page dan limit ke tipe number
       const pageNumber = parseInt(page, 10) || 1;
       const limitNumber = parseInt(limit, 10) || 10;
-      
-      const { result, pageInfo, totalCount } = await this.userService.getAllReport(search, pageNumber, limitNumber);
+
+      const { result, pageInfo, totalCount } =
+        await this.userService.getAllReport(search, pageNumber, limitNumber);
       const response = reportListResponse(result);
       return res
         .status(200)
-        .json(successWithPaginationAndCount(message.SUCCESS_GET_ALL, response, pageInfo, totalCount));
+        .json(
+          successWithPaginationAndCount(
+            message.SUCCESS_GET_ALL,
+            response,
+            pageInfo,
+            totalCount
+          )
+        );
     } catch (error) {
       if (
         error instanceof ValidationError ||
@@ -149,17 +164,30 @@ class ReportController {
   async getReportProfile(req, res) {
     try {
       const { search, page, limit } = req.query;
-      
+
       // Konversi page dan limit ke tipe number
       const pageNumber = parseInt(page, 10) || 1;
       const limitNumber = parseInt(limit, 10) || 10;
 
       const { id } = extractToken(req);
-      const { result, pageInfo, totalCount } = await this.userService.getReportProfile(id, search, pageNumber, limitNumber);
+      const { result, pageInfo, totalCount } =
+        await this.userService.getReportProfile(
+          id,
+          search,
+          pageNumber,
+          limitNumber
+        );
       const response = reportListResponse(result);
       return res
         .status(200)
-        .json(successWithPaginationAndCount(message.SUCCESS_GET_ALL, response, pageInfo, totalCount));
+        .json(
+          successWithPaginationAndCount(
+            message.SUCCESS_GET_ALL,
+            response,
+            pageInfo,
+            totalCount
+          )
+        );
     } catch (error) {
       if (
         error instanceof ValidationError ||
