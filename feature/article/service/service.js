@@ -4,6 +4,7 @@ const {
   NotFoundError,
 } = require("../../../utils/helper/response");
 const validator = require("validator");
+const { message } = require("../../../utils/constanta/constanta");
 
 class ArticleService extends ArticleServicesInterface {
   constructor(articleRepo) {
@@ -11,9 +12,9 @@ class ArticleService extends ArticleServicesInterface {
     this.articleRepo = articleRepo;
   }
 
-  async createArticle(data) {
+  async createArticle(data, file) {
     // Validate required fields
-    if (!data.title || !data.description || !data.image) {
+    if (!data.title || !data.description || !file) {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
@@ -35,7 +36,16 @@ class ArticleService extends ArticleServicesInterface {
       throw new ValidationError("Title already exist");
     }
 
-    const article = await this.articleRepo.createArticle(data);
+    if (file > 10 * 1024 * 1024) {
+      throw new ValidationError("File size must not be greater than 10MB");
+    }
+
+    const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedFileTypes.includes(file.mimetype)) {
+      throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+    }
+
+    const article = await this.articleRepo.createArticle(data, file);
     return article;
   }
 
@@ -101,3 +111,6 @@ class ArticleService extends ArticleServicesInterface {
     return article;
   }
 }
+
+
+module.exports = ArticleService;
