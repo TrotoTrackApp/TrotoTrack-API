@@ -24,7 +24,7 @@ function reportModelToReportCore(report) {
     report.longitude,
     report.image,
     report.description,
-    report.user_id,
+    report.id_user,
     report.status,
     report.created_at
   );
