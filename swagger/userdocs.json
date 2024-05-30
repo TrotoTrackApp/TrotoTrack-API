@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "https://api.trototrack.online/",
+      "url": "http://localhost:8080/",
       "description": "User Documentation"
     }
   ],
@@ -1637,6 +1637,98 @@
               }
             }
           }
+        }
+      }
+    },
+    "/send-otp": {
+      "post": {
+        "tags": ["Page User"],
+        "summary": "Send OTP",
+        "description": "Send OTP",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestSendOTP"
+              },
+              "examples": {
+                "send": {
+                  "value": {
+                    "email": "hilal@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send OTP",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success send otp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_email": {
+                    "value": {
+                      "status": false,
+                      "message": "Email is not valid"
+                    }
+                  },
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        
         }
       }
     },
