@@ -73,7 +73,7 @@ const uploadFileToGCSForArticle = async (filePath) => {
     }
 
     // Set destination path with new file name and original extension
-    const folderName = article;
+    const folderName = "article";
     const destination = `${folderName}/${newFileName}${ext}`;
 
     await bucket.upload(filePath, {

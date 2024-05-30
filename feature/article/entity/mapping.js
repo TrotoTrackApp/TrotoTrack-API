@@ -7,7 +7,7 @@ function articleCoreToArticleModel(mainData) {
     title: mainData.title,
     description: mainData.description,
     image: mainData.image,
-    created_at: report.createdAt,
+    created_at: mainData.createdAt,
   };
 }
 

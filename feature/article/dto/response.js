@@ -1,7 +1,8 @@
 function articleResponse(article) {
   const response = {
+    id: article.id,
     title: article.title,
-    description: article.name,
+    description: article.description,
     image: article.image,
     created_at: article.createdAt,
   };
@@ -11,8 +12,8 @@ function articleResponse(article) {
 function listArticleResponse(article) {
   const response = [];
   for (const data of article) {
-    const articleResponse = articleResponse(data);
-    response.push(articleResponse);
+    const result = articleResponse(data);
+    response.push(result);
   }
   return response;
 }

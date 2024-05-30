@@ -11,8 +11,8 @@ const {
   NotFoundError,
   UnauthorizedError,
 } = require("../../../utils/helper/response");
-
 const { message } = require("../../../utils/constanta/constanta");
+const { extractToken } = require("../../../utils/jwt/jwt");
 
 class ArticleController {
   constructor(articleService) {
@@ -38,9 +38,8 @@ class ArticleController {
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
-        return res
-          .status(500)
-          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+        console.log(error)
+        return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
     }
   }
