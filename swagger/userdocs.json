@@ -166,7 +166,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Register success",
             "content": {
               "application/json": {
@@ -948,7 +948,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Create report",
             "content": {
               "application/json": {
@@ -1728,7 +1728,6 @@
               }
             }
           }
-        
         }
       }
     },
