@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/TrotoTrack%20Logo.png" alt="Nama Alternatif"> 
+  <img src="https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/TrotoTrack%20Logo.png" alt="Nama Alternatif" style="transform: scale(10);"> 
 </p>
 
 ---
@@ -20,45 +20,39 @@
 ├── app                            
 │   ├── config                      # configuration connection any database
 │   ├── database                    # any database connection
+|   ├── migrate                        
 │   └── route                      
 ├── features
-│   └── featureA
+│   └── feature(a,b,c)              #this structure is the same for all of the features
+|       |── controller
+|       |   └── controller.js  
 │       ├── dto                    
-│       │   ├── request
-│       │   │   ├── mapping.go
-│       │   │   └── request.go
-│       │   └── response
-│       │       ├── mapping.go
-│       │       └── response.go
+│       │   ├── request.js
+│       │   └── response.js
 │       ├── entity
-│       │   ├── entity.go           
-│       │   ├── interface.go        # interface contract for all function repository and service 
-│       │   └── mapping.go          # mapping struct core to model or model to core
-│       ├── handler
-│       │   └── handler.go          # manages HTTP requests and responses.map HTTP input to calls to functions in the service layer.
-│       ├── model
-│       │   └── hook.go        
-│       │   └── model.go            # structure database 
+│       │   ├── entity.js          
+│       │   ├── interface.js       # interface contract for all function repository and service 
+│       │   └── mapping.js         # mapping struct main to model or model to main
+│       ├── model      
+│       │   └── model.js            # structure database 
 │       ├── repository
-│       │   └── respository.go      # query for manipulating data
+│       │   └── respository.js      # query for manipulating data
 │       └── service
-│           └── service.go          # contains the core business logic of the application and validation
-├── utils                           # providing commonly used helper functions across different parts of the project
+│           └── service.js          # contains the core business logic of the application and validation
+├── utils                         
 ```
 ## Tech Stack
-![header](https://github.com/RecyThing/RecyThing-API/assets/66883583/e358c9dd-ed14-4b24-8ec0-3d8ebbb40d65)
-![header-sub-header-body-text-header-2](https://github.com/RecyThing/RecyThing-API/assets/66883583/57f609c9-3fbf-498e-840e-4744e2726fa1)
-![header-sub-header-body-text-header-3](https://github.com/RecyThing/RecyThing-API/assets/66883583/f3c11700-2425-4b8d-b4d7-9010801f5832)
-![Static Badge](https://img.shields.io/badge/RDS%20MYSQL-rds?style=for-the-badge&logo=amazonrds&logoColor=white&color=%234ba185)
-![Static Badge](https://img.shields.io/badge/codecov-s?style=for-the-badge&logo=codecov&logoColor=white&color=%23F01F7A)
+![header-sub-header-body-text-header-3](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/291099608-f3c11700-2425-4b8d-b4d7-9010801f5832.png)
+![Static Badge](https://img.shields.io/badge/Cloud_SQL-cloudsql?style=for-the-badge&logo=googlecloud&logoColor=white&color=%234ba185)
+![Static Badge](https://img.shields.io/badge/Sequelize-sequelize?style=for-the-badge&logo=sequelize&logoColor=white&color=%232496ED)
+![Static Badge](https://img.shields.io/badge/Express.js-express?style=for-the-badge&logo=express&logoColor=black&color=%2385EA2D&)
 ![Static Badge](https://img.shields.io/badge/mysql-s?style=for-the-badge&logo=mysql&logoColor=white&color=%234479A1)
 ![Static Badge](https://img.shields.io/badge/docker-s?style=for-the-badge&logo=docker&logoColor=white&color=%232496ED)
-![Static Badge](https://img.shields.io/badge/cloudflare-s?style=for-the-badge&logo=cloudflare&logoColor=white&color=%23F38020)
 ![Static Badge](https://img.shields.io/badge/swagger-s?style=for-the-badge&logo=swagger&logoColor=%2385EA2D&color=black)
 ![Static Badge](https://img.shields.io/badge/openapi-s?style=for-the-badge&logo=openapiinitiative&logoColor=%2385EA2D&color=black)
 ![Static Badge](https://img.shields.io/badge/openai-s?style=for-the-badge&logo=openai&logoColor=white&color=%23412991)
 
-## API Documentation
+## API Documentation (BELUM)
 
 We use Swagger UI as the API documentation, running on Docker with JSON configuration located on an external server.
 
@@ -88,51 +82,17 @@ Running on cloud run :
     --allow-unauthenticated \
     --set-env-vars=SWAGGER_JSON_URL=https://recything.apicode.my.id/swagger/apidoc.json    #change to your external json
     ```
-## Unit Testing
-
-Using testify for testing code and generate mock with Mockery.
-
-- Install Mockery
-   ```
-  go install github.com/vektra/mockery/v2@v2.38.0
-  ```
-- Generate Mock Auto Detect All Interface
-  ```
-  mockery -all   #The generated mocks will be available in a single file named 'mocks'.
-  ```
-- Test Command
-  
-  Running test and cover on directory test : 
-  ```
-  go test -v -cover   
-  ```
-
-  Running Test and cover with html view :
-  ```
-  go test -coverprofile=cover.out && go tool cover -html=cover.out
-  ```
-
-  Running Test All Sub Directories : 
-  ```
-  go list ./... | grep service | xargs -n1 go test -cover  
-  ```
-  #change grep with your folder name (e.g `grep handler`), It is recommended to use the same folder name.
-  view like this :
- 
-  ![Screenshot from 2023-12-17 20-10-40](https://github.com/RecyThing/RecyThing-API/assets/66883583/ab647a0b-4c97-4c95-9400-b36897495296)
-  
-- Configuration Codecov
-
-  Connect codecov first [here](https://app.codecov.io/), Look YAML configuration [here](https://github.com/RecyThing/RecyThing-API/blob/development/.github/workflows/codecov.yml)
+## Unit Testing (BELUM)
 
 
-## Running Project
+
+## Running Project (BELUM)
 
 Start project with Go :
 ```
 go run main.go
 ```
-## How to deploy to Cloud Run
+## How to deploy to Cloud Run (BELUM)
   - First, build your Docker image and push it to the registry, just like you did with the Swagger UI configuration.
   - Deploy cloud run
     ```
@@ -154,7 +114,7 @@ go run main.go
   You will receive DNS records and add that configuration to the DNS Management in the platform where your domain is located
 
 
-## CI/CD Platform
+## CI/CD Platform (BELUM)
 Cloud Build is a Google Cloud Platform CI/CD platform that is easily implemented with GitHub. Configure trigger [here](https://console.cloud.google.com/cloud-build/). We use cloudbuid.yaml for trigger CI/CD :
 
 ![Screenshot from 2023-12-18 10-50-19](https://github.com/RecyThing/RecyThing-API/assets/66883583/4635ccbe-7e4e-44b8-977b-b4e06bf5bba4)
@@ -165,24 +125,22 @@ Cloud Build is a Google Cloud Platform CI/CD platform that is easily implemented
 
 | Name                           | University	                                         | 
 | :----------------------------- | :--------------------------------------------------- | 
-|	Hanief Fathul Bahri Ahmad      | Universitas Nusa Mandiri                              |	
-|	Tiara Juli Arsita	             | Universitas Tadulako                                  |	
-|	 Juan Azhar Adviseta Setiawan  | Universitas Pembangunan Nasional Veteran Yogyakarta   |	
-|	Al Hilaluddin                  | Universitas Muslim Indonesia                          |	
-|	Stanley	                       | Universitas Mikroskil                                 |	
+|	Al Hilaluddin                  | Universitas Muslim Indonesia                          |
+|	Ardhian Wisnu Kartika                  | Universitas Telkom                       |	
+
 
 ## References
 
-  - [Echo](https://echo.labstack.com/) : High performance, extensible, minimalist Go web framework
-  - [Gorm](https://gorm.io/) : GORM facilitates the interaction with relational databases, simplifying the process of accessing and managing data
-  - [Swagger-Ui](https://github.com/swagger-api/swagger-ui) : Api Documentation
-  - [Go-openai](https://github.com/sashabaranov/go-openai) : Configuration Open-Ai
-  - [Gorilla/schema](https://github.com/gorilla/schema) : Bind request struct
-  - [Cloud Run](https://cloud.google.com/run?hl=id) : Deployment Platform
-  - [Govalidator](https://github.com/asaskevich/govalidator) : Package of validators and sanitizers for strings, numerics, slices and structs
-  - [Codecov](https://about.codecov.io/) : Coverage Reporting
-  - [Testify](https://github.com/stretchr/testify) : A toolkit with common assertions and mocks that plays nicely with the standard library
-  - [Mockery](https://github.com/vektra/mockery) : A mock code autogenerator for Go Interface
+ ## Technologies and Tools
+
+- [Cloud Run](https://cloud.google.com/run?hl=id) : Deployment Platform
+- [Cloud SQL](https://cloud.google.com/sql) : Managed database service for relational databases
+- [Sequelize](https://sequelize.org/) : Sequelize is a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
+- [Express.js](https://expressjs.com/) : Fast, unopinionated, minimalist web framework for Node.js
+- [MySQL](https://www.mysql.com/) : The world's most popular open source database
+- [Docker](https://www.docker.com/) : Platform for developing, shipping, and running applications
+- [OpenAPI](https://www.openapis.org/) : Standard for defining APIs
+- [OpenAI](https://www.openai.com/) : Research organization that promotes and develops friendly AI
 
 
 
