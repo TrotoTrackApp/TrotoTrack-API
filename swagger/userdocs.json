@@ -1547,97 +1547,6 @@
             }
           }
         }
-      },
-      "/send-otp": {
-        "post": {
-          "tags": ["Page User"],
-          "summary": "Send OTP",
-          "description": "Send OTP",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RequestSendOTP"
-                },
-                "examples": {
-                  "send": {
-                    "value": {
-                      "email": "shiigetsu1@gmail.com"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Send OTP",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                  },
-                  "examples": {
-                    "success": {
-                      "value": {
-                        "status": true,
-                        "message": "Success send otp"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Validation error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ResponseError"
-                  },
-                  "examples": {
-                    "missing_fields": {
-                      "value": {
-                        "status": false,
-                        "message": "Please fill all required fields"
-                      }
-                    },
-                    "invalid_email": {
-                      "value": {
-                        "status": false,
-                        "message": "Email is not valid"
-                      }
-                    },
-                    "email_not_registered": {
-                      "value": {
-                        "status": false,
-                        "message": "Email not registered"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal server error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ResponseError"
-                  },
-                  "examples": {
-                    "server_error": {
-                      "value": {
-                        "status": false,
-                        "message": "Internal server error"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/send-otp": {
@@ -1699,7 +1608,19 @@
                       "status": false,
                       "message": "Email is not valid"
                     }
-                  },
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
                   "email_not_registered": {
                     "value": {
                       "status": false,
@@ -1792,18 +1713,6 @@
                       "message": "Email is not valid"
                     }
                   },
-                  "email_not_registered": {
-                    "value": {
-                      "status": false,
-                      "message": "Email not registered"
-                    }
-                  },
-                  "invalid_email_otp": {
-                    "value": {
-                      "status": false,
-                      "message": "Email or OTP is incorrect"
-                    }
-                  },
                   "invalid_otp": {
                     "value": {
                       "status": false,
@@ -1814,6 +1723,24 @@
                     "value": {
                       "status": false,
                       "message": "OTP is expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
                     }
                   }
                 }
@@ -1903,12 +1830,6 @@
                       "message": "Email is not valid"
                     }
                   },
-                  "email_not_registered": {
-                    "value": {
-                      "status": false,
-                      "message": "Email not registered"
-                    }
-                  },
                   "short_password": {
                     "value": {
                       "status": false,
@@ -1919,6 +1840,24 @@
                     "value": {
                       "status": false,
                       "message": "Password and Confirm Password must be the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "email_not_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "Email not registered"
                     }
                   }
                 }
