@@ -931,6 +931,12 @@
                       "message": "File size must not be greater than 10MB"
                     }
                   },
+                  "invalid_title": {
+                    "value": {
+                      "status": false,
+                      "message": "Title must be at least 5 characters long"
+                    }
+                  },
                   "invalid_description": {
                     "value": {
                       "status": false,
@@ -1314,6 +1320,12 @@
                     "value": {
                       "status": false,
                       "message": "File size must not be greater than 10MB"
+                    }
+                  },
+                  "invalid_title": {
+                    "value": {
+                      "status": false,
+                      "message": "Title must be at least 5 characters long"
                     }
                   },
                   "invalid_description": {
