@@ -1354,7 +1354,7 @@
         }
       }
     },
-    "/reports/{id}/like": {
+    "/reports/{id}/upvote": {
       "post": {
         "security": [
           {
@@ -1362,8 +1362,8 @@
           }
         ],
         "tags": ["Report"],
-        "summary": "Like report",
-        "description": "Like report",
+        "summary": "Upvote report",
+        "description": "Upvote report",
         "parameters": [
           {
             "$ref": "#/components/parameters/ReportId"
@@ -1371,7 +1371,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Like report",
+            "description": "Upvote report",
             "content": {
               "application/json": {
                 "schema": {
@@ -1381,7 +1381,7 @@
                   "success": {
                     "value": {
                       "status": true,
-                      "message": "Success liked report"
+                      "message": "Success upvote report"
                     }
                   }
                 }
@@ -1411,7 +1411,7 @@
                   "already_liked": {
                     "value": {
                       "status": false,
-                      "message": "You have already liked this report"
+                      "message": "You have already upvote this report"
                     }
                   }
                 }
