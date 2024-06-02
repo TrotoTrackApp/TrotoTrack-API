@@ -6,6 +6,7 @@ function reportResponse(report) {
     latitude: report.latitude,
     longitude: report.longitude,
     image: report.image,
+    status_damage: report.statusDamage,
     description: report.description,
     status: report.status,
     like: report.like,

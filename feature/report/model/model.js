@@ -30,6 +30,10 @@ const Report = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    status_damage: {
+      type: DataTypes.ENUM("Heavy Damaged", "Light Damaged", "Good"),
+      allowNull: false,
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: true,

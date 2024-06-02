@@ -6,6 +6,7 @@ class ReportCore {
     latitude,
     longitude,
     image,
+    statusDamage,
     description,
     userId,
     status,
@@ -18,6 +19,7 @@ class ReportCore {
     this.latitude = latitude;
     this.longitude = longitude;
     this.image = image;
+    this.statusDamage = statusDamage;
     this.description = description;
     this.userId = userId;
     this.status = status;

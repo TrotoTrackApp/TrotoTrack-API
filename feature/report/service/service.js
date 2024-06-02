@@ -14,6 +14,7 @@ class ReportService extends ReportServiceInterface {
       !data.location ||
       !data.latitude ||
       !data.longitude ||
+      !data.statusDamage ||
       !data.description ||
       !file
     ) {
