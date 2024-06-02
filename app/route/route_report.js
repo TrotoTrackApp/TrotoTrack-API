@@ -26,5 +26,6 @@ router.delete('/reports/:id', jwtMiddleware, reportController.deleteReport.bind(
 router.get('/reports/:id', jwtMiddleware, reportController.getReportById.bind(reportController));
 router.patch('/reports/:id/status', jwtMiddleware, reportController.updateStatusReport.bind(reportController));
 
+router.post('/reports/:id/like', jwtMiddleware, reportController.likeReport.bind(reportController));
 
 module.exports = router;

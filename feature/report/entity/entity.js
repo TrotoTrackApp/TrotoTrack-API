@@ -9,6 +9,7 @@ class ReportCore {
     description,
     userId,
     status,
+    like,
     createdAt,
   ) {
     this.id = id;
@@ -20,6 +21,7 @@ class ReportCore {
     this.description = description;
     this.userId = userId;
     this.status = status;
+    this.like = like;
     this.createdAt = createdAt;
   }
 }

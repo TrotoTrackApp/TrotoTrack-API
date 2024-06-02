@@ -43,6 +43,11 @@ const Report = sequelize.define(
       allowNull: false,
       defaultValue: "pending",
     },
+    like: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
   },
   {
     timestamps: true,
@@ -53,4 +58,30 @@ const Report = sequelize.define(
   }
 );
 
-module.exports = Report;
+const ReportLikes = sequelize.define(
+  "ReportLikes",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    id_user: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    id_report: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+  },
+  {
+    timestamps: true,
+    paranoid: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    deletedAt: "deleted_at",
+  }
+);
+
+module.exports = { Report, ReportLikes };

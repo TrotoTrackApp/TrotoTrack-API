@@ -4,6 +4,7 @@ const { message } = require("../../../utils/constanta/constanta");
 const {
   ValidationError,
   UnauthorizedError,
+  NotFoundError,
 } = require("../../../utils/helper/response");
 const {
   successResponse,
@@ -218,6 +219,28 @@ class ReportController {
       if (
         error instanceof ValidationError ||
         error instanceof UnauthorizedError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
+
+  async likeReport(req, res) {
+    try {
+      const id = req.params.id;
+      const { id: idUser } = extractToken(req);
+      await this.userService.likeReport(id, idUser);
+      return res.status(200).json(successResponse("Success Like Report"));
+    } catch (error) {
+      if (
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {

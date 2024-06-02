@@ -222,6 +222,40 @@ class ReportService extends ReportServiceInterface {
     const result = await this.reportRepository.updateStatusReport(id, status);
     return result;
   }
+
+  async likeReport(id, idUser) {
+    if (!id) {
+      throw new ValidationError(message.ERROR_ID);
+    }
+
+    if (!validator.isUUID(id)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    const currentReport = await this.reportRepository.getReportById(id);
+    if (!currentReport) {
+      throw new ValidationError(message.ERROR_NOT_FOUND);
+    }
+
+    const userLikedReport = await this.reportRepository.checkUserLikedReport(
+      id,
+      idUser
+    );
+
+    if(userLikedReport) {
+      throw new ValidationError("User has already liked this report");
+    }
+
+    // Check if the user has liked the report
+    const updatedLike = currentReport.like + 1;
+
+    const result = await this.reportRepository.likeReport(
+      id,
+      updatedLike,
+      idUser
+    );
+    return result;
+  }
 }
 
 module.exports = ReportService;
