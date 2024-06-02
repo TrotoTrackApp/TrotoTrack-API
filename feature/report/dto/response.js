@@ -8,6 +8,7 @@ function reportResponse(report) {
     image: report.image,
     description: report.description,
     status: report.status,
+    like: report.like,
     created_at: report.createdAt,
   };
   return response;
