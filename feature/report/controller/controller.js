@@ -236,7 +236,7 @@ class ReportController {
       const id = req.params.id;
       const { id: idUser } = extractToken(req);
       await this.userService.likeReport(id, idUser);
-      return res.status(200).json(successResponse("Success liked report"));
+      return res.status(200).json(successResponse("Success upvote report"));
     } catch (error) {
       if (
         error instanceof ValidationError ||
