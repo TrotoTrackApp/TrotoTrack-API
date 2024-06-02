@@ -152,10 +152,7 @@ class ReportRepository extends ReportRepositoryInterface {
   async likeReport(id, like, userId) {
     const transaction = await sequelize.transaction();
     try {
-      const report = await this.report.findByPk(id, {
-        transaction,
-        lock: transaction.LOCK.UPDATE,
-      });
+      const report = await this.report.findByPk(id, {transaction});
 
       if (!report) {
         throw new NotFoundError("User task not found");
@@ -171,10 +168,13 @@ class ReportRepository extends ReportRepositoryInterface {
         }
       );
 
-      await ReportLikes.create({
-        id_user: userId,
-        id_report: id,
-      });
+      await ReportLikes.create(
+        {
+          id_user: userId,
+          id_report: id,
+        },
+        { transaction }
+      );
 
       await transaction.commit();
 

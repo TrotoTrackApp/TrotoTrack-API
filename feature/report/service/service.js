@@ -243,7 +243,7 @@ class ReportService extends ReportServiceInterface {
     );
 
     if(userLikedReport) {
-      throw new ValidationError("User has already liked this report");
+      throw new ValidationError("You has already liked this report");
     }
 
     // Check if the user has liked the report

@@ -13,6 +13,7 @@ const {
   successWithPaginationAndCount,
 } = require("../../../utils/helper/response");
 const { reportResponse, reportListResponse } = require("../dto/response");
+const { DatabaseError } = require("sequelize");
 
 class ReportController {
   constructor(userService) {
@@ -243,6 +244,11 @@ class ReportController {
         error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
+      } else if (
+        error instanceof DatabaseError &&
+        error.original.code === "ER_LOCK_WAIT_TIMEOUT"
+      ) {
+        return res.status(409).json(errorResponse("Please try again"));
       } else {
         console.log(error);
         return res
