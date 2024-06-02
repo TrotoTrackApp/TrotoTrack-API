@@ -1586,6 +1586,7 @@
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "status_damage": "heavy damaged",
                           "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
                           "created_at": "2021-08-01T00:00:00Z"
@@ -1597,6 +1598,7 @@
                           "latitude": -5.135399,
                           "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                          "status_damage": "light damaged",
                           "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
                           "created_at": "2021-08-01T00:00:00Z"
@@ -1725,6 +1727,7 @@
                         "latitude": -5.135399,
                         "longitude": 119.42379,
                         "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                        "status_damage": "heavy damaged",
                         "description": "ini adalah contoh input report oleh user sendiri",
                         "status": "pending",
                         "created_at": "2021-08-01T00:00:00Z"
@@ -1842,8 +1845,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -1859,8 +1863,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -2652,6 +2657,9 @@
                 "image": {
                   "type": "string"
                 },
+                "status_damage": {
+                  "type": "string"
+                },
                 "description": {
                   "type": "string"
                 },
@@ -2670,6 +2678,7 @@
                 "latitude",
                 "longitude",
                 "image",
+                "status_damage",
                 "description",
                 "status",
                 "created_at"
@@ -2730,6 +2739,9 @@
               "image": {
                 "type": "string"
               },
+              "status_damage": {
+                "type": "string"
+              },
               "description": {
                 "type": "string"
               },
@@ -2748,6 +2760,7 @@
               "latitude",
               "longitude",
               "image",
+              "status_damage",
               "description",
               "status",
               "created_at"
@@ -2782,14 +2795,17 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
+          "image": {
             "type": "string"
           },
-          "image": {
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
             "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": ["location", "latitude", "longitude", "image", "status_damage", "description"]
       },
       "RequestReportMultiPart": {
         "type": "object",
@@ -2808,16 +2824,19 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
-            "type": "string"
-          },
           "image": {
             "type": "string",
             "format": "binary",
             "nullable": false
+          },
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": ["location", "latitude", "longitude", "image", "status_damage", "description"]
       }
     }
   }
