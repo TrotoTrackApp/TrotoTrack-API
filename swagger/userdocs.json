@@ -1354,127 +1354,6 @@
         }
       }
     },
-    "/reports/{id}/upvote": {
-      "post": {
-        "security": [
-          {
-            "auth": []
-          }
-        ],
-        "tags": ["Report"],
-        "summary": "Upvote report",
-        "description": "Upvote report",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ReportId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Upvote report",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
-                },
-                "examples": {
-                  "success": {
-                    "value": {
-                      "status": true,
-                      "message": "Success upvote report"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "missing_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is required"
-                    }
-                  },
-                  "invalid_id": {
-                    "value": {
-                      "status": false,
-                      "message": "ID is not valid"
-                    }
-                  },
-                  "already_liked": {
-                    "value": {
-                      "status": false,
-                      "message": "You have already upvote this report"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "unauthorized": {
-                    "value": {
-                      "status": false,
-                      "message": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "not_found": {
-                    "value": {
-                      "status": false,
-                      "message": "Report not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "examples": {
-                  "server_error": {
-                    "value": {
-                      "status": false,
-                      "message": "Internal server error"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/reports/{id}": {
       "put": {
         "security": [
@@ -1633,6 +1512,127 @@
                     "value": {
                       "status": false,
                       "message": "Forbidden access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Report not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{id}/upvote": {
+      "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Upvote report",
+        "description": "Upvote report",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ReportId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Upvote report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success upvote report"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  },
+                  "already_liked": {
+                    "value": {
+                      "status": false,
+                      "message": "You have already upvote this report"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
                     }
                   }
                 }
