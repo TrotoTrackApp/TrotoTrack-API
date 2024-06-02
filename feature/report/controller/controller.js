@@ -4,6 +4,7 @@ const { message } = require("../../../utils/constanta/constanta");
 const {
   ValidationError,
   UnauthorizedError,
+  NotFoundError,
 } = require("../../../utils/helper/response");
 const {
   successResponse,
@@ -12,6 +13,7 @@ const {
   successWithPaginationAndCount,
 } = require("../../../utils/helper/response");
 const { reportResponse, reportListResponse } = require("../dto/response");
+const { DatabaseError } = require("sequelize");
 
 class ReportController {
   constructor(userService) {
@@ -220,6 +222,33 @@ class ReportController {
         error instanceof UnauthorizedError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
+
+  async likeReport(req, res) {
+    try {
+      const id = req.params.id;
+      const { id: idUser } = extractToken(req);
+      await this.userService.likeReport(id, idUser);
+      return res.status(200).json(successResponse("Success Like Report"));
+    } catch (error) {
+      if (
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else if (
+        error instanceof DatabaseError &&
+        error.original.code === "ER_LOCK_WAIT_TIMEOUT"
+      ) {
+        return res.status(409).json(errorResponse("Please try again"));
       } else {
         console.log(error);
         return res
