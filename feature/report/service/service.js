@@ -233,21 +233,17 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROT_ID_INVALID);
     }
 
-    const currentReport = await this.reportRepository.getReportById(id);
-    if (!currentReport) {
-      throw new ValidationError(message.ERROR_NOT_FOUND);
-    }
-
     const userLikedReport = await this.reportRepository.checkUserLikedReport(
       id,
       idUser
     );
 
     if(userLikedReport) {
-      throw new ValidationError("You has already liked this report");
+      throw new ValidationError("You have already liked this report");
     }
 
     // Check if the user has liked the report
+    const currentReport = await this.reportRepository.getReportById(id);
     const updatedLike = currentReport.like + 1;
 
     const result = await this.reportRepository.likeReport(
