@@ -922,8 +922,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -939,8 +940,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -2209,14 +2211,24 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
+          "image": {
             "type": "string"
           },
-          "image": {
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
             "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       },
       "RequestReportMultiPart": {
         "type": "object",
@@ -2235,16 +2247,26 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
-            "type": "string"
-          },
           "image": {
             "type": "string",
             "format": "binary",
             "nullable": false
+          },
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       },
       "ResponseAllReport": {
         "type": "object",
@@ -2281,6 +2303,9 @@
                 "image": {
                   "type": "string"
                 },
+                "status_damage": {
+                  "type": "string"
+                },
                 "description": {
                   "type": "string"
                 },
@@ -2298,6 +2323,7 @@
                 "reference_location",
                 "latitude",
                 "longitude",
+                "status_damage",
                 "image",
                 "description",
                 "status",
@@ -2356,6 +2382,9 @@
                 "type": "number",
                 "format": "double"
               },
+              "status_damage": {
+                "type": "string"
+              },
               "image": {
                 "type": "string"
               },
@@ -2377,6 +2406,7 @@
               "latitude",
               "longitude",
               "image",
+              "status_damage",
               "description",
               "status",
               "created_at"
