@@ -1,6 +1,4 @@
-FROM node:21.7.3-alpine3.18
-
-RUN apk update && apk add --no-cache libc6-compat
+FROM node:18.7.0
 
 WORKDIR /app
 
