@@ -1,10 +1,9 @@
-const tf = require("@tensorflow/tfjs-node");
-require("dotenv").config();
+const tf = require('@tensorflow/tfjs-node');
+require('dotenv').config();
 
-function loadModel() {
-  url = process.env.MODEL_URL;
-  result = tf.loadGraphModel(url);
-  return result;
+async function loadModel() {
+  const modelUrl = process.env.MODEL_URL;
+  return tf.loadLayersModel(modelUrl);
 }
 
 module.exports = loadModel;
