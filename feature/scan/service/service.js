@@ -35,9 +35,9 @@ class ScanService extends ScanServiceInterface {
 
       const classes = ["good", "heavy demaged", "light demaged"];
       const descriptions = {
-        "good": "The item is in good condition.",
-        "heavy demaged": "The item is heavily damaged.",
-        "light demaged": "The item is lightly damaged.",
+        "good": "The sidewalk is in good condition. No action needed",
+        "heavy demaged": "The sidewalk is heavily damaged. Please report this area",
+        "light demaged": "The sidewalk is lightly damaged. Please report this area",
       };
 
       const predictions = await model.predict(expandedImg);
