@@ -2013,6 +2013,96 @@
           }
         }
       }
+    },
+    "/scan": {
+      "post": {
+        "tags": ["Page User"],
+        "summary": "Scan",
+        "description": "Scan",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestScan"
+              },
+              "examples": {
+                "scan": {
+                  "value": {
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScan"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success scan",
+                      "data": {
+                        "label": "heavy damaged",
+                        "probability": 94.70623779296875,
+                        "description": "The sidewalk is heavily damaged. Please report this area"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "No image uploaded or invalid image buffer."
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Expected image (BMP, JPEG, PNG, or GIF), but got unsupported image type: ${mimeType}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2595,6 +2685,44 @@
           }
         },
         "required": ["email", "password", "confirm_password"]
+      },
+      "RequestScan": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["image"]
+      },
+      "ResponseScan": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "probability": {
+                "type": "string"
+              },
+              "description": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": ["label", "probability", "description"]
+          }
+        }
       }
     }
   }
