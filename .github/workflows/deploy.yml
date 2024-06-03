@@ -24,6 +24,7 @@ env:
   EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
   EMAIL_USER: ${{ secrets.EMAIL_USER }}
   EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+  MODEL_URL: ${{ secrets.MODEL_URL }}
 
 
 jobs:
@@ -79,6 +80,7 @@ jobs:
             EMAIL_USER=${{ env.EMAIL_USER }}
             EMAIL_PASS=${{ env.EMAIL_PASS }}
             JWTSECRET=${{ env.JWTSECRET }}
+            MODEL_URL=${{ env.MODEL_URL }}
             
 
       - name: Show Output
