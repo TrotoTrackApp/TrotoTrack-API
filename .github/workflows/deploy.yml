@@ -5,11 +5,11 @@ on:
     branches: ["development"]
 
 env:
-  PROJECT_ID: testing-ci-cd-4248
-  GAR_LOCATION: asia-southeast2
-  GAR_REPOSITORY_NAME: testing-ci-cd
-  SERVICE: testing-ci-cd
-  REGION: asia-southeast2
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  GAR_LOCATION: ${{ secrets.GAR_LOCATION }}
+  GAR_REPOSITORY_NAME: ${{ secrets.GAR_REPOSITORY_NAME }}
+  SERVICE: ${{ secrets.SERVICE }}
+  REGION: ${{ secrets.REGION }}
   DBHOST: ${{ secrets.DBHOST }}
   DBUSER: ${{ secrets.DBUSER }}
   DBPASS: ${{ secrets.DBPASS }}
