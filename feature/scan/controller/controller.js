@@ -2,6 +2,7 @@ const { successWithDataResponse, errorResponse } = require("../../../utils/helpe
 const { ValidationError } = require("../../../utils/helper/response")
 const { message } = require("../../../utils/constanta/constanta");
 const loadModel = require("../model/model");
+const responseScan = require("../dto/response");
 
 class ScanController {
   constructor(scanService) {
@@ -13,13 +14,13 @@ class ScanController {
       const image = req.file;
       const model = await loadModel();
       const { label, probability, description } = await this.scanService.predict(image, model);
-      return res.status(200).json({ status: true, message: "Success scan", data: { label, probability, description } });
+      return res.status(200).json(successWithDataResponse("Success scan", responseScan(label, probability, description)));
     } catch (error) {
       if (error instanceof ValidationError) {
-        return res.status(error.statusCode).json({ status: false, message: error.message });
+        return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
         console.log(error);
-        return res.status(500).json({ status: false, message: "Internal server error" });
+        return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
     }
   }
