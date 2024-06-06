@@ -2173,9 +2173,19 @@
                 "$ref": "#/components/schemas/RequestUpdateStatusReport"
               },
               "examples": {
-                "status": {
+                "approved": {
                   "value": {
                     "status": "approved"
+                  }
+                },
+                "rejected": {
+                  "value": {
+                    "status": "rejected"
+                  }
+                },
+                "pending": {
+                  "value": {
+                    "status": "pending"
                   }
                 }
               }
@@ -2805,7 +2815,14 @@
             "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image", "status_damage", "description"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       },
       "RequestReportMultiPart": {
         "type": "object",
@@ -2836,7 +2853,14 @@
             "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image", "status_damage", "description"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       }
     }
   }

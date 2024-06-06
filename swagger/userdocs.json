@@ -2049,7 +2049,18 @@
                   "$ref": "#/components/schemas/ResponseScan"
                 },
                 "examples": {
-                  "success": {
+                  "good": {
+                    "value": {
+                      "status": true,
+                      "message": "Success scan",
+                      "data": {
+                        "label": "good",
+                        "probability": 94.70623779296875,
+                        "description": "The sidewalk is in good condition. No action needed"
+                      }
+                    }
+                  },
+                  "heavy_demaged": {
                     "value": {
                       "status": true,
                       "message": "Success scan",
@@ -2057,6 +2068,17 @@
                         "label": "heavy damaged",
                         "probability": 94.70623779296875,
                         "description": "The sidewalk is heavily damaged. Please report this area"
+                      }
+                    }
+                  },
+                  "light_demaged": {
+                    "value": {
+                      "status": true,
+                      "message": "Success scan",
+                      "data": {
+                        "label": "light damaged",
+                        "probability": 94.70623779296875,
+                        "description": "The sidewalk is lightly damaged. Please report this area"
                       }
                     }
                   }
