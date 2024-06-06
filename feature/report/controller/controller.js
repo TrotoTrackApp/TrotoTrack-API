@@ -29,6 +29,7 @@ class ReportController {
       request.userId = id;
       console.log("Request:", request);
       console.log("user id:", request.userId);
+      console.log("image:", image);
 
       await this.userService.createReport(request, image);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
@@ -39,6 +40,7 @@ class ReportController {
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
+        console.log(error);
         return res
           .status(500)
           .json(errorResponse(message.ERROR_INTERNAL_SERVER));
