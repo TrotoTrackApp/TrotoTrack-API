@@ -1582,25 +1582,19 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "di depan perumahan sudiang raya",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
                           "status_damage": "heavy damaged",
-                          "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
+                          "like": 0,
                           "created_at": "2021-08-01T00:00:00Z"
                         },
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "di depan perumahan sudiang raya",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
                           "status_damage": "light damaged",
-                          "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
+                          "like": 2,
                           "created_at": "2021-08-01T00:00:00Z"
                         }
                       ],
@@ -1700,8 +1694,8 @@
           }
         ],
         "tags": ["Report"],
-        "summary": "Get report profile",
-        "description": "Get report profile",
+        "summary": "Get report by id",
+        "description": "Get report by id",
         "parameters": [
           {
             "$ref": "#/components/parameters/UserId"
@@ -1709,7 +1703,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Get report profile",
+            "description": "Get report by id",
             "content": {
               "application/json": {
                 "schema": {
@@ -1730,6 +1724,8 @@
                         "status_damage": "heavy damaged",
                         "description": "ini adalah contoh input report oleh user sendiri",
                         "status": "pending",
+                        "like": 0,
+                        "reason": "Location is not clear",
                         "created_at": "2021-08-01T00:00:00Z"
                       }
                     }
@@ -2653,28 +2649,17 @@
                 "location": {
                   "type": "string"
                 },
-                "reference_location": {
-                  "type": "string"
-                },
-                "latitude": {
-                  "type": "number",
-                  "format": "double"
-                },
-                "longitude": {
-                  "type": "number",
-                  "format": "double"
-                },
                 "image": {
                   "type": "string"
                 },
                 "status_damage": {
                   "type": "string"
                 },
-                "description": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
+                },
+                "like": {
+                  "type": "integer"
                 },
                 "created_at": {
                   "type": "string",
@@ -2684,13 +2669,10 @@
               "required": [
                 "id",
                 "location",
-                "reference_location",
-                "latitude",
-                "longitude",
                 "image",
                 "status_damage",
-                "description",
                 "status",
+                "like",
                 "created_at"
               ]
             }
@@ -2758,6 +2740,12 @@
               "status": {
                 "type": "string"
               },
+              "like": {
+                "type": "integer"
+              },
+              "reason": {
+                "type": "string"
+              },
               "created_at": {
                 "type": "string",
                 "format": "date-time"
@@ -2773,6 +2761,8 @@
               "status_damage",
               "description",
               "status",
+              "like",
+              "reason",
               "created_at"
             ]
           }
