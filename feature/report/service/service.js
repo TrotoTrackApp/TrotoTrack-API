@@ -21,10 +21,10 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    if(data.statusDamage !== "heavy damage" && data.statusDamage !== "light damage" && data.statusDamage !== "good") {
-      throw new ValidationError("Status damage must be heavy damage, light damage, or good");
+    if(data.statusDamage !== "heavy damaged" && data.statusDamage !== "light damaged" && data.statusDamage !== "good") {
+      throw new ValidationError("Status damage must be heavy damaged, light damaged, or good");
     }
-    
+
     if (data.latitude < -90 || data.latitude > 90) {
       throw new ValidationError("Latitude must be between -90 and 90");
     }
