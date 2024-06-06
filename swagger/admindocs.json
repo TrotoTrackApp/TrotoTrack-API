@@ -1723,7 +1723,7 @@
                         "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
                         "status_damage": "heavy damaged",
                         "description": "ini adalah contoh input report oleh user sendiri",
-                        "status": "pending",
+                        "status": "rejected",
                         "like": 0,
                         "reason": "Location is not clear",
                         "created_at": "2021-08-01T00:00:00Z"
