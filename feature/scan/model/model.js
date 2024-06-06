@@ -29,10 +29,4 @@ async function loadModel() {
   return tf.loadLayersModel(modelUrl);
 }
 
-loadModel().then(model => {
-  console.log("Model loaded successfully");
-}).catch(error => {
-  console.error("Error loading model:", error);
-});
-
 module.exports = loadModel;
