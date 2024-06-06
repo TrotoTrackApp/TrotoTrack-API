@@ -2218,7 +2218,25 @@
                   "invalid_file": {
                     "value": {
                       "status": false,
-                      "message": "Expected image (BMP, JPEG, PNG, or GIF), but got unsupported image type: ${mimeType}"
+                      "message": "Expected image (JPG, JPEG, or PNG), but got unsupported image type: ${mimeType}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
                     }
                   }
                 }
