@@ -16,7 +16,7 @@ class ScanController {
       const { label, probability, description } = await this.scanService.predict(image, model);
       return res.status(200).json(successWithDataResponse("Success scan", responseScan(label, probability, description)));
     } catch (error) {
-      if (error instanceof ValidationError) {
+      if (error instanceof ValidationError || error instanceof UnauthorizedError) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
         console.log(error);

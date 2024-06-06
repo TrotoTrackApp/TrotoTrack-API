@@ -15,16 +15,15 @@ class ScanService extends ScanServiceInterface {
       }
 
       const supportedTypes = [
-        "image/bmp",
         "image/jpeg",
         "image/png",
-        "image/gif",
+        "image/jpg",
       ];
       const mimeType = image.mimetype;
 
       if (!supportedTypes.includes(mimeType)) {
         throw new ValidationError(
-          `Expected image (BMP, JPEG, PNG, or GIF), but got unsupported image type: ${mimeType}`
+          `Expected image (JPG, JPEG, or PNG), but got unsupported image type: ${mimeType}`
         );
       }
 
