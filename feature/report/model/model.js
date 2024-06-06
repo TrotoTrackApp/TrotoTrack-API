@@ -31,7 +31,7 @@ const Report = sequelize.define(
       allowNull: true,
     },
     status_damage: {
-      type: DataTypes.ENUM("heavy damaged", "light damaged", "good"),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     description: {
@@ -43,7 +43,7 @@ const Report = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("pending", "rejected", "approved"),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "pending",
     },

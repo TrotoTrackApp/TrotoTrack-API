@@ -44,6 +44,13 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
     }
 
+    const allowedStatusDamage = ["heavy damaged", "light damaged", "good"];
+    if (!allowedStatusDamage.includes(data.statusDamage)) {
+      throw new ValidationError(
+        "Status damage must be either 'heavy damaged', 'light damaged', or 'good'"
+      );
+    }
+
     const result = await this.reportRepository.createReport(data, file);
     return result;
   }
