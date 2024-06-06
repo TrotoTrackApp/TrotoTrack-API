@@ -23,7 +23,7 @@ class ReportRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
-  async updateStatusReport(id, status) {
+  async updateStatusReport(id, status, reason) {
     throw new Error("Method not implemented");
   }
 
@@ -57,7 +57,7 @@ class ReportServiceInterface {
     throw new Error("Method not implemented");
   }
 
-  async updateStatusReport(id, status) {
+  async updateStatusReport(id, status, reason) {
     throw new Error("Method not implemented");
   }
 

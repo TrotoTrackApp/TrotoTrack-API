@@ -64,7 +64,8 @@ class ReportController {
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
@@ -89,7 +90,8 @@ class ReportController {
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
@@ -103,20 +105,16 @@ class ReportController {
   async getReportById(req, res) {
     try {
       const id = req.params.id;
-      const { role } = extractToken(req);
-      if (role === "admin") {
-        const data = await this.userService.getReportById(id);
-        const response = reportResponse(data);
-        return res
-          .status(200)
-          .json(successWithDataResponse(message.SUCCESS_GET, response));
-      } else {
-        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
-      }
+      const data = await this.userService.getReportById(id);
+      const response = reportResponse(data);
+      return res
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET, response));
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
@@ -208,10 +206,10 @@ class ReportController {
   async updateStatusReport(req, res) {
     try {
       const id = req.params.id;
-      const { status } = req.body;
+      const { status, reason } = req.body;
       const { role } = extractToken(req);
       if (role === "admin") {
-        await this.userService.updateStatusReport(id, status);
+        await this.userService.updateStatusReport(id, status, reason);
         return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
       } else {
         return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
@@ -219,7 +217,8 @@ class ReportController {
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {

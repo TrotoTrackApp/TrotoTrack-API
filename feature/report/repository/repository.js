@@ -131,18 +131,20 @@ class ReportRepository extends ReportRepositoryInterface {
     return { result, pageInfo, totalCount };
   }
 
-  async updateStatusReport(id, status) {
-    const updateStatus = await this.report.update(
-      { status: status },
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
+  async updateStatusReport(id, status, reason) {
+    const updateData = { status: status };
+    if (status === "rejected") {
+        updateData.reason = reason;
+    }
 
-    if (updateStatus === 0) {
-      throw new NotFoundError("User task not found");
+    const updateStatus = await this.report.update(updateData, {
+        where: {
+            id: id,
+        },
+    });
+
+    if (updateStatus[0] === 0) {
+        throw new NotFoundError("User task not found");
     }
 
     const result = reportModelToReportCore(updateStatus);

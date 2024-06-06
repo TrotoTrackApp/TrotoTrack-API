@@ -188,7 +188,7 @@ class ReportService extends ReportServiceInterface {
     return { result, pageInfo, totalCount };
   }
 
-  async updateStatusReport(id, status) {
+  async updateStatusReport(id, status, reason) {
     if (!id) {
       throw new ValidationError(message.ERROR_ID);
     }
@@ -220,7 +220,15 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError("Status cannot be changed once it is approved");
     }
 
-    const result = await this.reportRepository.updateStatusReport(id, status);
+    if (status === "rejected" && !reason) {
+      throw new ValidationError("Reason is required when status is rejected");
+    }
+
+    const result = await this.reportRepository.updateStatusReport(
+      id,
+      status,
+      reason
+    );
     return result;
   }
 
@@ -238,7 +246,7 @@ class ReportService extends ReportServiceInterface {
       idUser
     );
 
-    if(userLikedReport) {
+    if (userLikedReport) {
       throw new ValidationError("You have already upvote this report");
     }
 
