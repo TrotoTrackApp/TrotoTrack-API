@@ -49,7 +49,7 @@ class ReportRepository extends ReportRepositoryInterface {
     });
 
     if (upadateReport === 0) {
-      throw new NotFoundError("User task not found");
+      throw new NotFoundError("Report not found");
     }
 
     const result = reportModelToReportCore(upadateReport);
@@ -64,7 +64,7 @@ class ReportRepository extends ReportRepositoryInterface {
     });
 
     if (deleteReport === 0) {
-      throw new NotFoundError("User task not found");
+      throw new NotFoundError("Report not found");
     }
 
     const result = reportModelToReportCore(deleteReport);
@@ -75,7 +75,7 @@ class ReportRepository extends ReportRepositoryInterface {
     const report = await this.report.findByPk(id);
 
     if (!report) {
-      throw new NotFoundError("User task not found");
+      throw new NotFoundError("Report not found");
     }
 
     const result = reportModelToReportCore(report);
@@ -144,7 +144,7 @@ class ReportRepository extends ReportRepositoryInterface {
     });
 
     if (updateStatus[0] === 0) {
-        throw new NotFoundError("User task not found");
+        throw new NotFoundError("Report not found");
     }
 
     const result = reportModelToReportCore(updateStatus);
@@ -157,7 +157,7 @@ class ReportRepository extends ReportRepositoryInterface {
       const report = await this.report.findByPk(id, {transaction});
 
       if (!report) {
-        throw new NotFoundError("User task not found");
+        throw new NotFoundError("Report not found");
       }
 
       const updatedReport = await this.report.update(
