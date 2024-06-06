@@ -21,6 +21,10 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
+    if(data.statusDamage !== "heavy damage" && data.statusDamage !== "light damage" && data.statusDamage !== "good") {
+      throw new ValidationError("Status damage must be heavy damage, light damage, or good");
+    }
+    
     if (data.latitude < -90 || data.latitude > 90) {
       throw new ValidationError("Latitude must be between -90 and 90");
     }
@@ -42,13 +46,6 @@ class ReportService extends ReportServiceInterface {
     const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (!allowedFileTypes.includes(file.mimetype)) {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
-    }
-
-    const allowedStatusDamage = ["heavy damaged", "light damaged", "good"];
-    if (!allowedStatusDamage.includes(data.statusDamage)) {
-      throw new ValidationError(
-        "Status damage must be either 'heavy damaged', 'light damaged', or 'good'"
-      );
     }
 
     const result = await this.reportRepository.createReport(data, file);
