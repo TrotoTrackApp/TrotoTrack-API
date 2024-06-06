@@ -15,6 +15,7 @@ class UserRepository extends UserRepositoryInterface {
 
   async createUser(data) {
     const user = usersCoreToUsersModel(data);
+    console.log("User data before creating user:", user);
     const createdUser = await User.create(user);
     const userCore = usersModelToUsersCore(createdUser);
     return userCore;
