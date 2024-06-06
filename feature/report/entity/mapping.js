@@ -1,3 +1,4 @@
+const { status } = require("init");
 const ReportCore = require("./entity");
 
 function reportCoreToReportModel(report) {
@@ -13,6 +14,7 @@ function reportCoreToReportModel(report) {
     user_id: report.userId,
     status: report.status,
     like: report.like,
+    reason: report.reason,
     created_at: report.createdAt,
   };
 }
@@ -30,6 +32,7 @@ function reportModelToReportCore(report) {
     report.id_user,
     report.status,
     report.like,
+    report.reason,
     report.created_at
   );
   return reportCore;

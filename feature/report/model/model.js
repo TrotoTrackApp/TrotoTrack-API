@@ -52,6 +52,10 @@ const Report = sequelize.define(
       allowNull: false,
       defaultValue: 0,
     },
+    reason: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     timestamps: true,
