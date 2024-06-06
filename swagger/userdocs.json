@@ -1091,25 +1091,19 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
                           "status_damage": "heavy damaged",
-                          "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
+                          "like": 0,
                           "created_at": "2021-08-01T00:00:00Z"
                         },
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
                           "status_damage": "heavy damaged",
-                          "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
+                          "like": 2,
                           "created_at": "2021-08-01T00:00:00Z"
                         }
                       ],
@@ -1228,7 +1222,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseReport"
+                  "$ref": "#/components/schemas/ResponseAllReport"
                 },
                 "examples": {
                   "success": {
@@ -1239,25 +1233,19 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
                           "status_damage": "heavy damaged",
-                          "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
+                          "like": 0,
                           "created_at": "2021-08-01T00:00:00Z"
                         },
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
                           "status_damage": "heavy damaged",
-                          "description": "ini adalah contoh input report oleh user sendiri",
                           "status": "pending",
+                          "like": 2,
                           "created_at": "2021-08-01T00:00:00Z"
                         }
                       ],
@@ -1355,6 +1343,133 @@
       }
     },
     "/reports/{id}": {
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Get report by id",
+        "description": "Get report by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ReportId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get report by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseReport"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                        "location": "makassar",
+                        "reference_location": "depan penjual bakso mas budi",
+                        "latitude": -5.135399,
+                        "longitude": 119.42379,
+                        "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                        "status_damage": "heavy damaged",
+                        "description": "ini adalah contoh input report oleh user sendiri",
+                        "status": "pending",
+                        "like": 0,
+                        "reason": null,
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Report not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "put": {
         "security": [
           {
@@ -2533,28 +2648,17 @@
                 "location": {
                   "type": "string"
                 },
-                "reference_location": {
-                  "type": "string"
-                },
-                "latitude": {
-                  "type": "number",
-                  "format": "double"
-                },
-                "longitude": {
-                  "type": "number",
-                  "format": "double"
-                },
                 "image": {
                   "type": "string"
                 },
                 "status_damage": {
                   "type": "string"
                 },
-                "description": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
+                },
+                "like": {
+                  "type": "integer"
                 },
                 "created_at": {
                   "type": "string",
@@ -2564,13 +2668,10 @@
               "required": [
                 "id",
                 "location",
-                "reference_location",
-                "latitude",
-                "longitude",
                 "status_damage",
                 "image",
-                "description",
                 "status",
+                "like",
                 "created_at"
               ]
             }
@@ -2638,6 +2739,12 @@
               "status": {
                 "type": "string"
               },
+              "like": {
+                "type": "integer"
+              },
+              "reason": {
+                "type": "string"
+              },
               "created_at": {
                 "type": "string",
                 "format": "date-time"
@@ -2653,6 +2760,8 @@
               "status_damage",
               "description",
               "status",
+              "like",
+              "reason",
               "created_at"
             ]
           }
