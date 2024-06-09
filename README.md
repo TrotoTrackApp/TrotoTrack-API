@@ -8,7 +8,6 @@
 - [Folder Structure](#folder-structure)
 - [Tech Stack](#tech-stack)
 - [API Documentation](#api-documentation)
-- [Unit Testing](#unit-testing)
 - [Running Project](#running-project)
 - [How to deploy to Cloud Run](#how-to-deploy-to-cloud-run)
 - [CI/CD Platform](#cicd-platform)
@@ -114,10 +113,10 @@ Akses localhost:8080
   You will receive DNS records and add that configuration to the DNS Management in the platform where your domain is located
 
 
-## CI/CD SETUP (BELUM)
-Cloud Build is a Google Cloud Platform CI/CD platform that is easily implemented with GitHub. We use deploy.yaml for trigger CI/CD :
+## CI/CD SETUP
+We use deploy.yaml for trigger CI/CD using GitHub Actions :
 
-![Screenshot from 2023-12-18 10-50-19](https://github.com/RecyThing/RecyThing-API/assets/66883583/4635ccbe-7e4e-44b8-977b-b4e06bf5bba4)
+![Screenshot 2024-06-09 134233](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Screenshot%202024-06-09%20134233.png)
 
 
 
