@@ -225,7 +225,7 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError("Status cannot be changed once it is approved");
     }
 
-    if (status === "rejected" && !reason) {
+    if ((status === "approved" || status === "rejected") && !reason) {
       throw new ValidationError("Reason is required when status is rejected");
     }
 
