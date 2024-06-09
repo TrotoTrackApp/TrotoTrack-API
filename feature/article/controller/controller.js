@@ -38,8 +38,10 @@ class ArticleController {
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
-        console.log(error)
-        return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
       }
     }
   }
@@ -78,7 +80,8 @@ class ArticleController {
     } catch (error) {
       if (
         error instanceof NotFoundError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof ValidationError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
