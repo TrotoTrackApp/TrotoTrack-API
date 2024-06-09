@@ -114,9 +114,9 @@ Akses localhost:8080
 
 
 ## CI/CD SETUP
-We use deploy.yaml for trigger CI/CD using GitHub Actions :
+We use [deploy.yaml](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/.github/workflows/deploy.yml) for trigger CI/CD using GitHub Actions :
 
-![Screenshot 2024-06-09 134233](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Screenshot%202024-06-09%20134233.png)
+![Screenshot 2024-06-09 134233](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Screenshot%202024-06-09%20134645.png)
 
 
 
