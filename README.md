@@ -53,16 +53,18 @@
 ![Static Badge](https://img.shields.io/badge/openai-s?style=for-the-badge&logo=openai&logoColor=white&color=%23412991)
 
 ## API Documentation (BELUM)
+We use Swagger UI as the API documentation, running at  http://api.trototrack.online
 
-We use Swagger UI as the API documentation, running at http://api.trototrack.online
 
-## Environment :
+## Running Project
+
+### Environment :
 ```
 Node v18.17.1
 npm 10.2.4
 ```
 
-## Haven't installed NPM yet?
+### Haven't installed NPM yet?
 ```
 Windows version:
 Download on https://nodejs.org/en/download/
@@ -74,7 +76,7 @@ $ npm -v
 Lets dev!
 ```
 
-## Deploy Development Mode :
+### Deploy Development Mode :
 ```
 WINDOWS :
 $ npm install init
@@ -85,8 +87,7 @@ LINUX (UBUNTU) :
 Install Node & NPM first :
 $ curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 $ sudo apt-get install -y nodejs
-$ npm install npm@latest -g
-$ npm install
+$ npm install init
 $ npm run serve
 Akses localhost:8080
 ```
