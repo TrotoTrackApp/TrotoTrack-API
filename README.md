@@ -43,7 +43,7 @@
 ```
 ## Tech Stack
 ![header-sub-header-body-text-header-3](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/291099608-f3c11700-2425-4b8d-b4d7-9010801f5832.png)
-![Static Badge](https://img.shields.io/badge/Cloud_SQL-cloudsql?style=for-the-badge&logo=googlecloud&logoColor=white&color=%234ba185)
+![Static Badge](https://img.shields.io/badge/Cloud_SQL-cloudsql?style=for-the-badge&logo=google-cloud&logoColor=white&color=%234ba185)
 ![Static Badge](https://img.shields.io/badge/Sequelize-sequelize?style=for-the-badge&logo=sequelize&logoColor=white&color=%232496ED)
 ![Static Badge](https://img.shields.io/badge/Express.js-express?style=for-the-badge&logo=express&logoColor=black&color=%2385EA2D&)
 ![Static Badge](https://img.shields.io/badge/mysql-s?style=for-the-badge&logo=mysql&logoColor=white&color=%234479A1)
@@ -54,44 +54,43 @@
 
 ## API Documentation (BELUM)
 
-We use Swagger UI as the API documentation, running on Docker with JSON configuration located on an external server.
+We use Swagger UI as the API documentation, running at http://api.trototrack.online
 
-Pull a pre-built docker image of the swagger-ui directly from Docker Hub:
-  ```
-  docker pull swaggerapi/swagger-ui
-  ```
-Provide a URL to a swagger.json on an external host:
-  ```
-  docker run -p 80:8080 -e SWAGGER_JSON_URL=https://recything.apicode.my.id/swagger/apidoc.json swaggerapi/swagger-ui
-  ```
-Running on cloud run : 
-  - Pull swaggerapi/swagger-ui,
-    ```
-    docker pull swaggerapi/swagger-ui
-    docker tag swaggerapi/swagger-ui gcr.io/$PROJECT_ID/swagger-ui  #change $PROJECT_ID to your project
-    ```
-  - Push to container registry
-    ```
-    docker push gcr.io/$PROJECT_ID/swagger-ui #change $PROJECT_ID to your project
-    ```
-  - Deploy cloud run
-    ```
-    gcloud run deploy swagger-ui \
-    --image=gcr.io/$PROJECT_ID/swagger-ui:latest \                                         #change $PROJECT_ID to your project
-    --platform=managed \
-    --allow-unauthenticated \
-    --set-env-vars=SWAGGER_JSON_URL=https://recything.apicode.my.id/swagger/apidoc.json    #change to your external json
-    ```
-## Unit Testing (BELUM)
-
-
-
-## Running Project (BELUM)
-
-Start project with Go :
+## Environment :
 ```
-go run main.go
+Node v18.17.1
+npm 10.2.4
 ```
+
+## Haven't installed NPM yet?
+```
+Windows version:
+Download on https://nodejs.org/en/download/
+
+Cek instalasi : 
+$ node -v
+$ npm -v
+
+Lets dev!
+```
+
+## Deploy Development Mode :
+```
+WINDOWS :
+$ npm install init
+$ npm run start
+Akses localhost:8080
+
+LINUX (UBUNTU) :
+Install Node & NPM first :
+$ curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
+$ npm install npm@latest -g
+$ npm install
+$ npm run serve
+Akses localhost:8080
+```
+
 ## How to deploy to Cloud Run (BELUM)
   - First, build your Docker image and push it to the registry, just like you did with the Swagger UI configuration.
   - Deploy cloud run
@@ -114,8 +113,8 @@ go run main.go
   You will receive DNS records and add that configuration to the DNS Management in the platform where your domain is located
 
 
-## CI/CD Platform (BELUM)
-Cloud Build is a Google Cloud Platform CI/CD platform that is easily implemented with GitHub. Configure trigger [here](https://console.cloud.google.com/cloud-build/). We use cloudbuid.yaml for trigger CI/CD :
+## CI/CD SETUP (BELUM)
+Cloud Build is a Google Cloud Platform CI/CD platform that is easily implemented with GitHub. We use deploy.yaml for trigger CI/CD :
 
 ![Screenshot from 2023-12-18 10-50-19](https://github.com/RecyThing/RecyThing-API/assets/66883583/4635ccbe-7e4e-44b8-977b-b4e06bf5bba4)
 
@@ -124,9 +123,9 @@ Cloud Build is a Google Cloud Platform CI/CD platform that is easily implemented
 ## Team Back-End
 
 | Name                           | University	                                         | 
-| :----------------------------- | :--------------------------------------------------- | 
-|	Al Hilaluddin                  | Universitas Muslim Indonesia                          |
-|	Ardhian Wisnu Kartika                  | Universitas Telkom                       |	
+| :----------------------------- | :---------------------------------------------------| 
+|	Al Hilaluddin                  | Universitas Muslim Indonesia                        |
+|	Ardhian Wisnu Kartika          | Universitas Telkom                                  |	
 
 
 ## References
