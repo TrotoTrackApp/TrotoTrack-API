@@ -76,19 +76,8 @@ class UserService extends UserServicesInterface {
     const token = crypto.randomBytes(32).toString("hex");
     data.verificationToken = token;
 
+    await sendVerificationEmail(data.email, token)
     const user = await this.userRepo.createUser(data);
-
-    // Send Verification Email
-    sendVerificationEmail(data.email, token)
-      .then(() => {
-        console.log(`Verification email sent to ${data.email}`);
-      })
-      .catch((error) => {
-        console.error(
-          `Error sending verification email to ${data.email}:`,
-          error
-        );
-      });
 
     return user;
   }
