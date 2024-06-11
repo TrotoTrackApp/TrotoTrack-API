@@ -95,6 +95,12 @@
                       "status": false,
                       "message": "Password is incorrect"
                     }
+                  },
+                  "email_not_verified": {
+                    "value": {
+                      "status": false,
+                      "message": "Email is not verified"
+                    }
                   }
                 }
               }
