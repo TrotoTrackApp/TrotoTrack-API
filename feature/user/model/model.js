@@ -39,6 +39,13 @@ const User = sequelize.define(
     otp_expired_time: {
       type: DataTypes.DOUBLE,
     },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    verification_token: {
+      type: DataTypes.STRING,
+    },
   },
   {
     timestamps: true,

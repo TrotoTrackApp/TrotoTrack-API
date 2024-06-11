@@ -39,6 +39,10 @@ class UserRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
+  async getVerificationToken(token) {
+    throw new Error("Method not implemented");
+  }
+
 }
 
 class UserServicesInterface {
@@ -83,6 +87,10 @@ class UserServicesInterface {
   }
 
   async newPassword(email, password, confirmPassword) {
+    throw new Error("Method not implemented");
+  }
+
+  async verifyToken(token) {
     throw new Error("Method not implemented");
   }
 }
