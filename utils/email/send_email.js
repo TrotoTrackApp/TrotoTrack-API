@@ -44,7 +44,7 @@ const sendVerificationEmail = async (userEmail, verificationToken) => {
   );
 
   // Generate the verification link
-  const verificationLink = `http://localhost:8080/verify?token=${verificationToken}`;
+  const verificationLink = `https://api.trototrack.online/verify?token=${verificationToken}`;
   const formattedHtml = htmlTemplate.replace(/{{\.VerificationLink}}/g, verificationLink);
 
   // Email options
