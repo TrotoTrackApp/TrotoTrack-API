@@ -243,7 +243,7 @@ class UserService extends UserServicesInterface {
     }
 
     const otp = generateOTP();
-    const otpExpired = Date.now() + 10 * 60 * 1000;
+    const otpExpired = Date.now() + 5 * 60 * 1000;
 
     const user = await this.userRepo.getUserByEmail(email);
     if (!user) {
