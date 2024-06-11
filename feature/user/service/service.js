@@ -70,6 +70,7 @@ class UserService extends UserServicesInterface {
     const hashedPassword = await generatePasswordHash(data.password);
     data.password = hashedPassword;
     data.role = "user";
+    data.isActive = false;
 
     // Generate verification token
     const token = crypto.randomBytes(32).toString("hex");
@@ -173,15 +174,15 @@ class UserService extends UserServicesInterface {
     }
 
     const user = await this.userRepo.getUserByEmail(email);
+    console.log("user", user);
     if (!user) {
       throw new NotFoundError("Email not registered");
     }
 
-    if (!user.is_active) {
+    if (user.isActive === false) {
       throw new ValidationError("Email is not verified");
     }
 
-    console.log("user", user);
     const isValidPassword = await comparePasswordHash(password, user.password);
     if (!isValidPassword) {
       throw new ValidationError("Password is incorrect");
