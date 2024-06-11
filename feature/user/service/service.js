@@ -9,9 +9,13 @@ const {
   generatePasswordHash,
   comparePasswordHash,
 } = require("../../../utils/helper/bcrypt");
-const sendOtp = require("../../../utils/email/send_otp");
+const {
+  sendOtp,
+  sendVerificationEmail,
+} = require("../../../utils/email/send_email");
 const { message } = require("../../../utils/constanta/constanta");
 const { generateOTP } = require("../../../utils/helper/otp");
+const crypto = require("crypto");
 
 class UserService extends UserServicesInterface {
   constructor(userRepo) {
@@ -66,7 +70,25 @@ class UserService extends UserServicesInterface {
     const hashedPassword = await generatePasswordHash(data.password);
     data.password = hashedPassword;
     data.role = "user";
+
+    // Generate verification token
+    const token = crypto.randomBytes(32).toString("hex");
+    data.verificationToken = token;
+
     const user = await this.userRepo.createUser(data);
+
+    // Send Verification Email
+    sendVerificationEmail(data.email, token)
+      .then(() => {
+        console.log(`Verification email sent to ${data.email}`);
+      })
+      .catch((error) => {
+        console.error(
+          `Error sending verification email to ${data.email}:`,
+          error
+        );
+      });
+
     return user;
   }
 
@@ -154,6 +176,11 @@ class UserService extends UserServicesInterface {
     if (!user) {
       throw new NotFoundError("Email not registered");
     }
+
+    if (!user.is_active) {
+      throw new ValidationError("Email is not verified");
+    }
+
     console.log("user", user);
     const isValidPassword = await comparePasswordHash(password, user.password);
     if (!isValidPassword) {
@@ -223,11 +250,13 @@ class UserService extends UserServicesInterface {
     }
 
     await this.userRepo.sendOtpEmail(email, otp, otpExpired);
-    sendOtp(email, otp).then(() => {
-      console.log(`Email sent to ${email}`);
-    }).catch((error) => {
-      console.error(`Error sending email to ${email}:`, error);
-    });
+    sendOtp(email, otp)
+      .then(() => {
+        console.log(`Email sent to ${email}`);
+      })
+      .catch((error) => {
+        console.error(`Error sending email to ${email}:`, error);
+      });
 
     return null;
   }
@@ -237,10 +266,10 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    if(!validator.isEmail(email)) {
+    if (!validator.isEmail(email)) {
       throw new ValidationError("Email is not valid");
     }
-    
+
     const result = await this.userRepo.getUserByEmail(email);
     if (!result) {
       throw new NotFoundError("Email not registered");
@@ -252,7 +281,7 @@ class UserService extends UserServicesInterface {
       throw new ValidationError("OTP is expired");
     }
 
-    if (result.otp !== uppercaseOTP ) {
+    if (result.otp !== uppercaseOTP) {
       throw new ValidationError("OTP is incorrect");
     }
 
@@ -266,7 +295,7 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    if(!validator.isEmail(email)) {
+    if (!validator.isEmail(email)) {
       throw new ValidationError("Email is not valid");
     }
 
@@ -289,6 +318,27 @@ class UserService extends UserServicesInterface {
     await this.userRepo.updateUserById(user.id, { password: hashedPassword });
 
     return null;
+  }
+
+  async verifyToken(token) {
+    if (token === null || token === undefined) {
+      throw new ValidationError("Invalid token");
+    }
+
+    const user = await this.userRepo.getVerificationToken(token);
+    if (!user) {
+      throw new NotFoundError("Token not found");
+    }
+
+    if (user.isActive) {
+      return true;
+    }
+    
+    await this.userRepo.updateUserById(user.id, {
+      isActive: true,
+    });
+
+    return false;
   }
 }
 

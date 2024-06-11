@@ -24,7 +24,8 @@ const {
   userListResponse,
 } = require("../dto/response");
 const { extractToken } = require("../../../utils/jwt/jwt");
-const e = require("cors");
+const path = require("path");
+const fs = require("fs");
 
 class UserController {
   constructor(userService) {
@@ -41,6 +42,7 @@ class UserController {
       if (error instanceof ValidationError || error instanceof DuplicateError) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
+        console.log(error);
         return res
           .status(500)
           .json(errorResponse(message.ERROR_INTERNAL_SERVER));
@@ -259,7 +261,9 @@ class UserController {
         user.newPassword,
         user.confirmPassword
       );
-      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
+      return res
+        .status(200)
+        .json(successResponse(message.SUCCES_UPDATE_PASSWORD));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -304,8 +308,14 @@ class UserController {
   async newPassword(req, res) {
     try {
       const request = await newPasswordRequest(req.body);
-      await this.userService.newPassword(request.email, request.password, request.confirmPassword);
-      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
+      await this.userService.newPassword(
+        request.email,
+        request.password,
+        request.confirmPassword
+      );
+      return res
+        .status(200)
+        .json(successResponse(message.SUCCES_UPDATE_PASSWORD));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -314,6 +324,35 @@ class UserController {
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       }
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async VerifyAccount(req, res) {
+    try {
+      const token = req.query.token;
+      const alreadyVerified = await this.userService.verifyToken(token);
+
+      let templatePath;
+      if (alreadyVerified) {
+        templatePath = path.join(
+          __dirname,
+          "../../../utils/template/verification_active.html"
+        );
+      } else {
+        templatePath = path.join(
+          __dirname,
+          "../../../utils/template/success_verification.html"
+        );
+      }
+
+      const emailContent = fs.readFileSync(templatePath, "utf-8");
+      return res.status(200).send(emailContent);
+    } catch (error) {
+      if (error instanceof NotFoundError || error instanceof ValidationError) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      console.log(error);
       return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }

@@ -125,6 +125,19 @@ class UserRepository extends UserRepositoryInterface {
     const result = usersModelToUsersCore(user);
     return result;
   }
+
+  async getVerificationToken(token) {
+    const user = await User.findOne({
+      where: { verification_token: token },
+    });
+
+    if (!user) {
+      throw new NotFoundError("token not found");
+    }
+
+    const result = usersModelToUsersCore(user);
+    return result;
+  }
 }
 
 module.exports = UserRepository;
