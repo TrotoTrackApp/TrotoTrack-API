@@ -1930,13 +1930,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                  "$ref": "#/components/schemas/ResponseOTP"
                 },
                 "examples": {
                   "success": {
                     "value": {
                       "status": true,
-                      "message": "Success verify otp"
+                      "message": "Success verify otp",
+                      "data": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
+                      }
                     }
                   }
                 }
@@ -2020,6 +2023,11 @@
     },
     "/new-password": {
       "patch": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Page User"],
         "summary": "New Password",
         "description": "New Password",
@@ -2032,7 +2040,6 @@
               "examples": {
                 "new": {
                   "value": {
-                    "email": "hilal@gmail.com",
                     "password": "troto123456",
                     "confirm_password": "troto123456"
                   }
@@ -2462,6 +2469,26 @@
         },
         "required": ["status", "message"]
       },
+      "ResponseOTP": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              }
+            },
+            "required": ["token"]
+          }
+        }
+      },
       "ResponseGetUser": {
         "type": "object",
         "properties": {
@@ -2834,9 +2861,6 @@
       "RequestNewPassword": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string"
-          },
           "password": {
             "type": "string"
           },
@@ -2844,7 +2868,7 @@
             "type": "string"
           }
         },
-        "required": ["email", "password", "confirm_password"]
+        "required": ["password", "confirm_password"]
       },
       "RequestScan": {
         "type": "object",
