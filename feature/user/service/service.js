@@ -3,7 +3,7 @@ const {
   ValidationError,
   NotFoundError,
 } = require("../../../utils/helper/response");
-const { createToken } = require("../../../utils/jwt/jwt");
+const { createToken, createVerificationToken } = require("../../../utils/jwt/jwt");
 const validator = require("validator");
 const {
   generatePasswordHash,
@@ -275,9 +275,10 @@ class UserService extends UserServicesInterface {
       throw new ValidationError("OTP is incorrect");
     }
 
+    const token = createVerificationToken(email)
     await this.userRepo.resetOtpEmail(otp);
 
-    return null;
+    return token;
   }
 
   async newPassword(email, password, confirmPassword) {

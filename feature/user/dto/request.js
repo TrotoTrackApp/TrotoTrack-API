@@ -21,8 +21,8 @@ function loginRequest(body) {
 }
 
 function newPasswordRequest(body) {
-  const { email, password, confirm_password } = body;
-  return { email, password, confirmPassword: confirm_password};
+  const { password, confirm_password } = body;
+  return { password, confirmPassword: confirm_password};
 }
 
 module.exports = { userRequest, loginRequest, userUpdateRequest, updatePasswordRequest, newPasswordRequest };

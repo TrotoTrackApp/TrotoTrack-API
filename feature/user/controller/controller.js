@@ -23,7 +23,7 @@ const {
   userResponse,
   userListResponse,
 } = require("../dto/response");
-const { extractToken } = require("../../../utils/jwt/jwt");
+const { extractToken, extractTokenVerifikasi } = require("../../../utils/jwt/jwt");
 const path = require("path");
 const fs = require("fs");
 
@@ -294,8 +294,8 @@ class UserController {
     try {
       const email = req.body.email;
       const otp = req.body.otp;
-      await this.userService.verifyOtpEmail(email, otp);
-      return res.status(200).json(successResponse("Success verify otp"));
+      const token = await this.userService.verifyOtpEmail(email, otp);
+      return res.status(200).json(successWithDataResponse("Success verify otp", { token }));
     } catch (error) {
       if (error instanceof NotFoundError || error instanceof ValidationError) {
         return res.status(error.statusCode).json(errorResponse(error.message));
@@ -307,9 +307,10 @@ class UserController {
 
   async newPassword(req, res) {
     try {
-      const request = await newPasswordRequest(req.body);
+      const request = newPasswordRequest(req.body);
+      const extraToken = extractTokenVerifikasi(req);
       await this.userService.newPassword(
-        request.email,
+        extraToken,
         request.password,
         request.confirmPassword
       );
