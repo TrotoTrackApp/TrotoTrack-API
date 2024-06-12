@@ -45,7 +45,7 @@ const Report = sequelize.define(
     status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "pending",
+      defaultValue: "Pending",
     },
     like: {
       type: DataTypes.INTEGER,
