@@ -2181,7 +2181,7 @@
                       }
                     }
                   },
-                  "heavy_demaged": {
+                  "heavy_damaged": {
                     "value": {
                       "status": true,
                       "message": "Success scan",
@@ -2192,7 +2192,7 @@
                       }
                     }
                   },
-                  "light_demaged": {
+                  "light_damaged": {
                     "value": {
                       "status": true,
                       "message": "Success scan",
