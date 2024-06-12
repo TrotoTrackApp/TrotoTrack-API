@@ -32,11 +32,11 @@ class ScanService extends ScanServiceInterface {
       const normalizedImg = resizedImg.toFloat().div(tf.scalar(255));
       const expandedImg = normalizedImg.expandDims(0);
 
-      const classes = ["good", "heavy damaged", "light damaged"];
+      const classes = ["Good", "Heavy Damaged", "Light Damaged"];
       const descriptions = {
-        "good": "The sidewalk is in good condition. No action needed",
-        "heavy damaged": "The sidewalk is heavily damaged. Please report this area",
-        "light damaged": "The sidewalk is lightly damaged. Please report this area",
+        "Good": "The sidewalk is in good condition. No action needed",
+        "Heavy Damaged": "The sidewalk is heavily damaged. Please report this area",
+        "Light Damaged": "The sidewalk is lightly damaged. Please report this area",
       };
 
       const predictions = await model.predict(expandedImg);
