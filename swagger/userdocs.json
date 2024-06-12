@@ -2121,6 +2121,24 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal server error",
             "content": {
