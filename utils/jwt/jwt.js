@@ -14,6 +14,25 @@ function createToken(id, role) {
   return token;
 }
 
+function createVerificationToken(email) {
+  const token = jwt.sign(
+    { email, exp: Math.floor(Date.now() / 1000) + 300 },
+    secretKey,
+    { algorithm: "HS256" }
+  );
+  return token;
+}
+
+function extractTokenVerifikasi(req) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  const decoded = jwt.verify(token, secretKey);
+  const email = decoded.email;
+  console.log("Decoded Token:", email);
+  return email;
+}
+
 // Fungsi untuk mengekstrak informasi dari token
 function extractToken(req) {
   const authHeader = req.headers["authorization"];
@@ -52,4 +71,4 @@ function jwtMiddleware(req, res, next) {
   });
 }
 
-module.exports = { createToken, jwtMiddleware, extractToken };
+module.exports = { createToken, jwtMiddleware, extractToken, createVerificationToken, extractTokenVerifikasi };
