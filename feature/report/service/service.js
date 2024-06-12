@@ -2,6 +2,7 @@ const { ReportServiceInterface } = require("../entity/interface");
 const { ValidationError } = require("../../../utils/helper/response");
 const { message } = require("../../../utils/constanta/constanta");
 const validator = require("validator");
+const capitalizeWords = require("../../../utils/helper/capitalize");
 
 class ReportService extends ReportServiceInterface {
   constructor(reportRepository) {
@@ -44,7 +45,8 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
     }
 
-    const allowedStatusDamage = ["good", "heavy damaged", "light damaged"];
+    data.statusDamage = capitalizeWords(data.statusDamage);
+    const allowedStatusDamage = ["Good", "Heavy Damaged", "Light Damaged"];
     if (!allowedStatusDamage.includes(data.statusDamage)) {
       throw new ValidationError("Status damage must be good, heavy damaged, or light damaged");
     }
@@ -206,14 +208,10 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    if (
-      status !== "pending" &&
-      status !== "approved" &&
-      status !== "rejected"
-    ) {
-      throw new ValidationError(
-        "Status must be pending, approved, or rejected"
-      );
+    status = capitalizeWords(status);
+    const allowedStatus = ["Pending", "Approved", "Rejected"];
+    if (!allowedStatus.includes(status)) {
+      throw new ValidationError("Status must be Pending, Approved, or Rejected");
     }
 
     const currentReport = await this.reportRepository.getReportById(id);
@@ -221,11 +219,11 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_NOT_FOUND);
     }
 
-    if (currentReport.status === "approved") {
+    if (currentReport.status === "Approved") {
       throw new ValidationError("Status cannot be changed once it is approved");
     }
 
-    if ((status === "approved" || status === "rejected") && !reason) {
+    if ((status === "Approved" || status === "Rejected") && !reason) {
       throw new ValidationError("Reason is required when status is rejected");
     }
 
