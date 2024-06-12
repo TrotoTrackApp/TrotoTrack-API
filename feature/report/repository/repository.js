@@ -91,6 +91,7 @@ class ReportRepository extends ReportRepositoryInterface {
       whereClause = {
         [Op.or]: [
           { location: { [Op.like]: `%${search}%` } },
+          { status_damage: { [Op.like]: `%${search}%` } },
           { status: { [Op.like]: `%${search}%` } },
         ],
       };
