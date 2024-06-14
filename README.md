@@ -91,18 +91,14 @@ $ npm run start
 Akses localhost:8080
 ```
 
-## How to deploy to Cloud Run
-  - First, build your Docker image and push it to the registry, just like you did with the Swagger UI configuration.
-  - Deploy cloud run
-    ```
-    gcloud run deploy <Service-Name> \                            # e.g  gcloud run deploy recything
-    --image=gcr.io/$PROJECT_ID/<Your-image>:latest \              #change $PROJECT_ID to your project
-    --platform=managed \
-    --allow-unauthenticated \
-    --set-env-vars=MYSQL_PORT=3306                                #change to your env
-    --set-env-vars=SERVER_PORT=  
-    --set-env-vars=STORAGE=   
-    ```
+## How to deploy to Cloud Run & CI/CD Setup
+  - First, create a [Dockerfile](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/Dockerfile) containing all the package needed
+  - Deploy cloud run using GitHub Actions
+
+  - ## CI/CD Setup
+    We use [deploy.yaml](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/.github/workflows/deploy.yml) for trigger CI/CD using GitHub Actions :
+    
+    ![Screenshot 2024-06-09 134233](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Screenshot%202024-06-09%20134645.png)
 
 - Custom Domain
 
@@ -111,12 +107,6 @@ Akses localhost:8080
   ![Screenshot from 2023-12-18 11-06-44](https://github.com/RecyThing/RecyThing-API/assets/66883583/e8a32da4-0850-4ab1-87bf-d20e87dafda7)
 
   You will receive DNS records and add that configuration to the DNS Management in the platform where your domain is located
-
-
-## CI/CD SETUP
-We use [deploy.yaml](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/.github/workflows/deploy.yml) for trigger CI/CD using GitHub Actions :
-
-![Screenshot 2024-06-09 134233](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Screenshot%202024-06-09%20134645.png)
 
 
 
