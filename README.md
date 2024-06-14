@@ -6,11 +6,10 @@
 ## Table of Contents
 
 - [Folder Structure](#folder-structure)
-- [Tech Stack](#tech-stack)
-- [API Documentation](#api-documentation)
-- [Running Project](#running-project)
-- [How to deploy to Cloud Run](#how-to-deploy-to-cloud-run)
-- [CI/CD Platform](#cicd-platform)
+- [Technologies Used](#technologies-used)
+- [Installation Guide](#installation-guide)
+- [API Endpoint](#api-endpoint)
+- [How to Deploy to Google Cloud Run with CI/CD](#how-to-deploy-to-google-cloud-run-with-ci/cd)
 - [Team Back-End](#team-back-end)
 - [References](#references)
 
