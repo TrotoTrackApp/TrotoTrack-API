@@ -87,11 +87,11 @@ Install Node & NPM first :
 $ curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 $ sudo apt-get install -y nodejs
 $ npm install init
-$ npm run serve
+$ npm run start
 Akses localhost:8080
 ```
 
-## How to deploy to Cloud Run (BELUM)
+## How to deploy to Cloud Run
   - First, build your Docker image and push it to the registry, just like you did with the Swagger UI configuration.
   - Deploy cloud run
     ```
