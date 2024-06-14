@@ -98,45 +98,26 @@ JWT_SECRET=your_jwt_secret
 ### Step 5: Configure the Database
 The application comes with a default database configuration located in app/database. If you need to use a different database, update the configuration in this directory.
 
-## API Documentation (BELUM)
-We use Swagger UI as the API documentation, running at  http://api.trototrack.online
-
-
-## Running Project
-
-### Environment :
+## Usage
+* Start the application by running the following command:
 ```
-Node v18.17.1
-npm 10.2.4
+npm run start
 ```
+* Connect to the API using Postman on port 8080.
 
-### Haven't installed NPM yet?
-```
-Windows version:
-Download on https://nodejs.org/en/download/
 
-Cek instalasi : 
-$ node -v
-$ npm -v
+## API Endpoint
 
-Lets dev!
-```
+| HTTP Verbs | Endpoints | Action |
+| ---------- | --------- | ------ |
+| POST       | /api/user/signup | To sign up a new user account |
+| POST | /api/user/login | To login an existing user account |
+| POST | /api/causes | To create a new cause |
+| GET | /api/causes | To retrieve all causes on the platform |
+| GET | /api/causes/:causeId | To retrieve details of a single cause |
+| PATCH | /api/causes/:causeId | To edit the details of a single cause |
+| DELETE | /api/causes/:causeId | To delete a single cause |
 
-### Deploy Development Mode :
-```
-WINDOWS :
-$ npm install init
-$ npm run start
-Akses localhost:8080
-
-LINUX (UBUNTU) :
-Install Node & NPM first :
-$ curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-$ sudo apt-get install -y nodejs
-$ npm install init
-$ npm run start
-Akses localhost:8080
-```
 
 ## How to deploy to Cloud Run & CI/CD Setup
   - First, create a [Dockerfile](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/Dockerfile) containing all the package needed
