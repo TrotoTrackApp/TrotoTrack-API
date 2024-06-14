@@ -107,16 +107,17 @@ npm run start
 
 
 ## API Endpoint
+### Users
 
-| HTTP Verbs | Endpoints | Action |
-| ---------- | --------- | ------ |
-| POST       | /api/user/signup | To sign up a new user account |
-| POST | /api/user/login | To login an existing user account |
-| POST | /api/causes | To create a new cause |
-| GET | /api/causes | To retrieve all causes on the platform |
-| GET | /api/causes/:causeId | To retrieve details of a single cause |
-| PATCH | /api/causes/:causeId | To edit the details of a single cause |
-| DELETE | /api/causes/:causeId | To delete a single cause |
+| HTTP Verbs                                                                         | Endpoints        | Query Params | Action                                 | Authorized |
+| ---------------------------------------------------------------------------------- | ---------------- | ------------ | -------------------------------------- | ---------- |       
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/register`      |              | To sign up a new user account          | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/login`         |              | To login an existing user account      | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/send-otp`      |              | Send otp for forget password           | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/verify-otp`    |              | Verify the OTP received via email      | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/verify `       | `token`      | Verify user account recevied via email | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/PATCH.png)  | `/new-password`  |              | Set a new password                     | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/scan`          |              | Scan image trotoar                     | Yes        |
 
 
 ## How to deploy to Cloud Run & CI/CD Setup
