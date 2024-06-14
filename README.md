@@ -296,6 +296,8 @@ You can either:
   - Follow the setup instructions to configure the workflow with your repository and secrets.
   - Manually create a GitHub Actions workflow (deploy.yaml):
 
+![Secret Github](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Cloud%20Run%20Action.png)
+
 - Manually create a GitHub Actions workflow (deploy.yaml):
   - Create a new file under .github/workflows/deploy.yaml.
   - Copy and paste the following basic template and adjust it according to your project specifics:
