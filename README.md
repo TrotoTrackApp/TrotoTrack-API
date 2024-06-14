@@ -56,6 +56,7 @@ Trototrack is an innovative application designed to streamline and expedite the 
 ![Static Badge](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/openai-s?style=for-the-badge&logo=openai&logoColor=white&color=%23412991)
+![Static Badge](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Bucket.png)
 
 ---
 
