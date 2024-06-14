@@ -55,7 +55,6 @@ Trototrack is an innovative application designed to streamline and expedite the 
 ![Static Badge](https://img.shields.io/badge/docker-s?style=for-the-badge&logo=docker&logoColor=white&color=%232496ED)
 ![Static Badge](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
-![Static Badge](https://img.shields.io/badge/openai-s?style=for-the-badge&logo=openai&logoColor=white&color=%23412991)
 
 ---
 
@@ -400,18 +399,14 @@ Explanation
 
 
 ## References
-
- ## Technologies and Tools
-
 - [Cloud Run](https://cloud.google.com/run?hl=id) : Deployment Platform
 - [Cloud SQL](https://cloud.google.com/sql) : Managed database service for relational databases
 - [Sequelize](https://sequelize.org/) : Sequelize is a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
 - [Express.js](https://expressjs.com/) : Fast, unopinionated, minimalist web framework for Node.js
 - [MySQL](https://www.mysql.com/) : The world's most popular open source database
 - [Docker](https://www.docker.com/) : Platform for developing, shipping, and running applications
-- [OpenAPI](https://www.openapis.org/) : Standard for defining APIs
-- [OpenAI](https://www.openai.com/) : Research organization that promotes and develops friendly AI
-
+- [TensorFlow](https://www.tensorflow.org/js) : Develop ML models in JavaScript, and use ML directly in the browser or in Node.js.
+- [Swagger](https://swagger.io/) : A widely-used framework for designing, building, and documenting APIs with ease.
 
 
 
