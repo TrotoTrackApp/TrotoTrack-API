@@ -159,9 +159,45 @@ npm run start
 
 ---
 
-## How to deploy to Cloud Run & CI/CD Setup
-  - First, create a [Dockerfile](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/Dockerfile) containing all the package needed
-  - Deploy cloud run using GitHub Actions
+## How to Deploy to Google Cloud Run with CI/CD
+Follow these steps to deploy Trototrack to Google Cloud Run using CI/CD:
+* Enable Required Google Cloud Services
+```
+gcloud services enable run.googleapis.com
+gcloud services enable artifactregistry.googleapis.com
+```
+* Create Service Account
+Create a service account with the following roles:
+  - Artifact Registry Administrator
+  - Cloud Run Admin
+  - Service Account User
+    
+You can use the Google Cloud Console UI or CLI to create the service account.
+
+CLI Instructions:
+```
+# Buat service account baru
+gcloud iam service-accounts create trototrack-sa --description="Service account for Trototrack deployment" --display-name="Trototrack Service Account"
+
+# Ambil alamat email service account
+export SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --filter="displayName:Trototrack Service Account" --format="value(email)")
+
+# Tambahkan peran Artifact Registry Administrator
+gcloud projects add-iam-policy-binding YOUR_PROJECT_ID --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/artifactregistry.admin"
+
+# Tambahkan peran Cloud Run Administrator
+gcloud projects add-iam-policy-binding YOUR_PROJECT_ID --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/run.admin"
+
+# Tambahkan peran Service Account User
+gcloud projects add-iam-policy-binding YOUR_PROJECT_ID --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/iam.serviceAccountUser"
+```
+
+* Generate Service Account Key JSON
+  
+You can use the Google Cloud Console UI or CLI to create Service Account Key JSON
+```
+gcloud iam service-accounts keys create KEY_FILE.json --iam-account=SERVICE_ACCOUNT_EMAIL
+```
 
   - ## CI/CD Setup
     We use [deploy.yaml](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/.github/workflows/deploy.yml) for trigger CI/CD using GitHub Actions :
