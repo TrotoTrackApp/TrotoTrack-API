@@ -8,6 +8,7 @@
 - [Folder Structure](#folder-structure)
 - [Technologies Used](#technologies-used)
 - [Installation Guide](#installation-guide)
+- [Usage](#usage)
 - [API Endpoint](#api-endpoint)
 - [How to Deploy to Google Cloud Run with CI/CD](#how-to-deploy-to-google-cloud-run-with-cicd)
 - [Team Back-End](#team-back-end)
