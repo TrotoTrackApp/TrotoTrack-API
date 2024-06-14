@@ -262,8 +262,12 @@ UI Instructions:
   - Click Create to create the repository.
 
 ### Step 5 : Store the following securely as GitHub secrets:
-  - Service account key JSON (KEY_FILE.json)
-  - Environment variables required for deployment
+- In your GitHub repository, go to Settings > Secrets > New repository secret.
+- Enter the name of the secret (e.g., GOOGLE_APPLICATION_CREDENTIALS for the Service Account Key JSON).
+- Paste the contents of the JSON file (KEY_FILE.json) into the value field.
+- Add additional secrets for each environment variable required for deployment.
+
+![Secret Github](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Secret%20Github.png) 
 
 ### Step 6 : Create Dockerfile
 Use the provided Dockerfile from Trototrack or customize it as needed for your application.
