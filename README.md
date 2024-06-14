@@ -55,6 +55,49 @@ Trototrack is an innovative application designed to streamline and expedite the 
 ![Static Badge](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/openai-s?style=for-the-badge&logo=openai&logoColor=white&color=%23412991)
 
+## Installation Guide
+Follow these steps to set up and run the Trototrack application on your local machine. This guide will help you clone the repository, install necessary dependencies, configure the environment, and set up the database.
+### Step 1: Clone the Repository
+Begin by cloning the Trototrack API repository from GitHub. Use the following command to clone the repository to your local machine:
+```
+git clone https://github.com/TrotoTrackApp/TrotoTrack-API.git
+```
+
+### Step 2: Choose the Branch
+The main branch contains the stable version of the application, which has been thoroughly tested and deployed. However, if you prefer to work with the latest development features, you can switch to the development branch. Use the commands below to switch branches:
+```
+# Switch to the main branch
+git checkout main
+
+# Or switch to the development branch
+git checkout development
+```
+
+### Step 3: Install Dependencies
+Navigate to the project directory and install the necessary dependencies using npm. This ensures all required packages are available for the application to run smoothly.
+```
+cd TrotoTrack-API
+npm install
+```
+
+### Step 4: Configure the Environment
+Create a .env file in the root directory of the project. This file will contain your environment-specific configurations, such as database credentials and API keys. You can use the .env.example file provided as a template. Copy and customize it according to your environment:
+```
+cp .env.example .env
+```
+Open the .env file in a text editor and replace the placeholder values with your actual configuration details. Here are some typical environment variables you might need to set:
+```
+PORT=3000
+DB_HOST=localhost
+DB_USER=username
+DB_PASSWORD=password
+DB_NAME=trototrack
+JWT_SECRET=your_jwt_secret
+```
+
+### Step 5: Configure the Database
+The application comes with a default database configuration located in app/database. If you need to use a different database, update the configuration in this directory.
+
 ## API Documentation (BELUM)
 We use Swagger UI as the API documentation, running at  http://api.trototrack.online
 
