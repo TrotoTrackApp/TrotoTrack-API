@@ -214,9 +214,28 @@ UI Instructions:
 ### Step 3 : Generate Service Account Key JSON
   
 You can use the Google Cloud Console UI or CLI to create Service Account Key JSON
+
+CLI Instructions:
 ```
 gcloud iam service-accounts keys create KEY_FILE.json --iam-account=SERVICE_ACCOUNT_EMAIL
 ```
+Replace KEY_FILE.json with the desired filename for your service account key JSON file, and SERVICE_ACCOUNT_EMAIL with the email address of your service account.
+
+UI Instructions:
+- Navigate to [Google Cloud Console](https://console.cloud.google.com/)
+- Select Your Project: Make sure you have selected the correct project where your service account is located.
+- Open the IAM & Admin Page:
+  - Click on the menu icon ☰ at the top left corner.
+  - Navigate to IAM & Admin > Service accounts.
+- Find Your Service Account:
+  - Locate the service account for which you want to create a key in the list.
+  - Click on the service account name to open its details.
+- Create Key
+  - Click on Add Key > Create new key.
+  - Choose the key type: JSON.
+  - Click Create to download the JSON key file.
+
+
 
 ### Step 4 : Create Artifact Registry Repository
 
