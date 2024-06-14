@@ -14,6 +14,7 @@
 - [Team Back-End](#team-back-end)
 - [References](#references)
 
+---
 ## Folder Structure
 ```
 ├── app                            
@@ -40,7 +41,7 @@
 │           └── service.js          # contains the core business logic of the application and validation
 ├── utils                         
 ```
-
+---
 ## Introduction
 Trototrack is an innovative application designed to streamline and expedite the process of reporting sidewalk defects. It leverages advanced technologies to simplify the identification and monitoring of damaged sidewalks, ensuring a safer and more accessible environment for pedestrians.
 
