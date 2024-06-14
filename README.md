@@ -161,12 +161,12 @@ npm run start
 
 ## How to Deploy to Google Cloud Run with CI/CD
 Follow these steps to deploy Trototrack to Google Cloud Run using CI/CD:
-* Enable Required Google Cloud Services
+### Step 1 : Enable Required Google Cloud Services
 ```
 gcloud services enable run.googleapis.com
 gcloud services enable artifactregistry.googleapis.com
 ```
-* Create Service Account
+### Step 2 : Create Service Account
 Create a service account with the following roles:
   - Artifact Registry Administrator
   - Cloud Run Admin
@@ -192,28 +192,166 @@ gcloud projects add-iam-policy-binding YOUR_PROJECT_ID --member="serviceAccount:
 gcloud projects add-iam-policy-binding YOUR_PROJECT_ID --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" --role="roles/iam.serviceAccountUser"
 ```
 
-* Generate Service Account Key JSON
+UI Instructions:
+- Navigate to [Google Cloud Console](https://console.cloud.google.com/)
+- Select Your Project: Make sure you have selected the correct project where you want to create the service account.
+- Open the IAM & Admin Page:
+  - Click on the menu icon ☰ at the top left corner.
+  - Navigate to IAM & Admin > Service accounts.
+- Create a New Service Account:
+  - Click on Create Service Account.
+  - Enter a name and description for your service account (e.g., "trototrack-sa" and "Service account for Trototrack deployment").
+  - Click Create.
+- Assign Roles:
+  - After creating the service account, click on the newly created service account from the list.
+  - Click on Add permissions.
+  - In the Select a role dropdown, search for and select:
+    - Artifact Registry Administrator
+    - Cloud Run Admin
+    - Service Account User
+  - Click Save to assign these roles to the service account.
+
+### Step 3 : Generate Service Account Key JSON
   
 You can use the Google Cloud Console UI or CLI to create Service Account Key JSON
 ```
 gcloud iam service-accounts keys create KEY_FILE.json --iam-account=SERVICE_ACCOUNT_EMAIL
 ```
 
-  - ## CI/CD Setup
-    We use [deploy.yaml](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/development/.github/workflows/deploy.yml) for trigger CI/CD using GitHub Actions :
-    
-    ![Screenshot 2024-06-09 134233](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/Screenshot%202024-06-09%20134645.png)
+### Step 4 : Create Artifact Registry Repository
 
-- Custom Domain
+You can create a repository in Artifact Registry configured for Docker format using either the Google Cloud Console UI or CLI.
 
-  Mapping domain with any DNS management , configuration mapping [here](https://console.cloud.google.com/run/domains). Click `Add Mapping`, And you can choose from 3 different ways of mapping domains, either using a custom domain with a load balancer, a custom domain with Cloud Run, or a custom domain with Firebase Hosting.
+CLI Instructions:
+```
+# Create repository in Artifact Registry for Docker format
+gcloud artifacts repositories create REPOSITORY_NAME --repository-format=docker --location=LOCATION
+```
 
-  ![Screenshot from 2023-12-18 11-06-44](https://github.com/RecyThing/RecyThing-API/assets/66883583/e8a32da4-0850-4ab1-87bf-d20e87dafda7)
+### Step 5 : Store the following securely as GitHub secrets:
+  - Service account key JSON (KEY_FILE.json)
+  - Environment variables required for deployment
 
-  You will receive DNS records and add that configuration to the DNS Management in the platform where your domain is located
+### Step 6 : Create Dockerfile
+Use the provided Dockerfile from Trototrack or customize it as needed for your application.
+Examples:
+```
+FROM node:18.7.0
 
+WORKDIR /app
 
+COPY package.json .
 
+RUN npm install
+
+COPY . .
+
+EXPOSE 8080
+
+CMD ["npm", "run", "start"]
+```
+
+### Step 7 : Create GitHub Actions Workflow
+You can either:
+- Use GitHub Action to find a Cloud Run deployment template:
+  - Navigate to GitHub Action and search for "Cloud Run".
+  - Choose a template like "Build and Deploy to Cloud Run".
+  - Follow the setup instructions to configure the workflow with your repository and secrets.
+  - Manually create a GitHub Actions workflow (deploy.yaml):
+
+- Manually create a GitHub Actions workflow (deploy.yaml):
+  - Create a new file under .github/workflows/deploy.yaml.
+  - Copy and paste the following basic template and adjust it according to your project specifics:
+```
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # Default branch for deployment, You can change the branch trigger according to what you want
+
+env:
+  PROJECT_ID: YOUR_PROJECT_ID
+  GAR_LOCATION: LOCATION_REPOSITORY
+  GAR_REPOSITORY_NAME: YOUR_REPOSITORY_NAME
+  SERVICE: YOUR_SERVICE_NAME
+  REGION: LOCATION_SERVICE_CLOUD_RUN
+  DBHOST: ${{ secrets.DBHOST }}
+  DBUSER: ${{ secrets.DBUSER }}
+  DBPASS: ${{ secrets.DBPASS }}
+  DBNAME: ${{ secrets.DBNAME }}
+  DBPORT: ${{ secrets.DBPORT }}
+  SERVERPORT: ${{ secrets.SERVERPORT }}
+  JWTSECRET: ${{ secrets.JWTSECRET }}
+  GOOGLE_CLOUD_KEY_BASE64: ${{ secrets.GOOGLE_CLOUD_KEY_BASE64 }}
+  BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+  FOLDER_NAME: ${{ secrets.FOLDER_NAME }}
+  EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+  EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+  EMAIL_USER: ${{ secrets.EMAIL_USER }}
+  EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+
+jobs:
+  deploy:
+    timeout-minutes: 30
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Google Auth
+        id: auth
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT }}"
+
+      # Authenticate Docker to Google Cloud Artifact Registry
+      - name: Configure Docker to use gcloud
+        run: |-
+          gcloud auth configure-docker ${{ env.GAR_LOCATION }}-docker.pkg.dev --quiet
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}" ./
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}"
+
+      # END - Docker auth and build
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}
+          flags: --verbosity=debug
+          env_vars: |
+            GOOGLE_CLOUD_KEY_BASE64=${{ env.GOOGLE_CLOUD_KEY_BASE64 }}
+            DBHOST=${{ env.DBHOST }}
+            DBUSER=${{ env.DBUSER }}
+            DBPASS=${{ env.DBPASS }}
+            DBNAME=${{ env.DBNAME }}
+            DBPORT=${{ env.DBPORT }}
+            SERVERPORT=${{ env.SERVERPORT }}
+            BUCKET_NAME=${{ env.BUCKET_NAME }}
+            FOLDER_NAME=${{ env.FOLDER_NAME }}
+            EMAIL_HOST=${{ env.EMAIL_HOST }}
+            EMAIL_PORT=${{ env.EMAIL_PORT }}
+            EMAIL_USER=${{ env.EMAIL_USER }}
+            EMAIL_PASS=${{ env.EMAIL_PASS }}
+            JWTSECRET=${{ env.JWTSECRET }}
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
+```
+Explanation
+- on: This configuration determines when the workflow will be triggered. In this example, the workflow will be triggered every time there is a push or pull request to the main branch.
+- env: The env section defines the environment variables required in the workflow. Make sure to replace the YOUR_PROJECT_ID, YOUR_REPOSITORY_NAME, and YOUR_SERVICE_NAME values ​​with the appropriate values ​​for your project. Secret variables taken from GitHub Secrets must also be adapted to your project needs, such as DBHOST, DBUSER, DBPASS, and others.
+  
 ## Team Back-End
 
 | Name                           | University	                                         | 
