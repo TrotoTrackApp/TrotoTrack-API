@@ -246,6 +246,20 @@ CLI Instructions:
 # Create repository in Artifact Registry for Docker format
 gcloud artifacts repositories create REPOSITORY_NAME --repository-format=docker --location=LOCATION
 ```
+Replace REPOSITORY_NAME with the desired name for your Artifact Registry repository, and LOCATION with the region where you want to create the repository (e.g., us-central1).
+
+UI Instructions:
+- Navigate to [Google Cloud Console](https://console.cloud.google.com/)
+- Select Your Project: Make sure you have selected the correct project where you want to create the Artifact Registry repository.
+- Open Artifact Registry:
+  - Click on the menu icon ☰ at the top left corner.
+  - Navigate to Artifact Registry under Tools.
+- Create a New Repository:
+  - Click on Create Repository.
+  - Enter a name for your repository under Repository name.
+  - Select Docker as the format under Repository format.
+  - Choose the appropriate Location.
+  - Click Create to create the repository.
 
 ### Step 5 : Store the following securely as GitHub secrets:
   - Service account key JSON (KEY_FILE.json)
