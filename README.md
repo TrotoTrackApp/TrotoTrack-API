@@ -109,15 +109,27 @@ npm run start
 ## API Endpoint
 ### Users
 
-| HTTP Verbs                                                                         | Endpoints        | Query Params | Action                                 | Authorized |
-| ---------------------------------------------------------------------------------- | ---------------- | ------------ | -------------------------------------- | ---------- |       
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/register`      |              | To sign up a new user account          | No         |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/login`         |              | To login an existing user account      | No         |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/send-otp`      |              | Send otp for forget password           | No         |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/verify-otp`    |              | Verify the OTP received via email      | No         |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/verify `       | `token`      | Verify user account recevied via email | No         |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/PATCH.png)  | `/new-password`  |              | Set a new password                     | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/scan`          |              | Scan image trotoar                     | Yes        |
+| HTTP Verbs                                                                         | Endpoints             | Query Params                | Action                                 | Authorized |
+| ---------------------------------------------------------------------------------- | --------------------- | --------------------------- | -------------------------------------- | ---------- |       
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/register`           |                             | To sign up a new user account          | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/login`              |                             | To login an existing user account      | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/send-otp`           |                             | Send otp for forget password           | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/verify-otp`         |                             | Verify the OTP received via email      | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/verify `            | `token`                     | Verify user account recevied via email | No         |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/PATCH.png)  | `/new-password`       |                             | Set a new password                     | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/scan`               |                             | Scan image sidewalk                    | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/profile`            |                             | Get user profile                       | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/PUT.png)    | `/profile`            |                             | Update user profile                    | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/PATCH.png)  | `/profile`            |                             | Update password user                   | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/articles`           |                             | Get all articles                       | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/articles/:id`       |                             | Get details articles                   | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/POST.png)   | `/reports`            |                             | Create a new report sidewalk           | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/reports`            | `limit`, `page`, `search`   | Retrieve all report sidewalk           | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/reports/profile`    | `limit`, `page`, `search`   | Retrieve sidewalk reports profiles     | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/GET.png)    | `/reports/:id`        |                             | Retrieve sidewalk reports details      | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/PUT.png)    | `/reports/:id`        |                             | Update sidewalk reports profiles       | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/assets/PUT.png)    | `/reports/:id/upvote` |                             | Upvote sidewalk reports                | Yes        |
+
 
 
 ## How to deploy to Cloud Run & CI/CD Setup
