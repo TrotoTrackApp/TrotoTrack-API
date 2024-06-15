@@ -13,7 +13,7 @@ class JobService extends JobServicesInterface {
     this.jobRepo = jobRepo;
   }
 
-  async createJob(data, file) {
+  async createJob(data, file, userId) {
     if (!data.name || !data.nik || !data.address || !data.phone || !file) {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
@@ -38,6 +38,12 @@ class JobService extends JobServicesInterface {
     const allowedFileTypes = ["application/pdf"];
     if (!allowedFileTypes.includes(file.mimetype)) {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+    }
+
+    // Validasi tambahan: Cek apakah pengguna sudah memiliki Job
+    const existingJob = await this.jobRepo.getJobByUserId(userId);
+    if (existingJob) {
+      throw new DuplicateError("User already has a registered job");
     }
 
     const job = await this.jobRepo.createJob(data, file);

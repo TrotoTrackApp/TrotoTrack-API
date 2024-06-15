@@ -25,7 +25,7 @@ class JobController {
       const data = jobRequest(req.body);
       const file = req.file;
       data.id_user = id;
-      await this.jobService.createJob(data, file);
+      await this.jobService.createJob(data, file, id);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
     } catch (error) {
       if (

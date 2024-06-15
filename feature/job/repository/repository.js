@@ -14,7 +14,7 @@ class JobRepository extends JobRepositoryInterface {
     this.db = Job;
   }
 
-  async createJob(data, file) {
+  async createJob(data, file, userId) {
     const job = jobCoreToJobModel(data);
 
     if (file) {
@@ -83,6 +83,17 @@ class JobRepository extends JobRepositoryInterface {
   async getJobProfile(idUser) {
     const job = await this.db.findOne({
       where: { id_user: idUser },
+    });
+    if (!job) {
+      throw new NotFoundError("Job not found");
+    }
+    const jobCore = jobModelToJobCore(job);
+    return jobCore;
+  }
+
+  async getJobByUserId(userId) {
+    const job = await this.db.findOne({
+      where: { id_user: userId },
     });
     if (!job) {
       throw new NotFoundError("Job not found");

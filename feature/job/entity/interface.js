@@ -1,5 +1,5 @@
 class JobRepositoryInterface {
-  async createJob(data, file) {
+  async createJob(data, file, userId) {
     throw new Error("Method not implemented");
   }
 
@@ -26,10 +26,14 @@ class JobRepositoryInterface {
   async getJobProfile(idUser) {
     throw new Error("Method not implemented");
   }
+
+  async getJobByUserId(userId) {
+    throw new Error("Method not implemented");
+  }
 }
 
 class JobServicesInterface {
-  async createJob(data, file) {
+  async createJob(data, file, userId) {
     throw new Error("Method not implemented");
   }
 
