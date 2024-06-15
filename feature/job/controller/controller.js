@@ -4,6 +4,7 @@ const {
   successResponse,
   errorResponse,
   successWithDataResponse,
+  successWithPaginationAndCount,
 } = require("../../../utils/helper/response");
 const {
   ValidationError,
@@ -100,13 +101,26 @@ class JobController {
 
   async getAllJob(req, res) {
     try {
+      const { search, page, limit } = req.query;
+
+      // Konversi page dan limit ke tipe number
+      const pageNumber = parseInt(page, 10) || 1;
+      const limitNumber = parseInt(limit, 10) || 10;
+
       const { role } = extractToken(req);
       if (role === "admin") {
-        const jobs = await this.jobService.getAllJob();
-        const response = listJobResponse(jobs);
+        const { result, pageInfo, totalCount } = await this.jobService.getAllJob(search, pageNumber, limitNumber);
+        const response = listJobResponse(result);
         return res
-          .status(200)
-          .json(successWithDataResponse(message.SUCCESS_GET, response));
+        .status(200)
+        .json(
+          successWithPaginationAndCount(
+            message.SUCCESS_GET_ALL,
+            response,
+            pageInfo,
+            totalCount
+          )
+        );
       } else {
         return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }

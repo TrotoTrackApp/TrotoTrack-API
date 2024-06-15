@@ -7,7 +7,7 @@ class JobRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
-  async getAllJob() {
+  async getAllJob(search, page, limit) {
     throw new Error("Method not implemented");
   }
 
@@ -45,7 +45,7 @@ class JobServicesInterface {
     throw new Error("Method not implemented");
   }
 
-  async getAllJob() {
+  async getAllJob(search, page, limit) {
     throw new Error("Method not implemented");
   }
 
