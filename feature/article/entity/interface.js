@@ -7,7 +7,7 @@ class ArticleRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
-  async getAllArticle() {
+  async getAllArticle(search, page, limit) {
     throw new Error("Method not implemented");
   }
 
@@ -33,7 +33,7 @@ class ArticleServicesInterface {
     throw new Error("Method not implemented");
   }
 
-  async getAllArticle() {
+  async getAllArticle(search, page, limit) {
     throw new Error("Method not implemented");
   }
 

@@ -62,12 +62,35 @@ class ArticleService extends ArticleServicesInterface {
     return article;
   }
 
-  async getAllArticle() {
-    const article = await this.articleRepo.getAllArticle();
-    if (article.length === 0) {
-      throw new ValidationError("No article found");
+  async getAllArticle(search, page, limit) {
+    if (!Number.isInteger(page) || !Number.isInteger(limit)) {
+      throw new ValidationError("Page and limit must be a number");
     }
-    return article;
+
+    if (limit > 10) {
+      throw new ValidationError("Limit must not be greater than 10");
+    }
+
+    if (page === undefined) {
+      page = 1;
+    }
+
+    if (limit === undefined) {
+      limit = 10;
+    }
+
+    const { result, pageInfo, totalCount } =
+      await this.articleRepo.getAllArticle(search, page, limit);
+    if (result.length === 0) {
+      return {
+        result: [],
+        pageInfo,
+        totalCount: 0,
+        message: "No article found",
+      };
+    }
+
+    return { result, pageInfo, totalCount };
   }
 
   async updateArticleById(id, updatedData, file) {

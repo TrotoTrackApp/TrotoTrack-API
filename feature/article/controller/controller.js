@@ -4,6 +4,7 @@ const {
   successResponse,
   errorResponse,
   successWithDataResponse,
+  successWithPaginationAndCount
 } = require("../../../utils/helper/response");
 const {
   ValidationError,
@@ -72,11 +73,25 @@ class ArticleController {
 
   async getAllArticle(req, res) {
     try {
-      const article = await this.articleService.getAllArticle();
-      const response = listArticleResponse(article);
+      const { search, page, limit } = req.query;
+
+      // Konversi page dan limit ke tipe number
+      const pageNumber = parseInt(page, 10) || 1;
+      const limitNumber = parseInt(limit, 10) || 10;
+
+      const { result, pageInfo, totalCount } =
+        await this.articleService.getAllArticle(search, pageNumber, limitNumber);
+      const response = listArticleResponse(result);
       return res
         .status(200)
-        .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
+        .json(
+          successWithPaginationAndCount(
+            message.SUCCESS_GET_ALL,
+            response,
+            pageInfo,
+            totalCount
+          )
+        );
     } catch (error) {
       if (
         error instanceof NotFoundError ||

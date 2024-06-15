@@ -7,6 +7,8 @@ const {
   listArticleModelToArticleCore,
 } = require("../entity/mapping");
 const { uploadFileToGCSForArticle } = require("../../../utils/storage/gcp_storage");
+const { calculateData } = require("../../../utils/helper/pagination");
+const { Op } = require("sequelize");
 
 class ArticleRepository extends ArticleRepositoryInterface {
   constructor() {
@@ -36,10 +38,29 @@ class ArticleRepository extends ArticleRepositoryInterface {
     return articleCore;
   }
 
-  async getAllArticle() {
-    const articles = await this.db.findAll();
-    const articleList = listArticleModelToArticleCore(articles);
-    return articleList;
+  async getAllArticle(search, page, limit) {
+    const offset = (page - 1) * limit;
+
+    let whereClause = {};
+    if (search) {
+      whereClause = {
+        [Op.or]: [
+          { title: { [Op.like]: `%${search}%` } }
+        ],
+      };
+    }
+
+    const totalCount = await this.db.count({ where: whereClause });
+    const data = await this.db.findAll({
+      where: whereClause,
+      limit: limit,
+      offset: offset,
+    });
+
+    const result = listArticleModelToArticleCore(data);
+    const pageInfo = calculateData(totalCount, limit, page);
+    return { result, pageInfo, totalCount };
+
   }
 
   async updateArticleById(id, updatedData, file) {
