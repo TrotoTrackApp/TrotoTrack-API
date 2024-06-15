@@ -10,6 +10,7 @@ function jobCoreToJobModel(mainData) {
     phone: mainData.phone,
     file: mainData.file,
     status: mainData.status,
+    id_user: mainData.user_id,
     created_at: mainData.createdAt,
   };
 }
@@ -33,6 +34,7 @@ function jobModelToJobCore(mainData) {
     mainData.phone,
     mainData.file,
     mainData.status,
+    mainData.id_user,
     mainData.created_at
   );
   return jobCore;
