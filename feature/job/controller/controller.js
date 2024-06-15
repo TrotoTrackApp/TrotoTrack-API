@@ -75,8 +75,10 @@ class JobController {
   async getJobProfile(req, res) {
     try {
       const { id } = extractToken(req);
-      const job = this.jobService.getJobProfile(id);
+      const job = await this.jobService.getJobProfile(id);
+      console.log("data", job);
       const response = jobResponse(job);
+      console.log("response", response);
       return res
         .status(200)
         .json(successWithDataResponse(message.SUCCESS_GET, response));

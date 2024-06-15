@@ -26,6 +26,12 @@ class JobService extends JobServicesInterface {
       throw new ValidationError("Phone must be at least 10 characters long");
     }
 
+    // Cek apakah pengguna sudah memiliki Job
+    const existingJob = await this.jobRepo.getJobByUserId(userId);
+    if (existingJob) {
+      throw new DuplicateError("User already has a registered job");
+    }
+
     const nikExist = await this.jobRepo.getJobByNik(data.nik);
     if (nikExist) {
       throw new DuplicateError("NIK already exist");
@@ -38,12 +44,6 @@ class JobService extends JobServicesInterface {
     const allowedFileTypes = ["application/pdf"];
     if (!allowedFileTypes.includes(file.mimetype)) {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
-    }
-
-    // Validasi tambahan: Cek apakah pengguna sudah memiliki Job
-    const existingJob = await this.jobRepo.getJobByUserId(userId);
-    if (existingJob) {
-      throw new DuplicateError("User already has a registered job");
     }
 
     const job = await this.jobRepo.createJob(data, file);
