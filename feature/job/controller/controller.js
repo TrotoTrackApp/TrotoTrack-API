@@ -72,29 +72,29 @@ class JobController {
     }
   }
 
-//   async getJobProfile(req, res) {
-//     try {
-//       const { id } = extractToken(req);
-//       const job = await this.jobService.getJobById(id);
-//       const response = jobResponse(job);
-//       return res
-//         .status(200)
-//         .json(successWithDataResponse(message.SUCCESS_GET, response));
-//     } catch (error) {
-//       if (
-//         error instanceof NotFoundError ||
-//         error instanceof UnauthorizedError ||
-//         error instanceof ValidationError
-//       ) {
-//         return res.status(error.statusCode).json(errorResponse(error.message));
-//       } else {
-//         console.log(error);
-//         return res
-//           .status(500)
-//           .json(errorResponse(message.ERROR_INTERNAL_SERVER));
-//       }
-//     }
-//   }
+  async getJobByUserId(req, res) {
+    try {
+      const { id } = extractToken(req);
+      const job = this.jobService.getJobProfile(id);
+      const response = jobResponse(job);
+      return res
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET, response));
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof UnauthorizedError ||
+        error instanceof ValidationError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
 
   async getAllJob(req, res) {
     try {

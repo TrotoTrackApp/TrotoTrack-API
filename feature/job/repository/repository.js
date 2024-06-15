@@ -6,9 +6,7 @@ const {
   jobModelToJobCore,
   listJobModelToJobCore,
 } = require("../entity/mapping");
-const {
-    uploadPDFForJob,
-} = require("../../../utils/storage/gcp_storage");
+const { uploadPDFForJob } = require("../../../utils/storage/gcp_storage");
 
 class JobRepository extends JobRepositoryInterface {
   constructor() {
@@ -73,13 +71,24 @@ class JobRepository extends JobRepositoryInterface {
 
   async getJobByNik() {
     const job = await this.db.findOne({
-        where: { nik: nik },
-      });
-      if (!job) {
-        throw new NotFoundError("Job not found");
-      }
-      const jobCore = jobModelToJobCore(job);
-      return jobCore;
+      where: { nik: nik },
+    });
+    if (!job) {
+      throw new NotFoundError("Job not found");
+    }
+    const jobCore = jobModelToJobCore(job);
+    return jobCore;
+  }
+
+  async getJobProfile(idUser) {
+    const job = await this.db.findOne({
+      where: { id_user: idUser },
+    });
+    if (!job) {
+      throw new NotFoundError("Job not found");
+    }
+    const jobCore = jobModelToJobCore(job);
+    return jobCore;
   }
 }
 

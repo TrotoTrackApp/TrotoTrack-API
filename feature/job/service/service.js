@@ -131,6 +131,19 @@ class JobService extends JobServicesInterface {
     }
     return deletedJob;
   }
+
+  async getJobProfile(idUser) {
+    if (!idUser) {
+      throw new ValidationError("Id is required");
+    }
+
+    if (!validator.isUUID(idUser)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    const job = await this.jobRepo.getJobProfile(idUser);
+    return job;
+  }
 }
 
 module.exports = JobService;
