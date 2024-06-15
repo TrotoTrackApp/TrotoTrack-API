@@ -16,7 +16,6 @@ const Job = sequelize.define(
     },
     nik: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
     },
     address: {
