@@ -213,6 +213,30 @@
               }
             }
           },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "invalid_limit_page": {
+                    "value": {
+                      "status": false,
+                      "message": "Page and limit must be a number"
+                    }
+                  },
+                  "invalid_limit": {
+                    "value": {
+                      "status": false,
+                      "message": "Limit must not be greater than 10"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized error",
             "content": {
@@ -1101,6 +1125,30 @@
                         "last_page": 1
                       },
                       "count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "invalid_limit_page": {
+                    "value": {
+                      "status": false,
+                      "message": "Page and limit must be a number"
+                    }
+                  },
+                  "invalid_limit": {
+                    "value": {
+                      "status": false,
+                      "message": "Limit must not be greater than 10"
                     }
                   }
                 }
@@ -2383,6 +2431,597 @@
           }
         }
       }
+    },
+    "/jobs": {
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Job"],
+        "summary": "Get all job",
+        "description": "Get all job",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitPagination"
+          },
+          {
+            "$ref": "#/components/parameters/PagePagination"
+          },
+          {
+            "$ref": "#/components/parameters/SearchNameNikAndPhone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAllJob"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get all data",
+                      "data": [
+                        {
+                          "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                          "name": "Al Hilaluddin",
+                          "nik": "743218421421",
+                          "address": "Jl. Sudiang Raya No. 1",
+                          "phone": "081234567890",
+                          "file": "https://trototrack.my.id/file.jpg",
+                          "status": "pending",
+                          "created_at": "2021-08-01T00:00:00Z"
+                        },
+                        {
+                          "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                          "name": "Al Hilaluddin",
+                          "nik": "743218421421",
+                          "address": "Jl. Sudiang Raya No. 1",
+                          "phone": "081234567890",
+                          "file": "https://trototrack.my.id/file.jpg",
+                          "status": "pending",
+                          "created_at": "2021-08-01T00:00:00Z"
+                        }
+                      ],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 3
+                      },
+                      "count": 6
+                    }
+                  },
+                  "no_job_found": {
+                    "value": {
+                      "status": true,
+                      "message": "No job found",
+                      "data": [],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 1
+                      },
+                      "count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "invalid_limit_page": {
+                    "value": {
+                      "status": false,
+                      "message": "Page and limit must be a number"
+                    }
+                  },
+                  "invalid_limit": {
+                    "value": {
+                      "status": false,
+                      "message": "Limit must not be greater than 10"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{id}": {
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Job"],
+        "summary": "Get job by id",
+        "description": "Get job by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JobId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get job by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseJob"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                        "name": "Al Hilaluddin",
+                        "nik": "743218421421",
+                        "address": "Jl. Sudiang Raya No. 1",
+                        "phone": "081234567890",
+                        "file": "https://trototrack.my.id/file.jpg",
+                        "status": "pending",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Job not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Job"],
+        "summary": "Update job by id",
+        "description": "Update job by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JobId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJob"
+              },
+              "examples": {
+                "create": {
+                  "value": {
+                    "name": "Al Hilaluddin",
+                    "nik": "743218421421",
+                    "address": "Jl. Sudiang Raya No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.jpg"
+                  }
+                }
+              }
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/RequestJobMultiPart"
+            },
+            "examples": {
+              "create": {
+                "value": {
+                  "name": "Al Hilaluddin",
+                  "nik": "743218421421",
+                  "address": "Jl. Sudiang Raya No. 1",
+                  "phone": "081234567890",
+                  "file": "https://trototrack.my.id/file.jpg"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update job by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success updated data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is not valid"
+                    }
+                  },
+                  "invalid_nik": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK must be a number"
+                    }
+                  },
+                  "invalid_phone": {
+                    "value": {
+                      "status": false,
+                      "message": "Phone must be a number"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only images with jpeg, png, and jpg formats are allowed"
+                    }
+                  },
+                  "invalid_size_image": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
+                    "value": {
+                      "status": false,
+                      "message": "Forbidden access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Job not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Job"],
+        "summary": "Delete job by id",
+        "description": "Delete job by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JobId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete job by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success deleted data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "forbidden": {
+                    "value": {
+                      "status": false,
+                      "message": "Forbidden access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Job not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2397,7 +3036,7 @@
       "UserId": {
         "name": "id",
         "in": "path",
-        "description": "Id of the user to get",
+        "description": "Id of the user",
         "required": true,
         "schema": {
           "type": "string"
@@ -2411,7 +3050,7 @@
       "ArticleId": {
         "name": "id",
         "in": "path",
-        "description": "id of the article to get",
+        "description": "id of the article",
         "required": true,
         "schema": {
           "type": "string"
@@ -2425,7 +3064,21 @@
       "ReportId": {
         "name": "id",
         "in": "path",
-        "description": "id of the report to get",
+        "description": "id of the report",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "JobId": {
+        "name": "id",
+        "in": "path",
+        "description": "Id of the job",
         "required": true,
         "schema": {
           "type": "string"
@@ -2469,7 +3122,7 @@
       "SearchLocationAndStatus": {
         "name": "search",
         "in": "query",
-        "description": "Search Location and Status",
+        "description": "Search location and status",
         "required": false,
         "schema": {
           "type": "string"
@@ -2486,7 +3139,7 @@
       "SearchNameUsernameAndEmail": {
         "name": "search",
         "in": "query",
-        "description": "Search Name, Username, and Email",
+        "description": "Search name, username, and email",
         "required": false,
         "schema": {
           "type": "string"
@@ -2506,7 +3159,7 @@
       "SearchTitle": {
         "name": "search",
         "in": "query",
-        "description": "Search Title",
+        "description": "Search title",
         "required": false,
         "schema": {
           "type": "string"
@@ -2514,6 +3167,26 @@
         "examples": {
           "title": {
             "value": "Sidewalks in Makassar"
+          }
+        }
+      },
+      "SearchNameNikAndPhone": {
+        "name": "search",
+        "in": "query",
+        "description": "Search name, nik, and phone",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "name": {
+            "value": "Hilal"
+          },
+          "nik": {
+            "value": "743218421421"
+          },
+          "phone": {
+            "value": "081234567890"
           }
         }
       }
@@ -2762,13 +3435,7 @@
                   "format": "date-time"
                 }
               },
-              "required": [
-                "id",
-                "title",
-                "description",
-                "image",
-                "created_at"
-              ]
+              "required": ["id", "title", "description", "image", "created_at"]
             }
           },
           "pagination": {
@@ -3047,6 +3714,177 @@
           "status_damage",
           "description"
         ]
+      },
+      "RequestJob": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nik": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "nik", "address", "phone", "file"]
+      },
+      "RequestJobMultiPart": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nik": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["name", "nik", "address", "phone", "file"]
+      },
+      "ResponseJob": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "nik": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "nik",
+              "address",
+              "phone",
+              "file",
+              "status",
+              "created_at"
+            ]
+          }
+        },
+        "required": ["status", "message", "data"]
+      },
+      "ResponseAllJob": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "nik": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "file": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "nik",
+                "address",
+                "phone",
+                "file",
+                "status",
+                "created_at"
+              ]
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer"
+              },
+              "current_page": {
+                "type": "integer"
+              },
+              "last_page": {
+                "type": "integer"
+              }
+            },
+            "required": ["limit", "current_page", "last_page"]
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "required": ["status", "message", "data", "pagination", "count"]
       }
     }
   }
