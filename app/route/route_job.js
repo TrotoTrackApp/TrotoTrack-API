@@ -24,7 +24,7 @@ router.put('/jobs/:id', jwtMiddleware, upload.single('file'), jobController.upda
 router.get('/jobs', jwtMiddleware, jobController.getAllJob.bind(jobController));
 router.get('/jobs/:id', jwtMiddleware, jobController.getJobById.bind(jobController));
 router.delete('/jobs/:id', jwtMiddleware, jobController.deleteJobById.bind(jobController));
-router.patch('/jobs/:id/status', jwtMiddleware, jobController.updateStatusJob.bind(jobController));
+router.patch('/jobs/:id/status', jwtMiddleware, jobController.updateStatusJobById.bind(jobController));
 
 
 module.exports = router;
