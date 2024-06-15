@@ -6,6 +6,8 @@ const {
   usersModelToUsersCore,
   listUserModelToUserCore,
 } = require("../entity/mapping");
+const { Op } = require("sequelize");
+const { calculateData } = require("../../../utils/helper/pagination");
 
 class UserRepository extends UserRepositoryInterface {
   constructor() {
@@ -30,10 +32,30 @@ class UserRepository extends UserRepositoryInterface {
     return userCore;
   }
 
-  async getAllUser() {
-    const users = await User.findAll();
-    const userList = listUserModelToUserCore(users);
-    return userList;
+  async getAllUser(search, page, limit) {
+    const offset = (page - 1) * limit;
+
+    let whereClause = {};
+    if (search) {
+      whereClause = {
+        [Op.or]: [
+          { name: { [Op.like]: `%${search}%` } },
+          { username: { [Op.like]: `%${search}%` } },
+          { email: { [Op.like]: `%${search}%` } },
+        ],
+      };
+    }
+
+    const totalCount = await User.count({ where: whereClause });
+    const data = await User.findAll({
+      where: whereClause,
+      limit: limit,
+      offset: offset,
+    });
+
+    const result = listUserModelToUserCore(data);
+    const pageInfo = calculateData(totalCount, limit, page);
+    return { result, pageInfo, totalCount };
   }
 
   async updateUserById(id, updatedData) {

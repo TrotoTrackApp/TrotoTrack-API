@@ -2,6 +2,7 @@ const {
   successResponse,
   errorResponse,
   successWithDataResponse,
+  successWithPaginationAndCount,
 } = require("../../../utils/helper/response");
 const {
   ValidationError,
@@ -23,7 +24,10 @@ const {
   userResponse,
   userListResponse,
 } = require("../dto/response");
-const { extractToken, extractTokenVerifikasi } = require("../../../utils/jwt/jwt");
+const {
+  extractToken,
+  extractTokenVerifikasi,
+} = require("../../../utils/jwt/jwt");
 const path = require("path");
 const fs = require("fs");
 
@@ -103,21 +107,36 @@ class UserController {
 
   async getAllUsers(req, res) {
     try {
+      const { search, page, limit } = req.query;
+
+      // Konversi page dan limit ke tipe number
+      const pageNumber = parseInt(page, 10) || 1;
+      const limitNumber = parseInt(limit, 10) || 10;
+
       const { role } = extractToken(req);
       console.log("role", role);
       if (role === "admin") {
-        const users = await this.userService.getAllUser();
-        const response = userListResponse(users);
+        const { result, pageInfo, totalCount } =
+          await this.userService.getAllUser(search, pageNumber, limitNumber);
+        const response = userListResponse(result);
         return res
           .status(200)
-          .json(successWithDataResponse(message.SUCCESS_GET_ALL, response));
+          .json(
+            successWithPaginationAndCount(
+              message.SUCCESS_GET_ALL,
+              response,
+              pageInfo,
+              totalCount
+            )
+          );
       } else {
         return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
       }
     } catch (error) {
       if (
         error instanceof NotFoundError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof ValidationError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
@@ -295,7 +314,9 @@ class UserController {
       const email = req.body.email;
       const otp = req.body.otp;
       const token = await this.userService.verifyOtpEmail(email, otp);
-      return res.status(200).json(successWithDataResponse("Success verify otp", { token }));
+      return res
+        .status(200)
+        .json(successWithDataResponse("Success verify otp", { token }));
     } catch (error) {
       if (error instanceof NotFoundError || error instanceof ValidationError) {
         return res.status(error.statusCode).json(errorResponse(error.message));

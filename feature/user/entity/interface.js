@@ -7,7 +7,7 @@ class UserRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
-  async getAllUser() {
+  async getAllUser(search, page, limit) {
     throw new Error("Method not implemented");
   }
 
@@ -54,7 +54,7 @@ class UserServicesInterface {
     throw new Error("Method not implemented");
   }
 
-  async getAllUser() {
+  async getAllUser(search, page, limit) {
     throw new Error("Method not implemented");
   }
 
