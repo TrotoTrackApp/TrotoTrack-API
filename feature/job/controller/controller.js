@@ -21,8 +21,10 @@ class JobController {
 
   async createJob(req, res) {
     try {
+      const { id } = extractToken(req);
       const data = jobRequest(req.body);
       const file = req.file;
+      data.id_user = id;
       await this.jobService.createJob(data, file);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
     } catch (error) {
@@ -70,29 +72,29 @@ class JobController {
     }
   }
 
-  async getJobProfile(req, res) {
-    try {
-      const { id } = extractToken(req);
-      const job = await this.jobService.getJobById(id);
-      const response = jobResponse(job);
-      return res
-        .status(200)
-        .json(successWithDataResponse(message.SUCCESS_GET, response));
-    } catch (error) {
-      if (
-        error instanceof NotFoundError ||
-        error instanceof UnauthorizedError ||
-        error instanceof ValidationError
-      ) {
-        return res.status(error.statusCode).json(errorResponse(error.message));
-      } else {
-        console.log(error);
-        return res
-          .status(500)
-          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
-      }
-    }
-  }
+//   async getJobProfile(req, res) {
+//     try {
+//       const { id } = extractToken(req);
+//       const job = await this.jobService.getJobById(id);
+//       const response = jobResponse(job);
+//       return res
+//         .status(200)
+//         .json(successWithDataResponse(message.SUCCESS_GET, response));
+//     } catch (error) {
+//       if (
+//         error instanceof NotFoundError ||
+//         error instanceof UnauthorizedError ||
+//         error instanceof ValidationError
+//       ) {
+//         return res.status(error.statusCode).json(errorResponse(error.message));
+//       } else {
+//         console.log(error);
+//         return res
+//           .status(500)
+//           .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+//       }
+//     }
+//   }
 
   async getAllJob(req, res) {
     try {
@@ -128,7 +130,7 @@ class JobController {
       const data = jobRequest(req.body);
       const file = req.file;
       const job = await this.userService.getJobById(id);
-      if (role === "admin" || idUser === job.id) {
+      if (role === "admin" || idUser === job.idUser) {
         await this.jobService.updateJobById(id, data, file);
         return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
       } else {
