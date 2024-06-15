@@ -2440,8 +2440,8 @@
           }
         ],
         "tags": ["Job"],
-        "summary": "Get all job",
-        "description": "Get all job",
+        "summary": "Get all application jobs",
+        "description": "Get all application jobs",
         "parameters": [
           {
             "$ref": "#/components/parameters/LimitPagination"
@@ -2455,7 +2455,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Get all job",
+            "description": "Get all application jobs",
             "content": {
               "application/json": {
                 "schema": {
@@ -2584,8 +2584,8 @@
           }
         ],
         "tags": ["Job"],
-        "summary": "Get job by id",
-        "description": "Get job by id",
+        "summary": "Get application job by id",
+        "description": "Get application job by id",
         "parameters": [
           {
             "$ref": "#/components/parameters/JobId"
@@ -2593,7 +2593,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Get job by id",
+            "description": "Get application job by id",
             "content": {
               "application/json": {
                 "schema": {
@@ -2707,8 +2707,8 @@
           }
         ],
         "tags": ["Job"],
-        "summary": "Update job by id",
-        "description": "Update job by id",
+        "summary": "Update application job by id",
+        "description": "Update application job by id",
         "parameters": [
           {
             "$ref": "#/components/parameters/JobId"
@@ -2752,7 +2752,7 @@
         },
         "responses": {
           "200": {
-            "description": "Update job by id",
+            "description": "Update application job by id",
             "content": {
               "application/json": {
                 "schema": {
@@ -2898,8 +2898,8 @@
           }
         ],
         "tags": ["Job"],
-        "summary": "Delete job by id",
-        "description": "Delete job by id",
+        "summary": "Delete application job by id",
+        "description": "Delete application job by id",
         "parameters": [
           {
             "$ref": "#/components/parameters/JobId"
@@ -2907,7 +2907,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Delete job by id",
+            "description": "Delete application job by id",
             "content": {
               "application/json": {
                 "schema": {
@@ -3031,8 +3031,8 @@
           }
         ],
         "tags": ["Job"],
-        "summary": "Update status job by id",
-        "description": "Update status job by id",
+        "summary": "Update application job status by id",
+        "description": "Update application job status by id",
         "parameters": [
           {
             "$ref": "#/components/parameters/JobId"
@@ -3066,7 +3066,7 @@
         },
         "responses": {
           "200": {
-            "description": "Update status job by id",
+            "description": "Update application job status by id",
             "content": {
               "application/json": {
                 "schema": {
