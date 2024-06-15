@@ -72,7 +72,7 @@ class JobController {
     }
   }
 
-  async getJobByUserId(req, res) {
+  async getJobProfile(req, res) {
     try {
       const { id } = extractToken(req);
       const job = this.jobService.getJobProfile(id);

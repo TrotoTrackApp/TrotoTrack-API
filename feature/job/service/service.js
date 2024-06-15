@@ -8,8 +8,8 @@ const validator = require("validator");
 const { message } = require("../../../utils/constanta/constanta");
 
 class JobService extends JobServicesInterface {
-  constructor() {
-    super(jobRepo);
+  constructor(jobRepo) {
+    super();
     this.jobRepo = jobRepo;
   }
 
