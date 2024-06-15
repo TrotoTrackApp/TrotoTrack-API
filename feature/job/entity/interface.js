@@ -18,10 +18,6 @@ class JobRepositoryInterface {
     async deleteJobById(id) {
       throw new Error("Method not implemented");
     }
-  
-    async getJobByTitle(title) {
-      throw new Error("Method not implemented");
-    }
 
     async getJobByNik() {
       throw new Error("Method not implemented");

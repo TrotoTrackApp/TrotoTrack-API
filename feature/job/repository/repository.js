@@ -71,17 +71,6 @@ class JobRepository extends JobRepositoryInterface {
     return deletedJob;
   }
 
-  async getJobByTitle(title) {
-    const job = await this.db.findOne({
-      where: { title: title },
-    });
-    if (!job) {
-      throw new NotFoundError("Job not found");
-    }
-    const jobCore = jobModelToJobCore(job);
-    return jobCore;
-  }
-
   async getJobByNik() {
     const job = await this.db.findOne({
         where: { nik: nik },
