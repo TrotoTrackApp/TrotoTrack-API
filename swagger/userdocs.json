@@ -2497,11 +2497,11 @@
           }
         ],
         "tags": ["Job"],
-        "summary": "Get profile Job",
-        "description": "Get profile Job",
+        "summary": "Get profile application job",
+        "description": "Get profile application job",
         "responses": {
           "200": {
-            "description": "Get profile Job",
+            "description": "Get profile application job",
             "content": {
               "application/json": {
                 "schema": {
@@ -2603,8 +2603,8 @@
           }
         ],
         "tags": ["Job"],
-        "summary": "Update profile Job",
-        "description": "Update profile Job",
+        "summary": "Update profile application job",
+        "description": "Update profile application job",
         "parameters": [
           {
             "$ref": "#/components/parameters/JobId"
