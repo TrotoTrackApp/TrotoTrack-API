@@ -2294,6 +2294,469 @@
           }
         }
       }
+    },
+    "/jobs": {
+      "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Jobs"],
+        "summary": "Register to the application",
+        "description": "Register to the application",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJob"
+              },
+              "examples": {
+                "register": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJobMultiPart"
+              },
+              "examples": {
+                "register": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Register to the application",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success created data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_nik": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK must be at least 16 characters long"
+                    }
+                  },
+                  "invalid_phone": {
+                    "value": {
+                      "status": false,
+                      "message": "Phone must be at least 10 characters long"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only PDF format is allowed"
+                    }
+                  },
+                  "invalid_size_file": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "nik_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK already exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "jobs/profile": {
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Jobs"],
+        "summary": "Get profile Job",
+        "description": "Get profile Job",
+        "responses": {
+          "200": {
+            "description": "Get profile Job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseJob"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "name": "Hilal",
+                        "nik": "737219421321",
+                        "address": "Jl. Jendral Sudirman No. 1",
+                        "phone": "081234567890",
+                        "file": "https://trototrack.my.id/file.pdf",
+                        "status": "pending",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is not valid"
+                    }
+                  },
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Job not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "jobs/{id}": {
+      "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Jobs"],
+        "summary": "Update profile Job",
+        "description": "Update profile Job",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JobId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJob"
+              },
+              "examples": {
+                "update": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJobMultiPart"
+              },
+              "examples": {
+                "update": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update profile Job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success updated data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is not valid"
+                    }
+                  },
+                  "invalid_nik": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK must be at least 16 characters long"
+                    }
+                  },
+                  "invalid_phone": {
+                    "value": {
+                      "status": false,
+                      "message": "Phone must be at least 10 characters long"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only PDF format is allowed"
+                    }
+                  },
+                  "invalid_size_file": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Job not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "nik_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK already exists for another job"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2337,6 +2800,20 @@
         "name": "id",
         "in": "path",
         "description": "id of the report to get",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "JobId": {
+        "name": "id",
+        "in": "path",
+        "description": "id of the job",
         "required": true,
         "schema": {
           "type": "string"
@@ -2923,6 +3400,97 @@
               }
             },
             "required": ["label", "probability", "description"]
+          }
+        }
+      },
+      "RequestJob": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nik": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "nik", "address", "phone", "file"]
+      },
+      "RequestJobMultiPart": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nik": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["name", "nik", "address", "phone", "file"]
+      },
+      "ResponseJob": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "nik": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "name",
+              "nik",
+              "address",
+              "phone",
+              "file",
+              "status",
+              "created_at"
+            ]
           }
         }
       }
