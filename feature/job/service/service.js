@@ -2,6 +2,7 @@ const { JobServicesInterface } = require("../entity/interface");
 const {
   ValidationError,
   NotFoundError,
+  DuplicateError,
 } = require("../../../utils/helper/response");
 const validator = require("validator");
 const { message } = require("../../../utils/constanta/constanta");
@@ -28,7 +29,7 @@ class JobService extends JobServicesInterface {
 
     const nikExist = await this.jobRepo.getJobByNik(data.nik);
     if (nikExist) {
-      throw new ValidationError("NIK already exist");
+      throw new DuplicateError("NIK already exist");
     }
 
     if (file > 10 * 1024 * 1024) {
@@ -87,7 +88,7 @@ class JobService extends JobServicesInterface {
 
       const nikExist = await this.jobRepo.getJobByNik(updatedData.nik);
       if (nikExist && nikExist.id !== id) {
-        throw new ValidationError("NIK already exists for another job");
+        throw new DuplicateError("NIK already exists for another job");
       }
     }
 
