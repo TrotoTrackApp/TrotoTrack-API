@@ -81,6 +81,17 @@ class JobRepository extends JobRepositoryInterface {
     const jobCore = jobModelToJobCore(job);
     return jobCore;
   }
+
+  async getJobByNik() {
+    const job = await this.db.findOne({
+        where: { nik: nik },
+      });
+      if (!job) {
+        throw new NotFoundError("Job not found");
+      }
+      const jobCore = jobModelToJobCore(job);
+      return jobCore;
+  }
 }
 
 module.exports = JobRepository;
