@@ -63,12 +63,35 @@ class JobService extends JobServicesInterface {
     return job;
   }
 
-  async getAllJob() {
-    const jobs = await this.jobRepo.getAllJob();
-    if (jobs.length === 0) {
-      throw new ValidationError("No job found");
+  async getAllJob(search, page, limit) {
+    if (!Number.isInteger(page) || !Number.isInteger(limit)) {
+      throw new ValidationError("Page and limit must be a number");
     }
-    return jobs;
+
+    if (limit > 10) {
+      throw new ValidationError("Limit must not be greater than 10");
+    }
+
+    if (page === undefined) {
+      page = 1;
+    }
+
+    if (limit === undefined) {
+      limit = 10;
+    }
+
+    const { result, pageInfo, totalCount } =
+      await this.jobRepo.getAllJob(search, page, limit);
+    if (result.length === 0) {
+      return {
+        result: [],
+        pageInfo,
+        totalCount: 0,
+        message: "No report found",
+      };
+    }
+
+    return { result, pageInfo, totalCount };
   }
 
   async updateJobById(id, updatedData, file) {

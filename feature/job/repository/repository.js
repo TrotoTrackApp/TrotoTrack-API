@@ -6,6 +6,8 @@ const {
   jobModelToJobCore,
   listJobModelToJobCore,
 } = require("../entity/mapping");
+const { calculateData } = require("../../../utils/helper/pagination");
+const { Op } = require("sequelize");
 const { uploadPDFForJob } = require("../../../utils/storage/gcp_storage");
 
 class JobRepository extends JobRepositoryInterface {
@@ -36,10 +38,30 @@ class JobRepository extends JobRepositoryInterface {
     return jobCore;
   }
 
-  async getAllJob() {
-    const jobs = await this.db.findAll();
-    const jobList = listJobModelToJobCore(jobs);
-    return jobList;
+  async getAllJob(search, page, limit) {
+    const offset = (page - 1) * limit;
+
+    let whereClause = {};
+    if (search) {
+      whereClause = {
+        [Op.or]: [
+          { name: { [Op.like]: `%${search}%` } },
+          { nik: { [Op.like]: `%${search}%` } },
+          { phone: { [Op.like]: `%${search}%` } },
+        ],
+      };
+    }
+
+    const totalCount = await this.db.count({ where: whereClause });
+    const reports = await this.db.findAll({
+      where: whereClause,
+      limit: limit,
+      offset: offset,
+    });
+
+    const result = listJobModelToJobCore(reports);
+    const pageInfo = calculateData(totalCount, limit, page);
+    return { result, pageInfo, totalCount };
   }
 
   async updateJobById(id, updatedData, file) {
