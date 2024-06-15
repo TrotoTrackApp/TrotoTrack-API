@@ -13,7 +13,6 @@ const {
 } = require("../../../utils/helper/response");
 const { message } = require("../../../utils/constanta/constanta");
 const { extractToken } = require("../../../utils/jwt/jwt");
-const e = require("cors");
 
 class JobController {
   constructor(jobService) {
@@ -45,11 +44,16 @@ class JobController {
   async getJobById(req, res) {
     const id = req.params.id;
     try {
-      const job = await this.jobService.getJobById(id);
-      const response = jobResponse(job);
-      return res
-        .status(200)
-        .json(successWithDataResponse(message.SUCCESS_GET, response));
+      const { role } = extractToken(req);
+      if (role === "admin") {
+        const job = await this.jobService.getJobById(id);
+        const response = jobResponse(job);
+        return res
+          .status(200)
+          .json(successWithDataResponse(message.SUCCESS_GET, response));
+      } else {
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+      }
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -66,13 +70,41 @@ class JobController {
     }
   }
 
-  async getAllJob(req, res) {
+  async getJobProfile(req, res) {
     try {
-      const jobs = await this.jobService.getAllJob();
-      const response = listJobResponse(jobs);
+      const { id } = extractToken(req);
+      const job = await this.jobService.getJobById(id);
+      const response = jobResponse(job);
       return res
         .status(200)
         .json(successWithDataResponse(message.SUCCESS_GET, response));
+    } catch (error) {
+      if (
+        error instanceof NotFoundError ||
+        error instanceof UnauthorizedError ||
+        error instanceof ValidationError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
+
+  async getAllJob(req, res) {
+    try {
+      if (role === "admin") {
+        const jobs = await this.jobService.getAllJob();
+        const response = listJobResponse(jobs);
+        return res
+          .status(200)
+          .json(successWithDataResponse(message.SUCCESS_GET, response));
+      } else {
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+      }
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -116,8 +148,13 @@ class JobController {
   async deleteJobById(req, res) {
     const id = req.params.id;
     try {
-      await this.jobService.deleteJobById(id);
-      return res.status(200).json(successResponse(message.SUCCESS_DELETED));
+      const { role } = extractToken(req);
+      if (role === "admin") {
+        await this.jobService.deleteJobById(id);
+        return res.status(200).json(successResponse(message.SUCCESS_DELETED));
+      } else {
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+      }
     } catch (error) {
       if (
         error instanceof NotFoundError ||
