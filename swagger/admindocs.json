@@ -149,6 +149,17 @@
         "tags": ["Users"],
         "summary": "Get all users",
         "description": "Get all users",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitPagination"
+          },
+          {
+            "$ref": "#/components/parameters/PagePagination"
+          },
+          {
+            "$ref": "#/components/parameters/SearchNameUsernameAndEmail"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Get all users",
@@ -176,7 +187,26 @@
                           "username": "troto",
                           "email": "troto@gmail.com"
                         }
-                      ]
+                      ],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 3
+                      },
+                      "count": 6
+                    }
+                  },
+                  "no_report_found": {
+                    "value": {
+                      "status": true,
+                      "message": "No report found",
+                      "data": [],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 1
+                      },
+                      "count": 0
                     }
                   }
                 }
@@ -1012,6 +1042,17 @@
         "tags": ["Article"],
         "summary": "Get all article",
         "description": "Get all article",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitPagination"
+          },
+          {
+            "$ref": "#/components/parameters/PagePagination"
+          },
+          {
+            "$ref": "#/components/parameters/SearchTitle"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Get all article",
@@ -1040,7 +1081,26 @@
                           "image": "https://trototrack.my.id/image.jpg",
                           "created_at": "2021-08-01T00:00:00Z"
                         }
-                      ]
+                      ],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 3
+                      },
+                      "count": 6
+                    }
+                  },
+                  "no_article_found": {
+                    "value": {
+                      "status": true,
+                      "message": "No article found",
+                      "data": [],
+                      "pagination": {
+                        "limit": 2,
+                        "current_page": 1,
+                        "last_page": 1
+                      },
+                      "count": 0
                     }
                   }
                 }
@@ -2422,6 +2482,40 @@
             "value": "pending"
           }
         }
+      },
+      "SearchNameUsernameAndEmail": {
+        "name": "search",
+        "in": "query",
+        "description": "Search Name, Username, and Email",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "name": {
+            "value": "Hilal"
+          },
+          "username": {
+            "value": "exoream"
+          },
+          "email": {
+            "value": "hilal@gmail.com"
+          }
+        }
+      },
+      "SearchTitle": {
+        "name": "search",
+        "in": "query",
+        "description": "Search Title",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "title": {
+            "value": "Sidewalks in Makassar"
+          }
+        }
       }
     },
     "schemas": {
@@ -2511,10 +2605,56 @@
         }
       },
       "ResponseGetAllUsers": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/ResponseGetUser"
-        }
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": ["id", "name", "image", "username", "email"]
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer"
+              },
+              "current_page": {
+                "type": "integer"
+              },
+              "last_page": {
+                "type": "integer"
+              }
+            },
+            "required": ["limit", "current_page", "last_page"]
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "required": ["status", "message", "data", "pagination", "count"]
       },
       "RequestUpdateUser": {
         "type": "object",
@@ -2591,10 +2731,66 @@
         }
       },
       "ResponseAllArticle": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/ResponseArticle"
-        }
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "description",
+                "image",
+                "created_at"
+              ]
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer"
+              },
+              "current_page": {
+                "type": "integer"
+              },
+              "last_page": {
+                "type": "integer"
+              }
+            },
+            "required": ["limit", "current_page", "last_page"]
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "required": ["status", "message", "data", "pagination", "count"]
       },
       "RequestArticle": {
         "type": "object",
