@@ -3,7 +3,10 @@ const {
   ValidationError,
   NotFoundError,
 } = require("../../../utils/helper/response");
-const { createToken, createVerificationToken } = require("../../../utils/jwt/jwt");
+const {
+  createToken,
+  createVerificationToken,
+} = require("../../../utils/jwt/jwt");
 const validator = require("validator");
 const {
   generatePasswordHash,
@@ -76,7 +79,7 @@ class UserService extends UserServicesInterface {
     const token = crypto.randomBytes(32).toString("hex");
     data.verificationToken = token;
 
-    await sendVerificationEmail(data.email, token)
+    await sendVerificationEmail(data.email, token);
     const user = await this.userRepo.createUser(data);
 
     return user;
@@ -95,12 +98,35 @@ class UserService extends UserServicesInterface {
     return user;
   }
 
-  async getAllUser() {
-    const users = await this.userRepo.getAllUser();
-    if (users.length === 0) {
-      throw new ValidationError("No user found");
+  async getAllUser(search, page, limit) {
+    if (!Number.isInteger(page) || !Number.isInteger(limit)) {
+      throw new ValidationError("Page and limit must be a number");
     }
-    return users;
+
+    if (limit > 10) {
+      throw new ValidationError("Limit must not be greater than 10");
+    }
+
+    if (page === undefined) {
+      page = 1;
+    }
+
+    if (limit === undefined) {
+      limit = 10;
+    }
+
+    const { result, pageInfo, totalCount } =
+      await this.userRepo.getAllUser(search, page, limit);
+    if (result.length === 0) {
+      return {
+        result: [],
+        pageInfo,
+        totalCount: 0,
+        message: "No user found",
+      };
+    }
+
+    return { result, pageInfo, totalCount };
   }
 
   async updateUserById(id, updatedData) {
@@ -275,7 +301,7 @@ class UserService extends UserServicesInterface {
       throw new ValidationError("OTP is incorrect");
     }
 
-    const token = createVerificationToken(email)
+    const token = createVerificationToken(email);
     await this.userRepo.resetOtpEmail(otp);
 
     return token;
@@ -324,7 +350,7 @@ class UserService extends UserServicesInterface {
     if (user.isActive) {
       return true;
     }
-    
+
     await this.userRepo.updateUserById(user.id, {
       isActive: true,
     });
