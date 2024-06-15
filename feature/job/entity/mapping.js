@@ -10,7 +10,7 @@ function jobCoreToJobModel(mainData) {
     phone: mainData.phone,
     file: mainData.file,
     status: mainData.status,
-    id_user: mainData.user_id,
+    id_user: mainData.id_user,
     created_at: mainData.createdAt,
   };
 }

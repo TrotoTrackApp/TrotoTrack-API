@@ -74,7 +74,7 @@ class JobRepository extends JobRepositoryInterface {
       where: { nik: nik },
     });
     if (!job) {
-      throw new NotFoundError("Job not found");
+      return null;
     }
     const jobCore = jobModelToJobCore(job);
     return jobCore;
@@ -96,7 +96,7 @@ class JobRepository extends JobRepositoryInterface {
       where: { id_user: userId },
     });
     if (!job) {
-      throw new NotFoundError("Job not found");
+      return null;
     }
     const jobCore = jobModelToJobCore(job);
     return jobCore;
