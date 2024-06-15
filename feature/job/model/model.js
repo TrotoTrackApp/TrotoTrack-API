@@ -35,6 +35,10 @@ const Job = sequelize.define(
       type: DataTypes.STRING,
       defaultValue: "pending",
     },
+    id_user: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
   },
   {
     timestamps: true,
