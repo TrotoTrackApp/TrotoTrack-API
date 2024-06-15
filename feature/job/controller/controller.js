@@ -124,10 +124,16 @@ class JobController {
   async updateJobById(req, res) {
     const id = req.params.id;
     try {
+      const { id: idUser, role } = extractToken(req);
       const data = jobRequest(req.body);
       const file = req.file;
-      await this.jobService.updateJobById(id, data, file);
-      return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      const job = await this.userService.getJobById(id);
+      if (role === "admin" || idUser === job.id) {
+        await this.jobService.updateJobById(id, data, file);
+        return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      } else {
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+      }
     } catch (error) {
       if (
         error instanceof ValidationError ||
