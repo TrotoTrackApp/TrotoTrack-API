@@ -30,6 +30,10 @@ class JobRepositoryInterface {
   async getJobByUserId(userId) {
     throw new Error("Method not implemented");
   }
+
+  async updateStatusJobById(id, status) {
+    throw new Error("Method not implemented");
+  }
 }
 
 class JobServicesInterface {
@@ -54,6 +58,10 @@ class JobServicesInterface {
   }
 
   async getJobProfile(idUser) {
+    throw new Error("Method not implemented");
+  }
+
+  async updateStatusJobById(id, status) {
     throw new Error("Method not implemented");
   }
 }

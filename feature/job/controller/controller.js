@@ -182,6 +182,33 @@ class JobController {
       }
     }
   }
+
+  async updateStatusJobById(req, res) {
+    const id = req.params.id;
+    try {
+      const { role } = extractToken(req);
+      const status = req.body.status;
+      if (role === "admin") {
+        await this.jobService.updateStatusJobById(id, status);
+        return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
+      } else {
+        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
+      }
+    } catch (error) {
+      if (
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
 }
 
 module.exports = JobController;

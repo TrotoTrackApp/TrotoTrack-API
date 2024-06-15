@@ -150,6 +150,23 @@ class JobService extends JobServicesInterface {
     const job = await this.jobRepo.getJobProfile(idUser);
     return job;
   }
+
+  async updateStatusJobById(id, status) {
+    if (!id) {
+      throw new ValidationError("Id is required");
+    }
+
+    if (!validator.isUUID(id)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    if (!status) {
+      throw new ValidationError("Status is required");
+    }
+
+    const updatedJob = await this.jobRepo.updateStatusJobById(id, status);
+    return updatedJob;
+  }
 }
 
 module.exports = JobService;

@@ -101,6 +101,19 @@ class JobRepository extends JobRepositoryInterface {
     const jobCore = jobModelToJobCore(job);
     return jobCore;
   }
+
+  async updateStatusJobById(id, status) {
+    const updatedJob = await this.db.update(
+      { status: status },
+      {
+        where: { id: id },
+      }
+    );
+    if (updatedJob[0] === 0) {
+      throw new NotFoundError("Job not found");
+    }
+    return updatedJob;
+  }
 }
 
 module.exports = JobRepository;
