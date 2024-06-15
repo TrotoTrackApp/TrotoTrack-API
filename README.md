@@ -49,7 +49,7 @@ Trototrack is an innovative application designed to streamline and expedite the 
 ---
 
 ## Technologies Used
-![header-sub-header-body-text-header-3](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/291099608-f3c11700-2425-4b8d-b4d7-9010801f5832.png)
+![header-sub-header-body-text-header-3](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/291099608-f3c11700-2425-4b8d-b4d7-9010801f5832.png)
 ![Static Badge](https://img.shields.io/badge/Cloud_SQL-cloudsql?style=for-the-badge&logo=google-cloud&logoColor=white&color=%234ba185)
 ![Static Badge](https://img.shields.io/badge/Sequelize-sequelize?style=for-the-badge&logo=sequelize&logoColor=white&color=%232496ED)
 ![Static Badge](https://img.shields.io/badge/Express.js-express?style=for-the-badge&logo=express&logoColor=black&color=%2385EA2D&)
@@ -117,8 +117,8 @@ npm run start
 ## API Endpoint
 ### Users
 
-| HTTP Verbs                                                                         | Endpoints             | Query Params                | Action                                 | Authorized |
-| ---------------------------------------------------------------------------------- | --------------------- | --------------------------- | -------------------------------------- | ---------- |       
+| HTTP Verbs                                                                            | Endpoints             | Query Params                | Action                                 | Authorized |
+| ------------------------------------------------------------------------------------- | --------------------- | --------------------------- | -------------------------------------- | ---------- |       
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/register`           |                             | Sign up a new user account             | No         |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/login`              |                             | Login an existing user account         | No         |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/send-otp`           |                             | Send otp for forget password           | No         |
@@ -139,8 +139,8 @@ npm run start
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/reports/:id/upvote` |                             | Upvote sidewalk reports                | Yes        |
 
 ### Admin
-| HTTP Verbs                                                                         | Endpoints             | Query Params                | Action                                 | Authorized |
-| ---------------------------------------------------------------------------------- | --------------------- | --------------------------- | -------------------------------------- | ---------- |       
+| HTTP Verbs                                                                            | Endpoints             | Query Params                | Action                                 | Authorized |
+| ------------------------------------------------------------------------------------- | --------------------- | --------------------------- | -------------------------------------- | ---------- |       
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/login`              |                             | Login an existing admin account        | No         |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/users`              |                             | Get all users account                  | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/users/:id`          |                             | Get users account details              | Yes        |
