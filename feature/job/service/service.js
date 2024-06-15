@@ -164,6 +164,11 @@ class JobService extends JobServicesInterface {
       throw new ValidationError("Status is required");
     }
 
+    const allowedStatus = ["pending", "approved", "rejected"];
+    if (!allowedStatus.includes(status)) {
+      throw new ValidationError("Invalid status");
+    }
+
     const updatedJob = await this.jobRepo.updateStatusJobById(id, status);
     return updatedJob;
   }
