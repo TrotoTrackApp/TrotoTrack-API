@@ -46,7 +46,7 @@ class JobRepository extends JobRepositoryInterface {
     const jobModel = jobCoreToJobModel(updatedData);
 
     if (file) {
-      const imageUrl = await uploadFileToGCSForJob(file.path);
+      const imageUrl = await uploadPDFForJob(file.path);
       jobModel.file = imageUrl;
     }
 
