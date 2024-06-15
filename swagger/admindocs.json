@@ -1806,7 +1806,7 @@
         "description": "Get report by id",
         "parameters": [
           {
-            "$ref": "#/components/parameters/UserId"
+            "$ref": "#/components/parameters/ReportId"
           }
         ],
         "responses": {
@@ -3221,7 +3221,7 @@
       "ArticleId": {
         "name": "id",
         "in": "path",
-        "description": "id of the article",
+        "description": "Id of the article",
         "required": true,
         "schema": {
           "type": "string"
@@ -3235,7 +3235,7 @@
       "ReportId": {
         "name": "id",
         "in": "path",
-        "description": "id of the report",
+        "description": "Id of the report",
         "required": true,
         "schema": {
           "type": "string"
