@@ -12,4 +12,4 @@ ReportLikes.belongsTo(Report, { foreignKey: "id_report", as: "report" });
 User.hasOne(Job, { foreignKey: "id_user", as: "jobs" });
 Job.belongsTo(User, { foreignKey: "id_user", as: "user" });
 
-module.exports = { User, Report, ReportLikes };
+module.exports = { User, Report, ReportLikes, Job };
