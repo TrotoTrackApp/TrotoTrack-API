@@ -132,7 +132,8 @@ class JobController {
       const { id: idUser, role } = extractToken(req);
       const data = jobRequest(req.body);
       const file = req.file;
-      const job = await this.userService.getJobById(id);
+      const job = await this.jobService.getJobById(id);
+      console.log("job", job);
       if (role === "admin" || idUser === job.idUser) {
         await this.jobService.updateJobById(id, data, file);
         return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
