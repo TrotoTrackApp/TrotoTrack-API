@@ -12,7 +12,7 @@
 - [API Endpoint](#api-endpoint)
 - [How to Deploy to Google Cloud Run with CI/CD](#how-to-deploy-to-google-cloud-run-with-cicd)
 - [API Documentation](#api-documentation)
-- [Team Back-End](#cloud-computing-team)
+- [Cloud Computing Team](#cloud-computing-team)
 - [References](#references)
 
 ---
