@@ -100,6 +100,7 @@ class JobController {
 
   async getAllJob(req, res) {
     try {
+      const { role } = extractToken(req);
       if (role === "admin") {
         const jobs = await this.jobService.getAllJob();
         const response = listJobResponse(jobs);

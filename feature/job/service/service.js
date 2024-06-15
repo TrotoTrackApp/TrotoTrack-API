@@ -65,8 +65,8 @@ class JobService extends JobServicesInterface {
 
   async getAllJob() {
     const jobs = await this.jobRepo.getAllJob();
-    if (article.length === 0) {
-      throw new ValidationError("No article found");
+    if (jobs.length === 0) {
+      throw new ValidationError("No job found");
     }
     return jobs;
   }
