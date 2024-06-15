@@ -138,8 +138,8 @@ npm run start
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/reports/:id`        |                             | Update sidewalk reports profiles       | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/reports/:id/upvote` |                             | Upvote sidewalk reports                | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/jobs`               |                             | Register to the application            | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/jobs/profile`       |                             | Get profile application                | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/jobs/:id`           |                             | Update profile application             | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/jobs/profile`       |                             | Get profile application job            | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/jobs/:id`           |                             | Update profile application job         | Yes        |
 
 
 ### Admin
@@ -162,9 +162,9 @@ npm run start
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/DELETE.png) | `/reports/:id`        |                             | Delete sidewalk reports                | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PATCH.png)  | `/reports/:id/status` |                             | Update status sidewalk reports         | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/jobs`               | `limit`, `page`, `search`   | Get all application jobs               | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/jobs/:id`           |                             | Get application jobs details           | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/jobs/:id`           |                             | Update application jobs                | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/DELETE.png) | `/jobs/:id`           |                             | Delete application jobs                | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/jobs/:id`           |                             | Get application job details            | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/jobs/:id`           |                             | Update application job                 | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/DELETE.png) | `/jobs/:id`           |                             | Delete application job                 | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PATCH.png)  | `/jobs/:id/status`    |                             | Update status application jobs         | Yes        |
 
 ---
