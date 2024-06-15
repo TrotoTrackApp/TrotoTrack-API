@@ -93,4 +93,35 @@ const uploadFileToGCSForArticle = async (filePath) => {
   }
 };
 
-module.exports = { uploadFileToGCS, uploadFileToGCSForArticle };
+const uploadPDFForJob = async (filePath) => {
+  try {
+    // Generate UUID for the file
+    const newFileName = uuidv4();
+    const ext = path.extname(filePath).toLowerCase();
+
+    if (ext !== ".pdf") {
+      throw new Error("File bukan file PDF");
+    }
+
+    // Set destination path with new file name and original extension
+    const folderName = "job";
+    const destination = `${folderName}/${newFileName}${ext}`;
+
+    await bucket.upload(filePath, {
+      destination: destination,
+      resumable: false,
+      public: true,
+      metadata: {
+        contentType: "application/pdf",
+      },
+    });
+
+    const publicUrl = `https://storage.googleapis.com/${bucketName}/${destination}`;
+    return publicUrl;
+  } catch (err) {
+    console.error("Error saat mengunggah file:", err);
+    throw err;
+  }
+};
+
+module.exports = { uploadFileToGCS, uploadFileToGCSForArticle, uploadPDFForJob };

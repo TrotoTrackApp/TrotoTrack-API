@@ -1,3 +1,4 @@
+const { status } = require("init");
 const ReportCore = require("./entity");
 
 function reportCoreToReportModel(report) {
@@ -8,9 +9,12 @@ function reportCoreToReportModel(report) {
     latitude: report.latitude,
     longitude: report.longitude,
     image: report.image,
+    status_damage: report.statusDamage,
     description: report.description,
     user_id: report.userId,
     status: report.status,
+    like: report.like,
+    reason: report.reason,
     created_at: report.createdAt,
   };
 }
@@ -23,9 +27,12 @@ function reportModelToReportCore(report) {
     report.latitude,
     report.longitude,
     report.image,
+    report.status_damage,
     report.description,
     report.id_user,
     report.status,
+    report.like,
+    report.reason,
     report.created_at
   );
   return reportCore;

@@ -15,6 +15,7 @@ class UserRepository extends UserRepositoryInterface {
 
   async createUser(data) {
     const user = usersCoreToUsersModel(data);
+    console.log("User data before creating user:", user);
     const createdUser = await User.create(user);
     const userCore = usersModelToUsersCore(createdUser);
     return userCore;
@@ -120,6 +121,19 @@ class UserRepository extends UserRepositoryInterface {
     user.otp = null;
     user.otp_expired_time = null;
     await user.save();
+
+    const result = usersModelToUsersCore(user);
+    return result;
+  }
+
+  async getVerificationToken(token) {
+    const user = await User.findOne({
+      where: { verification_token: token },
+    });
+
+    if (!user) {
+      throw new NotFoundError("token not found");
+    }
 
     const result = usersModelToUsersCore(user);
     return result;

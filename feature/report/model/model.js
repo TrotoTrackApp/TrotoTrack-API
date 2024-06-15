@@ -30,6 +30,10 @@ const Report = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    status_damage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -39,9 +43,18 @@ const Report = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("pending", "rejected", "approved"),
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "pending",
+      defaultValue: "Pending",
+    },
+    like: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    reason: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {
@@ -53,4 +66,30 @@ const Report = sequelize.define(
   }
 );
 
-module.exports = Report;
+const ReportLikes = sequelize.define(
+  "ReportLikes",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    id_user: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    id_report: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+  },
+  {
+    timestamps: true,
+    paranoid: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    deletedAt: "deleted_at",
+  }
+);
+
+module.exports = { Report, ReportLikes };

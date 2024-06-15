@@ -23,8 +23,9 @@ const {
   userResponse,
   userListResponse,
 } = require("../dto/response");
-const { extractToken } = require("../../../utils/jwt/jwt");
-const e = require("cors");
+const { extractToken, extractTokenVerifikasi } = require("../../../utils/jwt/jwt");
+const path = require("path");
+const fs = require("fs");
 
 class UserController {
   constructor(userService) {
@@ -34,12 +35,14 @@ class UserController {
   async createUser(req, res) {
     try {
       const user = userRequest(req.body);
+      console.log("Request:", user);
       await this.userService.createUser(user);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
     } catch (error) {
       if (error instanceof ValidationError || error instanceof DuplicateError) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
+        console.log(error);
         return res
           .status(500)
           .json(errorResponse(message.ERROR_INTERNAL_SERVER));
@@ -258,7 +261,9 @@ class UserController {
         user.newPassword,
         user.confirmPassword
       );
-      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
+      return res
+        .status(200)
+        .json(successResponse(message.SUCCES_UPDATE_PASSWORD));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -289,8 +294,8 @@ class UserController {
     try {
       const email = req.body.email;
       const otp = req.body.otp;
-      await this.userService.verifyOtpEmail(email, otp);
-      return res.status(200).json(successResponse("verify otp success"));
+      const token = await this.userService.verifyOtpEmail(email, otp);
+      return res.status(200).json(successWithDataResponse("Success verify otp", { token }));
     } catch (error) {
       if (error instanceof NotFoundError || error instanceof ValidationError) {
         return res.status(error.statusCode).json(errorResponse(error.message));
@@ -302,9 +307,16 @@ class UserController {
 
   async newPassword(req, res) {
     try {
-      const request = await newPasswordRequest(req.body);
-      await this.userService.newPassword(request.email, request.password, request.confirmPassword);
-      return res.status(200).json(successResponse(message.SUCCES_UPDATE_PASSWORD));
+      const request = newPasswordRequest(req.body);
+      const extraToken = extractTokenVerifikasi(req);
+      await this.userService.newPassword(
+        extraToken,
+        request.password,
+        request.confirmPassword
+      );
+      return res
+        .status(200)
+        .json(successResponse(message.SUCCES_UPDATE_PASSWORD));
     } catch (error) {
       if (
         error instanceof NotFoundError ||
@@ -313,6 +325,35 @@ class UserController {
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       }
+      return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
+    }
+  }
+
+  async VerifyAccount(req, res) {
+    try {
+      const token = req.query.token;
+      const alreadyVerified = await this.userService.verifyToken(token);
+
+      let templatePath;
+      if (alreadyVerified) {
+        templatePath = path.join(
+          __dirname,
+          "../../../utils/template/verification_active.html"
+        );
+      } else {
+        templatePath = path.join(
+          __dirname,
+          "../../../utils/template/success_verification.html"
+        );
+      }
+
+      const emailContent = fs.readFileSync(templatePath, "utf-8");
+      return res.status(200).send(emailContent);
+    } catch (error) {
+      if (error instanceof NotFoundError || error instanceof ValidationError) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      }
+      console.log(error);
       return res.status(500).json(errorResponse(message.ERROR_INTERNAL_SERVER));
     }
   }

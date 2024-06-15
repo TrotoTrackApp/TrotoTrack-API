@@ -4,6 +4,7 @@ const { message } = require("../../../utils/constanta/constanta");
 const {
   ValidationError,
   UnauthorizedError,
+  NotFoundError,
 } = require("../../../utils/helper/response");
 const {
   successResponse,
@@ -12,6 +13,7 @@ const {
   successWithPaginationAndCount,
 } = require("../../../utils/helper/response");
 const { reportResponse, reportListResponse } = require("../dto/response");
+const { DatabaseError } = require("sequelize");
 
 class ReportController {
   constructor(userService) {
@@ -27,6 +29,7 @@ class ReportController {
       request.userId = id;
       console.log("Request:", request);
       console.log("user id:", request.userId);
+      console.log("image:", image);
 
       await this.userService.createReport(request, image);
       return res.status(201).json(successResponse(message.SUCCESS_CREATED));
@@ -37,6 +40,7 @@ class ReportController {
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
+        console.log(error);
         return res
           .status(500)
           .json(errorResponse(message.ERROR_INTERNAL_SERVER));
@@ -62,7 +66,8 @@ class ReportController {
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
@@ -87,7 +92,8 @@ class ReportController {
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
@@ -101,20 +107,16 @@ class ReportController {
   async getReportById(req, res) {
     try {
       const id = req.params.id;
-      const { role } = extractToken(req);
-      if (role === "admin") {
-        const data = await this.userService.getReportById(id);
-        const response = reportResponse(data);
-        return res
-          .status(200)
-          .json(successWithDataResponse(message.SUCCESS_GET, response));
-      } else {
-        return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
-      }
+      const data = await this.userService.getReportById(id);
+      const response = reportResponse(data);
+      return res
+        .status(200)
+        .json(successWithDataResponse(message.SUCCESS_GET, response));
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
       } else {
@@ -206,10 +208,10 @@ class ReportController {
   async updateStatusReport(req, res) {
     try {
       const id = req.params.id;
-      const { status } = req.body;
+      const { status, reason } = req.body;
       const { role } = extractToken(req);
       if (role === "admin") {
-        await this.userService.updateStatusReport(id, status);
+        await this.userService.updateStatusReport(id, status, reason);
         return res.status(200).json(successResponse(message.SUCCESS_UPDATED));
       } else {
         return res.status(403).json(errorResponse(message.ERROR_FORBIDDEN));
@@ -217,9 +219,37 @@ class ReportController {
     } catch (error) {
       if (
         error instanceof ValidationError ||
-        error instanceof UnauthorizedError
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
       ) {
         return res.status(error.statusCode).json(errorResponse(error.message));
+      } else {
+        console.log(error);
+        return res
+          .status(500)
+          .json(errorResponse(message.ERROR_INTERNAL_SERVER));
+      }
+    }
+  }
+
+  async likeReport(req, res) {
+    try {
+      const id = req.params.id;
+      const { id: idUser } = extractToken(req);
+      await this.userService.likeReport(id, idUser);
+      return res.status(200).json(successResponse("Success upvote report"));
+    } catch (error) {
+      if (
+        error instanceof ValidationError ||
+        error instanceof UnauthorizedError ||
+        error instanceof NotFoundError
+      ) {
+        return res.status(error.statusCode).json(errorResponse(error.message));
+      } else if (
+        error instanceof DatabaseError &&
+        error.original.code === "ER_LOCK_WAIT_TIMEOUT"
+      ) {
+        return res.status(409).json(errorResponse("Please try again"));
       } else {
         console.log(error);
         return res

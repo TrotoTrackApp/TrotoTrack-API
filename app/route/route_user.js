@@ -16,7 +16,8 @@ router.post('/register', userController.createUser.bind(userController));
 router.post('/login', userController.login.bind(userController));
 router.post('/send-otp', userController.sendOtpEmail.bind(userController));
 router.post('/verify-otp', userController.verifyOtpEmail.bind(userController));
-router.patch('/new-password', userController.newPassword.bind(userController));
+router.patch('/new-password', jwtMiddleware, userController.newPassword.bind(userController));
+router.get("/verify", userController.VerifyAccount.bind(userController));
 
 
 router.get('/users', jwtMiddleware, userController.getAllUsers.bind(userController));

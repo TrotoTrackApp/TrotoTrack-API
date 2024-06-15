@@ -11,6 +11,8 @@ function usersCoreToUsersModel(mainData) {
     role: mainData.role,
     otp: mainData.otp,
     otp_expired_time: mainData.otpExpiredTime,
+    is_active: mainData.isActive,
+    verification_token: mainData.verificationToken,
   };
 }
 
@@ -34,7 +36,9 @@ function usersModelToUsersCore(mainData) {
     mainData.confirmPassword,
     mainData.role,
     mainData.otp,
-    mainData.otpExpiredTime
+    mainData.otp_expired_time,
+    mainData.is_active,
+    mainData.verification_token
   );
   return userCore;
 }

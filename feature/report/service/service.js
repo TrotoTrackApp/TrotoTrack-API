@@ -2,6 +2,7 @@ const { ReportServiceInterface } = require("../entity/interface");
 const { ValidationError } = require("../../../utils/helper/response");
 const { message } = require("../../../utils/constanta/constanta");
 const validator = require("validator");
+const capitalizeWords = require("../../../utils/helper/capitalize");
 
 class ReportService extends ReportServiceInterface {
   constructor(reportRepository) {
@@ -14,6 +15,7 @@ class ReportService extends ReportServiceInterface {
       !data.location ||
       !data.latitude ||
       !data.longitude ||
+      !data.statusDamage ||
       !data.description ||
       !file
     ) {
@@ -41,6 +43,12 @@ class ReportService extends ReportServiceInterface {
     const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (!allowedFileTypes.includes(file.mimetype)) {
       throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+    }
+
+    data.statusDamage = capitalizeWords(data.statusDamage);
+    const allowedStatusDamage = ["Good", "Heavy Damaged", "Light Damaged"];
+    if (!allowedStatusDamage.includes(data.statusDamage)) {
+      throw new ValidationError("Status damage must be good, heavy damaged, or light damaged");
     }
 
     const result = await this.reportRepository.createReport(data, file);
@@ -187,7 +195,7 @@ class ReportService extends ReportServiceInterface {
     return { result, pageInfo, totalCount };
   }
 
-  async updateStatusReport(id, status) {
+  async updateStatusReport(id, status, reason) {
     if (!id) {
       throw new ValidationError(message.ERROR_ID);
     }
@@ -200,14 +208,10 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    if (
-      status !== "pending" &&
-      status !== "approved" &&
-      status !== "rejected"
-    ) {
-      throw new ValidationError(
-        "Status must be pending, approved, or rejected"
-      );
+    status = capitalizeWords(status);
+    const allowedStatus = ["Pending", "Approved", "Rejected"];
+    if (!allowedStatus.includes(status)) {
+      throw new ValidationError("Status must be Pending, Approved, or Rejected");
     }
 
     const currentReport = await this.reportRepository.getReportById(id);
@@ -215,11 +219,49 @@ class ReportService extends ReportServiceInterface {
       throw new ValidationError(message.ERROR_NOT_FOUND);
     }
 
-    if (currentReport.status === "approved") {
+    if (currentReport.status === "Approved") {
       throw new ValidationError("Status cannot be changed once it is approved");
     }
 
-    const result = await this.reportRepository.updateStatusReport(id, status);
+    if ((status === "Approved" || status === "Rejected") && !reason) {
+      throw new ValidationError("Reason is required when status is rejected");
+    }
+
+    const result = await this.reportRepository.updateStatusReport(
+      id,
+      status,
+      reason
+    );
+    return result;
+  }
+
+  async likeReport(id, idUser) {
+    if (!id) {
+      throw new ValidationError(message.ERROR_ID);
+    }
+
+    if (!validator.isUUID(id)) {
+      throw new ValidationError(message.ERROT_ID_INVALID);
+    }
+
+    const userLikedReport = await this.reportRepository.checkUserLikedReport(
+      id,
+      idUser
+    );
+
+    if (userLikedReport) {
+      throw new ValidationError("You have already upvote this report");
+    }
+
+    // Check if the user has liked the report
+    const currentReport = await this.reportRepository.getReportById(id);
+    const updatedLike = currentReport.like + 1;
+
+    const result = await this.reportRepository.likeReport(
+      id,
+      updatedLike,
+      idUser
+    );
     return result;
   }
 }

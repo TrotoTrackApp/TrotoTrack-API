@@ -3,15 +3,19 @@ const {
   ValidationError,
   NotFoundError,
 } = require("../../../utils/helper/response");
-const { createToken } = require("../../../utils/jwt/jwt");
+const { createToken, createVerificationToken } = require("../../../utils/jwt/jwt");
 const validator = require("validator");
 const {
   generatePasswordHash,
   comparePasswordHash,
 } = require("../../../utils/helper/bcrypt");
-const sendOtp = require("../../../utils/email/send_otp");
+const {
+  sendOtp,
+  sendVerificationEmail,
+} = require("../../../utils/email/send_email");
 const { message } = require("../../../utils/constanta/constanta");
 const { generateOTP } = require("../../../utils/helper/otp");
+const crypto = require("crypto");
 
 class UserService extends UserServicesInterface {
   constructor(userRepo) {
@@ -66,7 +70,15 @@ class UserService extends UserServicesInterface {
     const hashedPassword = await generatePasswordHash(data.password);
     data.password = hashedPassword;
     data.role = "user";
+    data.isActive = false;
+
+    // Generate verification token
+    const token = crypto.randomBytes(32).toString("hex");
+    data.verificationToken = token;
+
+    await sendVerificationEmail(data.email, token)
     const user = await this.userRepo.createUser(data);
+
     return user;
   }
 
@@ -151,10 +163,15 @@ class UserService extends UserServicesInterface {
     }
 
     const user = await this.userRepo.getUserByEmail(email);
+    console.log("user", user);
     if (!user) {
       throw new NotFoundError("Email not registered");
     }
-    console.log("user", user);
+
+    if (user.isActive === false) {
+      throw new ValidationError("Email is not verified");
+    }
+
     const isValidPassword = await comparePasswordHash(password, user.password);
     if (!isValidPassword) {
       throw new ValidationError("Password is incorrect");
@@ -215,7 +232,7 @@ class UserService extends UserServicesInterface {
     }
 
     const otp = generateOTP();
-    const otpExpired = Date.now() + 10 * 60 * 1000;
+    const otpExpired = Date.now() + 5 * 60 * 1000;
 
     const user = await this.userRepo.getUserByEmail(email);
     if (!user) {
@@ -223,11 +240,13 @@ class UserService extends UserServicesInterface {
     }
 
     await this.userRepo.sendOtpEmail(email, otp, otpExpired);
-    sendOtp(email, otp).then(() => {
-      console.log(`Email sent to ${email}`);
-    }).catch((error) => {
-      console.error(`Error sending email to ${email}:`, error);
-    });
+    sendOtp(email, otp)
+      .then(() => {
+        console.log(`Email sent to ${email}`);
+      })
+      .catch((error) => {
+        console.error(`Error sending email to ${email}:`, error);
+      });
 
     return null;
   }
@@ -237,10 +256,10 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    if(!validator.isEmail(email)) {
+    if (!validator.isEmail(email)) {
       throw new ValidationError("Email is not valid");
     }
-    
+
     const result = await this.userRepo.getUserByEmail(email);
     if (!result) {
       throw new NotFoundError("Email not registered");
@@ -252,13 +271,14 @@ class UserService extends UserServicesInterface {
       throw new ValidationError("OTP is expired");
     }
 
-    if (result.otp !== uppercaseOTP ) {
+    if (result.otp !== uppercaseOTP) {
       throw new ValidationError("OTP is incorrect");
     }
 
+    const token = createVerificationToken(email)
     await this.userRepo.resetOtpEmail(otp);
 
-    return null;
+    return token;
   }
 
   async newPassword(email, password, confirmPassword) {
@@ -266,7 +286,7 @@ class UserService extends UserServicesInterface {
       throw new ValidationError(message.ERROR_REQUIRED_FIELD);
     }
 
-    if(!validator.isEmail(email)) {
+    if (!validator.isEmail(email)) {
       throw new ValidationError("Email is not valid");
     }
 
@@ -289,6 +309,27 @@ class UserService extends UserServicesInterface {
     await this.userRepo.updateUserById(user.id, { password: hashedPassword });
 
     return null;
+  }
+
+  async verifyToken(token) {
+    if (token === null || token === undefined) {
+      throw new ValidationError("Invalid token");
+    }
+
+    const user = await this.userRepo.getVerificationToken(token);
+    if (!user) {
+      throw new NotFoundError("Token not found");
+    }
+
+    if (user.isActive) {
+      return true;
+    }
+    
+    await this.userRepo.updateUserById(user.id, {
+      isActive: true,
+    });
+
+    return false;
   }
 }
 

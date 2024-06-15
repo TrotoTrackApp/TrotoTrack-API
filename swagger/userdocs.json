@@ -95,6 +95,12 @@
                       "status": false,
                       "message": "Password is incorrect"
                     }
+                  },
+                  "email_not_verified": {
+                    "value": {
+                      "status": false,
+                      "message": "Email is not verified"
+                    }
                   }
                 }
               }
@@ -922,8 +928,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -939,8 +946,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -1089,23 +1097,19 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
-                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status_damage": "heavy damaged",
                           "status": "pending",
+                          "like": 0,
                           "created_at": "2021-08-01T00:00:00Z"
                         },
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
-                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status_damage": "heavy damaged",
                           "status": "pending",
+                          "like": 2,
                           "created_at": "2021-08-01T00:00:00Z"
                         }
                       ],
@@ -1224,7 +1228,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseReport"
+                  "$ref": "#/components/schemas/ResponseAllReport"
                 },
                 "examples": {
                   "success": {
@@ -1235,23 +1239,19 @@
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
-                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status_damage": "heavy damaged",
                           "status": "pending",
+                          "like": 0,
                           "created_at": "2021-08-01T00:00:00Z"
                         },
                         {
                           "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
                           "location": "makassar",
-                          "reference_location": "depan penjual bakso mas budi",
-                          "latitude": -5.135399,
-                          "longitude": 119.42379,
                           "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
-                          "description": "ini adalah contoh input report oleh user sendiri",
+                          "status_damage": "heavy damaged",
                           "status": "pending",
+                          "like": 2,
                           "created_at": "2021-08-01T00:00:00Z"
                         }
                       ],
@@ -1349,6 +1349,133 @@
       }
     },
     "/reports/{id}": {
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Get report by id",
+        "description": "Get report by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ReportId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get report by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseReport"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "id": "0897413e-da0a-41ef-a20d-04d34ef67598",
+                        "location": "makassar",
+                        "reference_location": "depan penjual bakso mas budi",
+                        "latitude": -5.135399,
+                        "longitude": 119.42379,
+                        "image": "https://storage.googleapis.com/trototrack/report/Bukti Pelaporan 3.png",
+                        "status_damage": "heavy damaged",
+                        "description": "ini adalah contoh input report oleh user sendiri",
+                        "status": "pending",
+                        "like": 0,
+                        "reason": null,
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Report not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "put": {
         "security": [
           {
@@ -1376,8 +1503,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -1393,8 +1521,9 @@
                     "reference_location": "depan penjual bakso mas budi",
                     "latitude": -5.135399,
                     "longitude": 119.42379,
-                    "description": "ini adalah contoh input report oleh user sendiri",
-                    "image": "https://trototrack.my.id/image.jpg"
+                    "image": "https://trototrack.my.id/image.jpg",
+                    "status_damage": "heavy damaged",
+                    "description": "ini adalah contoh input report oleh user sendiri"
                   }
                 }
               }
@@ -1504,6 +1633,127 @@
                     "value": {
                       "status": false,
                       "message": "Forbidden access"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Report not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{id}/upvote": {
+      "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Report"],
+        "summary": "Upvote report",
+        "description": "Upvote report",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ReportId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Upvote report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success upvote report"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "ID is not valid"
+                    }
+                  },
+                  "already_liked": {
+                    "value": {
+                      "status": false,
+                      "message": "You have already upvote this report"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
                     }
                   }
                 }
@@ -1680,13 +1930,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                  "$ref": "#/components/schemas/ResponseOTP"
                 },
                 "examples": {
                   "success": {
                     "value": {
                       "status": true,
-                      "message": "Success verify otp"
+                      "message": "Success verify otp",
+                      "data": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkhpbGFsIiwiZW1haWwiOiJoaWxhbEBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.7J1"
+                      }
                     }
                   }
                 }
@@ -1770,6 +2023,11 @@
     },
     "/new-password": {
       "patch": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
         "tags": ["Page User"],
         "summary": "New Password",
         "description": "New Password",
@@ -1782,7 +2040,6 @@
               "examples": {
                 "new": {
                   "value": {
-                    "email": "hilal@gmail.com",
                     "password": "troto123456",
                     "confirm_password": "troto123456"
                   }
@@ -1864,6 +2121,622 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scan": {
+      "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Page User"],
+        "summary": "Scan Image",
+        "description": "Scan Image",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestScan"
+              },
+              "examples": {
+                "scan": {
+                  "value": {
+                    "image": "https://trototrack.my.id/image.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scan Image",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScan"
+                },
+                "examples": {
+                  "good": {
+                    "value": {
+                      "status": true,
+                      "message": "Success scan",
+                      "data": {
+                        "label": "good",
+                        "probability": 94.70623779296875,
+                        "description": "The sidewalk is in good condition. No action needed"
+                      }
+                    }
+                  },
+                  "heavy_damaged": {
+                    "value": {
+                      "status": true,
+                      "message": "Success scan",
+                      "data": {
+                        "label": "heavy damaged",
+                        "probability": 94.70623779296875,
+                        "description": "The sidewalk is heavily damaged. Please report this area"
+                      }
+                    }
+                  },
+                  "light_damaged": {
+                    "value": {
+                      "status": true,
+                      "message": "Success scan",
+                      "data": {
+                        "label": "light damaged",
+                        "probability": 94.70623779296875,
+                        "description": "The sidewalk is lightly damaged. Please report this area"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "No image uploaded or invalid image buffer."
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Expected image (JPG, JPEG, or PNG), but got unsupported image type: ${mimeType}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "post": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Job"],
+        "summary": "Register to the application",
+        "description": "Register to the application",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJob"
+              },
+              "examples": {
+                "register": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJobMultiPart"
+              },
+              "examples": {
+                "register": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Register to the application",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success created data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_fields": {
+                    "value": {
+                      "status": false,
+                      "message": "Please fill all required fields"
+                    }
+                  },
+                  "invalid_nik": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK must be at least 16 characters long"
+                    }
+                  },
+                  "invalid_phone": {
+                    "value": {
+                      "status": false,
+                      "message": "Phone must be at least 10 characters long"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only PDF format is allowed"
+                    }
+                  },
+                  "invalid_size_file": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "nik_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK already exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "jobs/profile": {
+      "get": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Job"],
+        "summary": "Get profile Job",
+        "description": "Get profile Job",
+        "responses": {
+          "200": {
+            "description": "Get profile Job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseJob"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success get data",
+                      "data": {
+                        "name": "Hilal",
+                        "nik": "737219421321",
+                        "address": "Jl. Jendral Sudirman No. 1",
+                        "phone": "081234567890",
+                        "file": "https://trototrack.my.id/file.pdf",
+                        "status": "pending",
+                        "created_at": "2021-08-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is not valid"
+                    }
+                  },
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Job not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "status": false,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "jobs/{id}": {
+      "put": {
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "tags": ["Job"],
+        "summary": "Update profile Job",
+        "description": "Update profile Job",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JobId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJob"
+              },
+              "examples": {
+                "update": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJobMultiPart"
+              },
+              "examples": {
+                "update": {
+                  "value": {
+                    "name": "Hilal",
+                    "nik": "737219421321",
+                    "address": "Jl. Jendral Sudirman No. 1",
+                    "phone": "081234567890",
+                    "file": "https://trototrack.my.id/file.pdf"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update profile Job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCreateUpdateDelete"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "status": true,
+                      "message": "Success updated data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "missing_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is required"
+                    }
+                  },
+                  "invalid_id": {
+                    "value": {
+                      "status": false,
+                      "message": "Id is not valid"
+                    }
+                  },
+                  "invalid_nik": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK must be at least 16 characters long"
+                    }
+                  },
+                  "invalid_phone": {
+                    "value": {
+                      "status": false,
+                      "message": "Phone must be at least 10 characters long"
+                    }
+                  },
+                  "invalid_file": {
+                    "value": {
+                      "status": false,
+                      "message": "Invalid file type. Only PDF format is allowed"
+                    }
+                  },
+                  "invalid_size_file": {
+                    "value": {
+                      "status": false,
+                      "message": "File size must not be greater than 10MB"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "status": false,
+                      "message": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "not_found": {
+                    "value": {
+                      "status": false,
+                      "message": "Job not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "examples": {
+                  "nik_registered": {
+                    "value": {
+                      "status": false,
+                      "message": "NIK already exists for another job"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal server error",
             "content": {
@@ -1927,6 +2800,20 @@
         "name": "id",
         "in": "path",
         "description": "id of the report to get",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "id": {
+            "value": "ce6c992c-f260-4bc9-b332-3e12a10df8fb"
+          }
+        }
+      },
+      "JobId": {
+        "name": "id",
+        "in": "path",
+        "description": "id of the job",
         "required": true,
         "schema": {
           "type": "string"
@@ -2077,6 +2964,26 @@
         },
         "required": ["status", "message"]
       },
+      "ResponseOTP": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              }
+            },
+            "required": ["token"]
+          }
+        }
+      },
       "ResponseGetUser": {
         "type": "object",
         "properties": {
@@ -2209,14 +3116,24 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
+          "image": {
             "type": "string"
           },
-          "image": {
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
             "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       },
       "RequestReportMultiPart": {
         "type": "object",
@@ -2235,16 +3152,26 @@
             "type": "number",
             "format": "double"
           },
-          "description": {
-            "type": "string"
-          },
           "image": {
             "type": "string",
             "format": "binary",
             "nullable": false
+          },
+          "status_damage": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
           }
         },
-        "required": ["location", "latitude", "longitude", "image"]
+        "required": [
+          "location",
+          "latitude",
+          "longitude",
+          "image",
+          "status_damage",
+          "description"
+        ]
       },
       "ResponseAllReport": {
         "type": "object",
@@ -2267,25 +3194,17 @@
                 "location": {
                   "type": "string"
                 },
-                "reference_location": {
-                  "type": "string"
-                },
-                "latitude": {
-                  "type": "number",
-                  "format": "double"
-                },
-                "longitude": {
-                  "type": "number",
-                  "format": "double"
-                },
                 "image": {
                   "type": "string"
                 },
-                "description": {
+                "status_damage": {
                   "type": "string"
                 },
                 "status": {
                   "type": "string"
+                },
+                "like": {
+                  "type": "integer"
                 },
                 "created_at": {
                   "type": "string",
@@ -2295,12 +3214,10 @@
               "required": [
                 "id",
                 "location",
-                "reference_location",
-                "latitude",
-                "longitude",
+                "status_damage",
                 "image",
-                "description",
                 "status",
+                "like",
                 "created_at"
               ]
             }
@@ -2356,6 +3273,9 @@
                 "type": "number",
                 "format": "double"
               },
+              "status_damage": {
+                "type": "string"
+              },
               "image": {
                 "type": "string"
               },
@@ -2363,6 +3283,12 @@
                 "type": "string"
               },
               "status": {
+                "type": "string"
+              },
+              "like": {
+                "type": "integer"
+              },
+              "reason": {
                 "type": "string"
               },
               "created_at": {
@@ -2377,8 +3303,11 @@
               "latitude",
               "longitude",
               "image",
+              "status_damage",
               "description",
               "status",
+              "like",
+              "reason",
               "created_at"
             ]
           }
@@ -2427,9 +3356,6 @@
       "RequestNewPassword": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string"
-          },
           "password": {
             "type": "string"
           },
@@ -2437,7 +3363,136 @@
             "type": "string"
           }
         },
-        "required": ["email", "password", "confirm_password"]
+        "required": ["password", "confirm_password"]
+      },
+      "RequestScan": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["image"]
+      },
+      "ResponseScan": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "probability": {
+                "type": "string"
+              },
+              "description": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "required": ["label", "probability", "description"]
+          }
+        }
+      },
+      "RequestJob": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nik": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "nik", "address", "phone", "file"]
+      },
+      "RequestJobMultiPart": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nik": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          }
+        },
+        "required": ["name", "nik", "address", "phone", "file"]
+      },
+      "ResponseJob": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "nik": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "name",
+              "nik",
+              "address",
+              "phone",
+              "file",
+              "status",
+              "created_at"
+            ]
+          }
+        }
       }
     }
   }
