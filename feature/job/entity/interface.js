@@ -19,7 +19,7 @@ class JobRepositoryInterface {
     throw new Error("Method not implemented");
   }
 
-  async getJobByNik() {
+  async getJobByNik(nik) {
     throw new Error("Method not implemented");
   }
 

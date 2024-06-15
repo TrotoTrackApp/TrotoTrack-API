@@ -69,7 +69,7 @@ class JobRepository extends JobRepositoryInterface {
     return deletedJob;
   }
 
-  async getJobByNik() {
+  async getJobByNik(nik) {
     const job = await this.db.findOne({
       where: { nik: nik },
     });
