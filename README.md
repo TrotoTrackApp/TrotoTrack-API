@@ -129,7 +129,7 @@ npm run start
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/profile`            |                             | Get user profile                       | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/profile`            |                             | Update user profile                    | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PATCH.png)  | `/profile`            |                             | Update password user                   | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/articles`           |                             | Get all articles                       | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/articles`           | `limit`, `page`, `search`   | Get all articles                       | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/articles/:id`       |                             | Get details articles                   | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/reports`            |                             | Create a new report sidewalk           | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/reports`            | `limit`, `page`, `search`   | Retrieve all report sidewalk           | Yes        |
@@ -138,17 +138,18 @@ npm run start
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/reports/:id`        |                             | Update sidewalk reports profiles       | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/reports/:id/upvote` |                             | Upvote sidewalk reports                | Yes        |
 
+
 ### Admin
 | HTTP Verbs                                                                            | Endpoints             | Query Params                | Action                                 | Authorized |
 | ------------------------------------------------------------------------------------- | --------------------- | --------------------------- | -------------------------------------- | ---------- |       
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/login`              |                             | Login an existing admin account        | No         |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/users`              |                             | Get all users account                  | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/users`              | `limit`, `page`, `search`   | Get all users account                  | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/users/:id`          |                             | Get users account details              | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/users/:id `         |                             | Update users account                   | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/DELETE.png) | `/users/:id`          |                             | Delete users account                   | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PATCH.png)  | `/users/:id`          |                             | Update password users account          | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/POST.png)   | `/articles`           |                             | Create a new articles                  | Yes        |
-| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/articles`           |                             | Get all articles                       | Yes        |
+| ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/articles`           | `limit`, `page`, `search`   | Get all articles                       | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/GET.png)    | `/articles/:id`       |                             | Get articles details                   | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/PUT.png)    | `/articles/:id`       |                             | Update articles                        | Yes        |
 | ![](https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/DELETE.png) | `/articles/:id`       |                             | Delete articles                        | Yes        |
