@@ -2302,7 +2302,7 @@
             "auth": []
           }
         ],
-        "tags": ["Jobs"],
+        "tags": ["Job"],
         "summary": "Register to the application",
         "description": "Register to the application",
         "requestBody": {
@@ -2466,7 +2466,7 @@
             "auth": []
           }
         ],
-        "tags": ["Jobs"],
+        "tags": ["Job"],
         "summary": "Get profile Job",
         "description": "Get profile Job",
         "responses": {
@@ -2572,7 +2572,7 @@
             "auth": []
           }
         ],
-        "tags": ["Jobs"],
+        "tags": ["Job"],
         "summary": "Update profile Job",
         "description": "Update profile Job",
         "parameters": [
