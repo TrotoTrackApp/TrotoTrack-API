@@ -6,7 +6,6 @@ const {
 } = require("../../../utils/helper/response");
 const validator = require("validator");
 const { message } = require("../../../utils/constanta/constanta");
-const { mod } = require("@tensorflow/tfjs-node");
 
 class JobService extends JobServicesInterface {
   constructor() {
