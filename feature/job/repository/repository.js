@@ -7,7 +7,7 @@ const {
   listJobModelToJobCore,
 } = require("../entity/mapping");
 const {
-  uploadFileToGCSForArticle,
+    uploadPDFForJob,
 } = require("../../../utils/storage/gcp_storage");
 
 class JobRepository extends JobRepositoryInterface {
@@ -20,7 +20,7 @@ class JobRepository extends JobRepositoryInterface {
     const job = jobCoreToJobModel(data);
 
     if (file) {
-      const imageUrl = await uploadFileToGCSForJob(file.path);
+      const imageUrl = await uploadPDFForJob(file.path);
       job.file = imageUrl;
     }
 
@@ -82,3 +82,5 @@ class JobRepository extends JobRepositoryInterface {
     return jobCore;
   }
 }
+
+module.exports = JobRepository;
