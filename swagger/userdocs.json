@@ -2372,7 +2372,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Register to the application",
             "content": {
               "application/json": {
