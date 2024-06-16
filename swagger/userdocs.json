@@ -2513,6 +2513,7 @@
                       "status": true,
                       "message": "Success get data",
                       "data": {
+                        "id": "07546e64-f4da-4c77-9625-df1fbc536d1e",
                         "name": "Hilal",
                         "nik": "737219421321",
                         "address": "Jl. Jendral Sudirman No. 1",
@@ -3553,6 +3554,10 @@
           "data": {
             "type": "object",
             "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
               "name": {
                 "type": "string"
               },
@@ -3577,6 +3582,7 @@
               }
             },
             "required": [
+              "id",
               "name",
               "nik",
               "address",
