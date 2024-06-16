@@ -2347,7 +2347,7 @@
                       "message": "Please fill all required fields"
                     }
                   },
-                  "invalid_changed_status": {
+                  "already_approved": {
                     "value": {
                       "status": false,
                       "message": "Status cannot be changed once it is approved"
@@ -2787,6 +2787,12 @@
                     "value": {
                       "status": false,
                       "message": "Id is not valid"
+                    }
+                  },
+                  "already_approved": {
+                    "value": {
+                      "status": false,
+                      "message": "Status cannot be changed once it is approved"
                     }
                   },
                   "invalid_nik": {

@@ -1599,6 +1599,12 @@
                       "message": "ID is not valid"
                     }
                   },
+                  "already_approved": {
+                    "value": {
+                      "status": false,
+                      "message": "Status cannot be changed once it is approved"
+                    }
+                  },
                   "invalid_latitude": {
                     "value": {
                       "status": false,
@@ -2684,6 +2690,12 @@
                     "value": {
                       "status": false,
                       "message": "Id is not valid"
+                    }
+                  },
+                  "already_approved": {
+                    "value": {
+                      "status": false,
+                      "message": "Job has been approved and cannot be updated"
                     }
                   },
                   "invalid_nik": {
