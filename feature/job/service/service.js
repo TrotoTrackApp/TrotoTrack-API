@@ -43,7 +43,9 @@ class JobService extends JobServicesInterface {
 
     const allowedFileTypes = ["application/pdf"];
     if (!allowedFileTypes.includes(file.mimetype)) {
-      throw new ValidationError("Invalid file type. Only PDF format is allowed");
+      throw new ValidationError(
+        "Invalid file type. Only PDF format is allowed"
+      );
     }
 
     const job = await this.jobRepo.createJob(data, file);
@@ -80,8 +82,11 @@ class JobService extends JobServicesInterface {
       limit = 10;
     }
 
-    const { result, pageInfo, totalCount } =
-      await this.jobRepo.getAllJob(search, page, limit);
+    const { result, pageInfo, totalCount } = await this.jobRepo.getAllJob(
+      search,
+      page,
+      limit
+    );
     if (result.length === 0) {
       return {
         result: [],
@@ -141,6 +146,11 @@ class JobService extends JobServicesInterface {
       }
     }
 
+    // If the job status is rejected, the status must be set to pending
+    if (job.status === "Rejected" && !updatedData.status) {
+      updatedData.status = "Pending";
+    }
+
     const updatedJob = await this.jobRepo.updateJobById(id, updatedData, file);
     return updatedJob;
   }
@@ -187,7 +197,8 @@ class JobService extends JobServicesInterface {
       throw new ValidationError("Status is required");
     }
 
-    const allowedStatus = ["pending", "approved", "rejected"];
+    status = capitalizeWords(status);
+    const allowedStatus = ["Pending", "Approved", "Rejected"];
     if (!allowedStatus.includes(status)) {
       throw new ValidationError("Invalid status");
     }
