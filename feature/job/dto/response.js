@@ -7,7 +7,7 @@ function jobResponse(job) {
     phone: job.phone,
     file: job.file,
     status: job.status,
-    created_at: job.created_at,
+    created_at: job.createdAt,
   };
   return response;
 }
