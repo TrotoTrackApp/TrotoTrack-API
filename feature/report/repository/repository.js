@@ -102,6 +102,9 @@ class ReportRepository extends ReportRepositoryInterface {
       where: whereClause,
       limit: limit,
       offset: offset,
+      order: [
+        ["like", "DESC"],
+      ],
     });
 
     const result = listReportModelToListReportCore(reports);
