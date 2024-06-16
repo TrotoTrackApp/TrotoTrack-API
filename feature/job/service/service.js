@@ -114,6 +114,10 @@ class JobService extends JobServicesInterface {
       throw new NotFoundError("Job not found");
     }
 
+    if (job.status === "Approved") {
+      throw new ValidationError("Job has been approved and cannot be updated");
+    }
+
     // Validate NIK if provided
     if (updatedData.nik) {
       if (updatedData.nik.length < 16) {
