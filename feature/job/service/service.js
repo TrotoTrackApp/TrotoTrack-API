@@ -43,7 +43,7 @@ class JobService extends JobServicesInterface {
 
     const allowedFileTypes = ["application/pdf"];
     if (!allowedFileTypes.includes(file.mimetype)) {
-      throw new ValidationError(message.ERROR_INVALID_FILE_TYPE);
+      throw new ValidationError("Invalid file type. Only PDF format is allowed");
     }
 
     const job = await this.jobRepo.createJob(data, file);
