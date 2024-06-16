@@ -2,6 +2,9 @@ const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
+const {
+  ValidationError
+} = require("../helper/response")
 
 // Dekode string base64
 const base64EncodedKey = process.env.GOOGLE_CLOUD_KEY_BASE64;
@@ -100,7 +103,7 @@ const uploadPDFForJob = async (filePath) => {
     const ext = path.extname(filePath).toLowerCase();
 
     if (ext !== ".pdf") {
-      throw new Error("File bukan file PDF");
+      throw new ValidationError("File bukan file pdf");
     }
 
     // Set destination path with new file name and original extension
