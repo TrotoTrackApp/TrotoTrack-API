@@ -11,11 +11,11 @@ const Report = sequelize.define(
       primaryKey: true,
     },
     location: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     reference_location: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     latitude: {
