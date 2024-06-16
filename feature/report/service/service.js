@@ -100,6 +100,10 @@ class ReportService extends ReportServiceInterface {
     if (existingReport.status === "Rejected" && !data.status) {
       data.status = "Pending";
     }
+
+    if(existingReport.status === "Approved") {
+      throw new ValidationError("Status cannot be changed once it is approved");
+    }
     
     const result = await this.reportRepository.updateReport(id, data, file);
     return result;
