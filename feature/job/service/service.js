@@ -6,6 +6,7 @@ const {
 } = require("../../../utils/helper/response");
 const validator = require("validator");
 const { message } = require("../../../utils/constanta/constanta");
+const capitalizeWords = require("../../../utils/helper/capitalize");
 
 class JobService extends JobServicesInterface {
   constructor(jobRepo) {
