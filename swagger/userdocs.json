@@ -2489,7 +2489,7 @@
         }
       }
     },
-    "jobs/profile": {
+    "/jobs/profile": {
       "get": {
         "security": [
           {
@@ -2595,7 +2595,7 @@
         }
       }
     },
-    "jobs/{id}": {
+    "/jobs/{id}": {
       "put": {
         "security": [
           {
