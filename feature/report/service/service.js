@@ -96,6 +96,11 @@ class ReportService extends ReportServiceInterface {
       }
     }
 
+    const existingReport = await this.reportRepository.getReportById(id);
+    if (existingReport.status === "Rejected" && !data.status) {
+      data.status = "Pending";
+    }
+    
     const result = await this.reportRepository.updateReport(id, data, file);
     return result;
   }
