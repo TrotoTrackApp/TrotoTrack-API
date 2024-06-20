@@ -7,6 +7,8 @@
 
 - [Folder Structure](#folder-structure)
 - [Technologies Used](#technologies-used)
+- [Introduction](#introduction)
+- [Application Architecture](#application-architecture)
 - [Installation Guide](#installation-guide)
 - [Usage](#usage)
 - [API Endpoint](#api-endpoint)
