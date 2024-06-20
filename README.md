@@ -64,7 +64,7 @@ Trototrack is an innovative application designed to streamline and expedite the 
 ---
 
 ## Application Architecture
-<img src="https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/Cloud%20Architecture.jpg" alt="Nama Alternatif" style="transform: scale(10);"> 
+<img src="https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/Application%20Architecture.png" alt="Application Architecture" style="transform: scale(10);"> 
 
 ---
 
