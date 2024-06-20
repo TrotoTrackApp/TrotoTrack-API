@@ -61,6 +61,11 @@ Trototrack is an innovative application designed to streamline and expedite the 
 
 ---
 
+## Application Architecture
+<img src="https://github.com/TrotoTrackApp/TrotoTrack-API/blob/readme/utils/img/Cloud%20Architecture.jpg" alt="Nama Alternatif" style="transform: scale(10);"> 
+
+---
+
 ## Installation Guide
 Follow these steps to set up and run the Trototrack application on your local machine. This guide will help you clone the repository, install necessary dependencies, configure the environment, and set up the database.
 ### Step 1: Clone the Repository
