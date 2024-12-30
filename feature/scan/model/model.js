@@ -7,7 +7,7 @@ const base64Key = process.env.GOOGLE_CLOUD_KEY_BASE64;
 const key = JSON.parse(Buffer.from(base64Key, 'base64').toString('utf8'));
 
 const storage = new Storage({ credentials: key });
-const bucketName = 'trototrack-ml';
+const bucketName = 'trototracks-ml';
 const fileName = 'model.json';
 
 // Fungsi untuk mendapatkan access token
@@ -25,7 +25,7 @@ async function getAccessToken() {
 // Fungsi untuk memuat model menggunakan Access Token
 async function loadModel() {
   const token = await getAccessToken();
-  const modelUrl = `https://storage.googleapis.com/${bucketName}/${fileName}?access_token=${token}`;
+  const modelUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
   return tf.loadLayersModel(modelUrl);
 }
 
